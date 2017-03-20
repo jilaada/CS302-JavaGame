@@ -1,12 +1,13 @@
 package model_classes;
+import java.util.ArrayList;
 
 public class Wall {
 
 	private int numberOfBricks;
-	private Point brickCoordinates;
+	private ArrayList<Point> brickCoordinates;
+	private ArrayList<Brick> brickList;
 	
 	public Wall(int brickNo) {		
-		//Add other variable constructors
 		this.numberOfBricks = brickNo;
 	}
 
@@ -14,16 +15,28 @@ public class Wall {
 		this.numberOfBricks = number;
 	}
 	
-	public int setNumberOfBricks() {
+	public int getNumberOfBricks() {
 		return this.numberOfBricks;
 	}
 	
-	public void setBrickCoord(Point pos) {
-		this.brickCoordinates = pos;
+	public void addBrick(Brick brick) {
+		this.brickList.add(brick);
 	}
 	
-	public Point getBrickCoord() {
-		return this.brickCoordinates;
+	public ArrayList<Brick> getBricks(Brick brick) {
+		return this.brickList;
+	}
+	
+	public void addBrickCoord(Point pos) {
+		this.brickCoordinates.add(pos);
+	}
+	
+	public ArrayList<Point> getBrickCoord() {
+		if(this.brickCoordinates == null) {
+			return null;
+		} else {
+			return this.brickCoordinates;
+		}
 	}
 	
 	

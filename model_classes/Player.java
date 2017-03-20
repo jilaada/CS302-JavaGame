@@ -12,8 +12,8 @@ public class Player {
 		this.playerName = name;
 		
 		//Object constructors
-		this.playerWall = 0;
-		this.playerPaddle = 0;
+		//this.playerWall = 0;
+		//this.playerPaddle = 0;
 	}
 	
 	public void setPlayerScore(int score) {
@@ -28,24 +28,32 @@ public class Player {
 		this.playerName = name;	
 	}
 	
-	protected String setPlayerName() {
+	protected String getPlayerName() {
 		return this.playerName;
 	}
 	
 	//Object implementation
-	protected void setPlayerWall(Wall barrier) {
-		this.playerWall = barrier;	
+	protected void addPlayerWall(Wall barrier) {
+			this.playerWall = barrier;	
 	}
 	
 	protected Wall getPlayerWall() {
-		return this.playerWall;
+		if(this.playerWall == null) {
+			return null;
+		} else {
+			return this.playerWall;
+		}
 	}
 	
-	protected void setPlayerPaddle(Paddle blocker) {
+	protected void addPlayerPaddle(Paddle blocker) {
 		this.playerPaddle = blocker;	
 	}
 	
 	protected Paddle getPlayerPaddle() {
-		return this.playerPaddle;
+		if(this.playerPaddle == null) {
+			return null;
+		} else {
+			return this.playerPaddle;
+		}
 	}
 }

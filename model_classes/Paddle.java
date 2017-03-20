@@ -2,16 +2,12 @@ package model_classes;
 
 public class Paddle {
 	
-	//private int[] currentPos;
-	//private int[] previousPos;
 	private Point currentPos;
 	private Point previousPos;
 	private double paddleSpeed;
 	private double paddleSize;
 	
 	public Paddle(double speed, double size) {
-		
-		//Add other variable constructors
 		this.paddleSpeed = speed;
 		this.paddleSize = size;
 	}
@@ -22,7 +18,11 @@ public class Paddle {
 	}
 	
 	public Point getCurrentPos() {
-		return this.currentPos;
+		if(this.currentPos == null) {
+			return null;
+		} else {
+			return this.currentPos;
+		}
 	}
 	
 	public void setPreviousPos(Point pos) {
@@ -30,7 +30,11 @@ public class Paddle {
 	}
 	
 	public Point getPreviousPos() {
-		return this.previousPos;
+		if(this.previousPos == null) {
+			return null;
+		} else {
+			return this.previousPos;
+		}
 	}
 	
 	public void setPaddleSpeed(double speed) {

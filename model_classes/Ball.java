@@ -1,4 +1,5 @@
 package model_classes;
+//import java.lang.Math;
 
 public class Ball {
 
@@ -6,15 +7,16 @@ public class Ball {
 	private Point previousPos;
 	private Point nextPos;
 	private double ballSpeed;
-	private double ballSize;
+	private double ballRad;
+	private double ballArea;
 	
 	
 	
-	public Ball(double speed, double size) {
+	public Ball(double speed, double rad) {
 		
 		//Add other variable constructors
 		this.ballSpeed = speed;
-		this.ballSize = size;
+		this.ballRad = rad;
 	}
 
 	
@@ -23,7 +25,11 @@ public class Ball {
 	}
 	
 	public Point getCurrentPos() {
-		return this.currentPos;
+		if(this.currentPos == null) {
+			return null;
+		} else {
+			return this.currentPos;
+		}
 	}
 	
 	public void setPreviousPos(Point pos) {
@@ -31,7 +37,11 @@ public class Ball {
 	}
 	
 	public Point getPreviousPos() {
-		return this.previousPos;
+		if(this.previousPos == null) {
+			return null;
+		} else {
+			return this.previousPos;
+		}
 	}
 	
 	public void setNextPos(Point pos) {
@@ -39,7 +49,11 @@ public class Ball {
 	}
 	
 	public Point getNextPos() {
-		return this.nextPos;
+		if(this.nextPos == null) {
+			return null;
+		} else {
+			return this.nextPos;
+		}
 	}
 	
 	public void setBallSpeed(double speed) {
@@ -50,17 +64,25 @@ public class Ball {
 		return this.ballSpeed;
 	}
 	
-	public void setBallSize(double size) {
-		this.ballSize = size;
+	public void setBallRadius(double rad) {
+		this.ballRad = rad;
+		this.ballArea = 0.5*(Math.PI * Math.pow(rad,2));
 	}
 	
-	public double getPaddleSize() {
-		return this.ballSize;
+	public double getBallRadius() {
+		return this.ballRad;
+	}
+	
+	public void setBallArea(double area) {
+		this.ballArea = area;
+	}
+	
+	public double getBallArea() {
+		return this.ballArea;
 	}
 	
 	public boolean checkForCollision() {
-		//TO DO:
-	}
+		return true; //MUST CHANGE
 	}
 	
 }
