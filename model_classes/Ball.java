@@ -63,7 +63,7 @@ public class Ball {
 	
 	public void setBallRadius(double rad) {
 		this.ballRad = rad;
-		this.ballArea = 0.5*(Math.PI * Math.pow(rad,2));
+		this.ballArea = 0.6*(Math.PI * Math.pow(rad,2));
 	}
 	
 	public double getBallRadius() {
