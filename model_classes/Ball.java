@@ -13,8 +13,6 @@ public class Ball {
 	
 	
 	public Ball(double speed, double rad) {
-		
-		//Add other variable constructors
 		this.ballSpeed = speed;
 		this.ballRad = rad;
 	}
