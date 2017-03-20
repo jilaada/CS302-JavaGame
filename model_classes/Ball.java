@@ -9,8 +9,7 @@ public class Ball {
 	private double ballSpeed;
 	private double ballRad;
 	private double ballArea;
-	
-	
+	private double ballAngle;
 	
 	public Ball(double speed, double rad) {
 		
@@ -85,4 +84,8 @@ public class Ball {
 		return true; //MUST CHANGE
 	}
 	
+	public void moveBall() {
+		//TODO:
+		
+	}
 }
