@@ -63,7 +63,11 @@ public class Ball {
 	
 	public void setBallRadius(double rad) {
 		this.ballRad = rad;
-		this.ballArea = 0.5*(Math.PI * Math.pow(rad,2));
+<<<<<<< HEAD
+		this.ballArea = 0.8*(Math.PI * Math.pow(rad,2));
+=======
+		this.ballArea = 0.6*(Math.PI * Math.pow(rad,2));
+>>>>>>> ad4f2097b0dce1740d5ac2451cbe27e761954d87
 	}
 	
 	public double getBallRadius() {
@@ -83,45 +87,7 @@ public class Ball {
 	}
 	
 	public void moveBall() {
-		//TODO: moveBall is a function that will move the ball to the next position with respect 
-		// to the current position and previous position
-		double newX, newY;
-		// Determine direction X
-		if ((previousPos.getX() - currentPos.getX()) > 0) {
-			// Moving to the left
-			newX = this.currentPos.getX() - Math.cos(ballAngle)*ballSpeed;
-		} else if ((previousPos.getX() - currentPos.getX()) < 0) {
-			// Moving to the right
-			newX = Math.cos(ballAngle)*ballSpeed + this.currentPos.getX();
-		} else {
-			newX = currentPos.getX();
-		}
+		//TODO:
 		
-		// Determine direction Y
-		if ((previousPos.getY() - currentPos.getY()) > 0) {
-			// Moving up
-			newY = this.currentPos.getY() - Math.sin(ballAngle)*ballSpeed;
-		} else if ((previousPos.getY() - currentPos.getY()) < 0) {
-			newY = Math.sin(ballAngle)*ballSpeed + this.currentPos.getY();
-		} else {
-			newY = currentPos.getY();
-		}
-		
-		// Check to see if the new position will collide with anything - cannot be through the bounds
-		// Change the angle 
-		if (newX > 1024) {
-			newX = 1024;
-		} else if (newX < 0) {
-			newX = 0;
-		}
-		
-		if (newY > 768) {
-			newY = 768;
-		} else if (newY < 0) {
-			newY = 0;
-		}
-		// Set the new point with the new x and y coordinate
-		nextPos.setX((int)newX);
-		nextPos.setY((int)newY);
 	}
 }
