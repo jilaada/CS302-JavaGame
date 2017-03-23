@@ -4,12 +4,22 @@ public class Paddle {
 	
 	private Point currentPos;
 	private Point previousPos;
+	private Point paddleBounds;
 	private double paddleSpeed;
 	private double paddleSize;
+	private int paddleToken;
 	
-	public Paddle(double speed, double size) {
+	public Paddle(double speed, double size, int token) {
 		this.paddleSpeed = speed;
 		this.paddleSize = size;
+		this.paddleToken = token;
+		
+		if (token == 1) {
+			paddleBounds.setX(350);
+			paddleBounds.setY(250);
+		} else if (token == 2) {
+			
+		}
 	}
 
 	
@@ -53,4 +63,8 @@ public class Paddle {
 		return this.paddleSize;
 	}
 	
+	/** movePaddle() should take an input of the direction it is moving.*/
+	public void movePaddle() {
+		
+	}
 }

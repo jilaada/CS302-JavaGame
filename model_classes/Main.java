@@ -12,11 +12,11 @@ public class Main {
 		System.out.println(p1.getPlayerName());
 		System.out.println(p1.getPlayerScore());
 		
-		Paddle myPaddle = new Paddle(1.0, 2);
+		//Paddle myPaddle = new Paddle(1.0, 2);
 		Wall myWall = new Wall(50);
 		Ball myBall = new Ball(3, 4);
 		
-		p1.addPlayerPaddle(myPaddle);
+		//p1.addPlayerPaddle(myPaddle);
 		p1.addPlayerWall(myWall);
 		
 		/*int start = 0;
