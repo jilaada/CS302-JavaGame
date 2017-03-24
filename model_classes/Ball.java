@@ -6,6 +6,7 @@ public class Ball {
 	private Point currentPos;
 	private Point previousPos;
 	private Point nextPos;
+	private Player lastTouch;
 	private double ballSpeed;
 	private double ballRad;
 	private double ballArea;
@@ -78,50 +79,15 @@ public class Ball {
 		return this.ballArea;
 	}
 	
-	public boolean checkForCollision() {
-		return true; //MUST CHANGE
+	public void setBallAngle(double angle) {
+		this.ballAngle = angle;
 	}
 	
-	public void moveBall() {
-		//TODO: moveBall is a function that will move the ball to the next position with respect 
-		// to the current position and previous position
-		double newX, newY;
-		// Determine direction X
-		if ((previousPos.getX() - currentPos.getX()) > 0) {
-			// Moving to the left
-			newX = this.currentPos.getX() - Math.cos(ballAngle)*ballSpeed;
-		} else if ((previousPos.getX() - currentPos.getX()) < 0) {
-			// Moving to the right
-			newX = Math.cos(ballAngle)*ballSpeed + this.currentPos.getX();
-		} else {
-			newX = currentPos.getX();
-		}
-		
-		// Determine direction Y
-		if ((previousPos.getY() - currentPos.getY()) > 0) {
-			// Moving up
-			newY = this.currentPos.getY() - Math.sin(ballAngle)*ballSpeed;
-		} else if ((previousPos.getY() - currentPos.getY()) < 0) {
-			newY = Math.sin(ballAngle)*ballSpeed + this.currentPos.getY();
-		} else {
-			newY = currentPos.getY();
-		}
-		
-		// Check to see if the new position will collide with anything - cannot be through the bounds
-		// Change the angle 
-		if (newX > 1024) {
-			newX = 1024;
-		} else if (newX < 0) {
-			newX = 0;
-		}
-		
-		if (newY > 768) {
-			newY = 768;
-		} else if (newY < 0) {
-			newY = 0;
-		}
-		// Set the new point with the new x and y coordinate
-		nextPos.setX((int)newX);
-		nextPos.setY((int)newY);
+	public double getBallAngle() {
+		return this.ballAngle;
+	}
+	
+	public boolean checkForCollision() {
+		return true; //MUST CHANGE
 	}
 }
