@@ -1,6 +1,5 @@
 package model_classes;
-//import java.lang.Math;
-//import.System;
+
 import java.lang.Math;
 
 public class Ball {
@@ -8,6 +7,7 @@ public class Ball {
 	private Point currentPos;
 	private Point previousPos;
 	private Point nextPos;
+	private Player lastTouch;
 	private double ballSpeed;
 	private double ballRad;
 	private double ballArea;
@@ -82,8 +82,12 @@ public class Ball {
 		return this.ballArea;
 	}
 	
-	public boolean checkForCollision() {
-		return true; //MUST CHANGE
+	public void setBallAngle(double angle) {
+		this.ballAngle = angle;
+	}
+
+	public double getBallAngle() {
+		return this.ballAngle;
 	}
 
 	public void moveBall() {
@@ -95,28 +99,27 @@ public class Ball {
 		double yDel = Math.abs(previousPos.getY() - currentPos.getY());
 
 		double hypot = Math.pow((Math.pow(xDel, 2) + Math.pow(yDel, 2)), 0.5);
-		this.ballAngle = Math.atan(xDel/hypot);
-
+		this.ballAngle = Math.atan(xDel / hypot);
 
 
 		double newX, newY;
 		// Determine direction X
 		if ((previousPos.getX() - currentPos.getX()) > 0) {
 			// Moving to the left
-			newX = this.currentPos.getX() - Math.cos(ballAngle)*ballSpeed;
+			newX = this.currentPos.getX() - Math.cos(ballAngle) * ballSpeed;
 		} else if ((previousPos.getX() - currentPos.getX()) < 0) {
 			// Moving to the right
-			newX = Math.cos(ballAngle)*ballSpeed + this.currentPos.getX();
+			newX = Math.cos(ballAngle) * ballSpeed + this.currentPos.getX();
 		} else {
 			newX = currentPos.getX();
 		}
-		
+
 		// Determine direction Y
 		if ((previousPos.getY() - currentPos.getY()) > 0) {
 			// Moving up
-			newY = this.currentPos.getY() - Math.sin(ballAngle)*ballSpeed;
+			newY = this.currentPos.getY() - Math.sin(ballAngle) * ballSpeed;
 		} else if ((previousPos.getY() - currentPos.getY()) < 0) {
-			newY = Math.sin(ballAngle)*ballSpeed + this.currentPos.getY();
+			newY = Math.sin(ballAngle) * ballSpeed + this.currentPos.getY();
 		} else {
 			newY = currentPos.getY();
 		}
@@ -152,6 +155,6 @@ public class Ball {
 		this.currentPos.setX((int)Math.round(newX));
 		this.currentPos.setY((int)Math.round(newY));
 
-
 	}
+
 }
