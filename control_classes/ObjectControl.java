@@ -56,6 +56,6 @@ public class ObjectControl {
 		currentBall.getNextPos().setX((int)newX);
 		currentBall.getNextPos().setY((int)newY);
 		
-		//
+		//HELLO
 	}
 }
