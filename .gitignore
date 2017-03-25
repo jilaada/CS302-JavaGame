@@ -70,9 +70,6 @@ local.properties
 #Ignore classpath
 *.classpath
 
-#Ignore project
-*.project
-
 ## File-based project format:
 *.iws
 
