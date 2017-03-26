@@ -4,6 +4,8 @@ public class Paddle {
 	
 	private Point currentPos;
 	private Point previousPos;
+	private Point paddleStart;
+	private Point paddleEnd;
 	private Point paddleBounds;
 	private double paddleSpeed;
 	private double paddleSize;
@@ -27,22 +29,40 @@ public class Paddle {
 		}
 		
 		// Added the paddle bounds selection based on player location
+		//TODO: These will need to refer to the screen resolution thing
+
 		if (paddleToken == 1) {
-			paddleBounds.setX(350);
-			paddleBounds.setY(250);
+			this.paddleStart.setX((int)(paddleSize/2));
+			this.paddleStart.setY(250);
+			this.paddleBounds.setX(350);
+			this.paddleBounds.setY(250);
+			this.paddleEnd.setX(350);
+			this.paddleEnd.setY((int)(paddleSize/2));
 		} else if (paddleToken == 2) {
-			paddleBounds.setX(674);
-			paddleBounds.setY(250);
+			this.paddleStart.setX(674);
+			this.paddleStart.setY((int)(paddleSize/2));
+			this.paddleBounds.setX(674);
+			this.paddleBounds.setY(250);
+			this.paddleEnd.setX(1024 - (int)(paddleSize/2));
+			this.paddleEnd.setY(250);
 		} else if (paddleToken == 3) {
-			paddleBounds.setX(350);
-			paddleBounds.setY(518);
+			this.paddleStart.setX((int)(paddleSize/2));
+			this.paddleStart.setY(518);
+			this.paddleBounds.setX(350);
+			this.paddleBounds.setY(518);
+			this.paddleEnd.setX(350);
+			this.paddleEnd.setY(768 - (int)(paddleSize/2));
 		} else if (paddleToken == 4) {
-			paddleBounds.setX(678);
-			paddleBounds.setY(518);
-		} else {
+			this.paddleStart.setX(674);
+			this.paddleStart.setY(768 - (int)(paddleSize/2));
+			this.paddleBounds.setX(674);
+			this.paddleBounds.setY(518);
+			this.paddleEnd.setX(1024 - (int)(paddleSize/2));
+			this.paddleEnd.setY(518);
+		} //else {
 			// Throw exception when the player token is anything other than 1-4
-			throw new Exception("Invalid Player Token");
-		}
+			//throw new Exception("Invalid Player Token");
+		//}
 	}
 
 	/** Sets the current position of the paddle
@@ -83,11 +103,27 @@ public class Paddle {
 			return this.previousPos;
 		}
 	}
+
+	/**
+	 * Get paddle bound point class
+	 * @return returns a point class containing the paddle bounds
+	 */
+	public Point getPaddleBounds() {
+		return paddleBounds;
+	}
+
+	public Point getPaddleStart() {
+		return paddleStart;
+	}
+
+	public Point getPaddleEnd() {
+		return paddleEnd;
+	}
 	
 	/**
 	 * Allows for the player to change the speed of the paddle
 	 * Paddle should not be allowed to go into speeds that are less than 1
-	 * @param Double input of the new speed value
+	 * @param speed input for the speed of the paddle
 	 */
 	public void setPaddleSpeed(double speed) {
 		if (speed < 1) {
@@ -109,7 +145,7 @@ public class Paddle {
 	/**
 	 * Sets the size of the paddle 
 	 * Should not be less than the 10 or greater than 50
-	 * @param size
+	 * @param size size of the ball
 	 */
 	public void setPaddleSize(double size) {
 		if (size < 10) {
@@ -127,5 +163,9 @@ public class Paddle {
 	 */
 	public double getPaddleSize() {
 		return this.paddleSize;
+	}
+
+	public int getPaddleToken() {
+		return this.paddleToken;
 	}
 }

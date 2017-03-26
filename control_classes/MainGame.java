@@ -22,11 +22,12 @@ public class MainGame extends Application {
     public void start(Stage theStage)
     {
         Group root = new Group();
-        Scene scene = new Scene(root, 1024, 768, Color.BLACK);
+        Scene scene = new Scene(root, 1024, 600, Color.BLACK);
         theStage.setScene( scene );
         theStage.setTitle("Game window");
 
-        Ball newBall = new Ball(1, 5);
+        Ball newBall = new Ball(6, 5);
+        ObjectControl ControlUnit = new ObjectControl();
 
 
         Circle c1 = new Circle(newBall.getCurrentPos().getX(), newBall.getCurrentPos().getY(), newBall.getBallRadius(), Color.RED);
@@ -45,7 +46,7 @@ public class MainGame extends Application {
                 double x = 232 + 128 * Math.cos(t);
                 double y = 232 + 128 * Math.sin(t);
 
-                newBall.moveBall();
+                ControlUnit.moveBall(newBall);
                 /**System.out.print((double)newBall.getCurrentPos().getX());
                 System.out.print("  ");
                 System.out.println((double)newBall.getCurrentPos().getY());*/
