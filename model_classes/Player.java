@@ -45,7 +45,7 @@ public class Player {
 		}
 	}
 	
-	protected void addPlayerPaddle(Paddle blocker) {
+	public void addPlayerPaddle(Paddle blocker) {
 		this.playerPaddle = blocker;	
 	}
 	

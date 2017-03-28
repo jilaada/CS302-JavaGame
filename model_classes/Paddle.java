@@ -18,51 +18,49 @@ public class Paddle {
 	 * @param size - sets the size of the paddle
 	 * @param token - determines the player number (P1, P2, P3, P4)
 	 */
-	public Paddle(double speed, double size, int token) throws Exception{
+	public Paddle(double speed, double size, int token) {
 		this.paddleSpeed = speed;
 		this.paddleSize = size;
 		this.paddleToken = token;
-		
-		// Throw exception when the size of the paddle is too large or too small(?)
-		if ((paddleSize <= 10) || (paddleSize >= 50)) {
-			throw new Exception("Paddle size is not between 10 and 50 pixels");
-		}
-		
-		// Added the paddle bounds selection based on player location
-		//TODO: These will need to refer to the screen resolution thing
 
-		if (paddleToken == 1) {
-			this.paddleStart.setX((int)(paddleSize/2));
+		previousPos = new Point(0,0);
+		currentPos = new Point(0,0);
+		paddleStart = new Point(0 ,0);
+		paddleEnd = new Point(0, 0);
+		paddleBounds = new Point(0,0);
+	}
+
+	public void setBounds() {
+		int size = (int)paddleSize/2;
+		if (this.paddleToken == 1) {
+			this.paddleStart.setX(size);
 			this.paddleStart.setY(250);
 			this.paddleBounds.setX(350);
 			this.paddleBounds.setY(250);
 			this.paddleEnd.setX(350);
-			this.paddleEnd.setY((int)(paddleSize/2));
-		} else if (paddleToken == 2) {
+			this.paddleEnd.setY(size);
+		} else if (this.paddleToken == 2) {
 			this.paddleStart.setX(674);
-			this.paddleStart.setY((int)(paddleSize/2));
+			this.paddleStart.setY(size);
 			this.paddleBounds.setX(674);
 			this.paddleBounds.setY(250);
-			this.paddleEnd.setX(1024 - (int)(paddleSize/2));
+			this.paddleEnd.setX(1024 - size);
 			this.paddleEnd.setY(250);
-		} else if (paddleToken == 3) {
-			this.paddleStart.setX((int)(paddleSize/2));
+		} else if (this.paddleToken == 3) {
+			this.paddleStart.setX(size);
 			this.paddleStart.setY(518);
 			this.paddleBounds.setX(350);
 			this.paddleBounds.setY(518);
 			this.paddleEnd.setX(350);
-			this.paddleEnd.setY(768 - (int)(paddleSize/2));
-		} else if (paddleToken == 4) {
+			this.paddleEnd.setY(768 - size);
+		} else if (this.paddleToken == 4) {
 			this.paddleStart.setX(674);
-			this.paddleStart.setY(768 - (int)(paddleSize/2));
+			this.paddleStart.setY(768 - size);
 			this.paddleBounds.setX(674);
 			this.paddleBounds.setY(518);
-			this.paddleEnd.setX(1024 - (int)(paddleSize/2));
+			this.paddleEnd.setX(1024 - size);
 			this.paddleEnd.setY(518);
-		} //else {
-			// Throw exception when the player token is anything other than 1-4
-			//throw new Exception("Invalid Player Token");
-		//}
+		}
 	}
 
 	/** Sets the current position of the paddle

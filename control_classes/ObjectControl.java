@@ -185,7 +185,7 @@ public class ObjectControl {
 	 * @param currentBall - the ball to be moved
 	 */
 	public void moveBall(Ball currentBall) {
-		//TODO: moveBall is a function that will move the ball to the next position with respect
+		//TODO: change so angle can be changed randomly
 		// to the current position and previous position
 
 		Point previousPos = currentBall.getPreviousPos();
