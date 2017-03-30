@@ -30,10 +30,10 @@ public class MainGame extends Application {
         IOHandle HandleIO = new IOHandle(scene);
 
         ObjectControl ControlUnit = new ObjectControl();
-        Ball newBall = new Ball(6, 5);
+        Ball newBall = new Ball(5, 5);
         // Set player one
         Player player1 = new Player("TestPlayer");
-        Paddle paddle1 = new Paddle(5,15,1);
+        Paddle paddle1 = new Paddle(5,40,1);
         paddle1.setBounds();
         player1.addPlayerPaddle(paddle1);
         Point ppoint = new Point(150, 250);
@@ -60,8 +60,10 @@ public class MainGame extends Application {
 
                 if (HandleIO.hasMovedLeftP1()) {
                     ControlUnit.movePaddle(paddle1, 0);
+                    HandleIO.resetP1();
                 } else if (HandleIO.hasMovedRightP1()) {
                     ControlUnit.movePaddle(paddle1, 1);
+                    HandleIO.resetP1();
                 }
 
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;

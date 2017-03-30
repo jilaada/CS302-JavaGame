@@ -17,7 +17,7 @@ public class Player {
 	}
 	
 	public void setPlayerScore(int score) {
-		this.playerScore = score;	
+		this.playerScore = score;
 	}
 	
 	public int getPlayerScore() {
@@ -25,7 +25,7 @@ public class Player {
 	}
 	
 	protected void setPlayerName(String name) {
-		this.playerName = name;	
+		this.playerName = name;
 	}
 	
 	protected String getPlayerName() {
@@ -34,7 +34,7 @@ public class Player {
 	
 	//Object implementation
 	protected void addPlayerWall(Wall barrier) {
-			this.playerWall = barrier;	
+		this.playerWall = barrier;
 	}
 	
 	protected Wall getPlayerWall() {
@@ -46,7 +46,7 @@ public class Player {
 	}
 	
 	public void addPlayerPaddle(Paddle blocker) {
-		this.playerPaddle = blocker;	
+		this.playerPaddle = blocker;
 	}
 	
 	protected Paddle getPlayerPaddle() {
@@ -56,4 +56,6 @@ public class Player {
 			return this.playerPaddle;
 		}
 	}
+
+
 }

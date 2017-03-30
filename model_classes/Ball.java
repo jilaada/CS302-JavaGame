@@ -17,7 +17,7 @@ public class Ball {
 		this.ballSpeed = speed;
 		this.ballRad = rad;
 		this.previousPos = new Point(300,300);
-		this.currentPos = new Point(301,301);
+		this.currentPos = new Point(299, 301);
 	}
 
 	
