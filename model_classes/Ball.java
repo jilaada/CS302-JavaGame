@@ -12,6 +12,10 @@ public class Ball {
 	private double ballRad;
 	private double ballArea;
 	private double ballAngle;
+
+	// For testing
+	private int xVel;
+	private int yVel;
 	
 	public Ball(double speed, double rad) {
 		this.ballSpeed = speed;
@@ -90,4 +94,20 @@ public class Ball {
 		return this.ballAngle;
 	}
 
+	// For testing
+	public void setXVel(int dX) {
+		this.xVel = dX;
+	}
+
+	public void setYVel(int dY) {
+		this.yVel = dY;
+	}
+
+	public int getxVel() {
+		return this.xVel;
+	}
+
+	public int getyVel() {
+		return this.yVel;
+	}
 }

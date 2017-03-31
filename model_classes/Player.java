@@ -6,7 +6,7 @@ public class Player {
 	private String playerName;	
 	private Wall playerWall;
 	private Paddle playerPaddle;
-	
+
 	public Player(String name) {
 		this.playerScore = 0;
 		this.playerName = name;
@@ -56,6 +56,5 @@ public class Player {
 			return this.playerPaddle;
 		}
 	}
-
 
 }
