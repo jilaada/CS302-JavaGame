@@ -55,19 +55,4 @@ public class BallAdapter implements IBall {
         return currentBall.getyVel();
     }
 
-    public void setPrevXPos(int x) {
-        this.prevXPos = x;
-    }
-
-    public void setPrevYPos(int y) {
-        this.prevYPos = y;
-    }
-
-    public int getPrevXPos() {
-        return this.prevXPos;
-    }
-
-    public int getPrevYPos() {
-        return this.prevYPos;
-    }
 }

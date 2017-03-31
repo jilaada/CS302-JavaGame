@@ -10,6 +10,7 @@ public class GameAdaptor implements IGame {
     private PlayerAdapter playerOne, playerTwo;
     private PaddleAdapter currentPaddle;
     private WallAdapter p1wall;
+    private int newX, newY;
 
     public GameAdaptor() {
         timeRemaining = 120;
@@ -46,11 +47,13 @@ public class GameAdaptor implements IGame {
 
     public void moveBall() {
         //Add the velocity to the ball
-        int newX, newY;
 
         newX = currentBall.getXPos() + currentBall.getXVelocity();
         newY = currentBall.getYPos() + currentBall.getYVelocity();
 
+        checkPaddleCollision();
+
+        // Check if collision with Boundary
         if (newX < 0) {
             // Collided with the left wall
             newX = 0;
@@ -83,4 +86,21 @@ public class GameAdaptor implements IGame {
             playerTwo.setWin(false);
         }
     }
+
+    public void checkPaddleCollision() {
+        if ((newX >= currentPaddle.getxPos()) && (currentBall.getXPos() <= currentPaddle.getxPos())) {
+            if ((newY >= currentPaddle.getyPos()) && (currentBall.getYPos() <= currentPaddle.getyPos())) {
+                // within the path of the of the ball going down and right
+                newX = newX - (newY - currentPaddle.getyPos());
+                newY = currentPaddle.getyPos();
+                // Y velocity to change
+                currentBall.setYVelocity(-(currentBall.getYVelocity()));
+            }
+        }
+    }
+
+    public void checkWallCollision() {
+        
+    }
+
 }
