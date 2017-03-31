@@ -22,9 +22,20 @@ public class WallAdapter implements IWall {
         this.yPos = y;
     }
 
+    public int getYPos() {
+        return this.yPos;
+    }
+
+    public int getXPos() {
+        return this.xPos;
+    }
+
+    public void setDestroyedWall(boolean des) {
+        this.destroyedWall = des;
+    }
+
     @Override
     public boolean isDestroyed() {
-
-        return false;
+        return destroyedWall;
     }
 }

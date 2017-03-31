@@ -52,6 +52,7 @@ public class GameAdaptor implements IGame {
         newY = currentBall.getYPos() + currentBall.getYVelocity();
 
         checkPaddleCollision();
+        checkWallCollision();
 
         // Check if collision with Boundary
         if (newX < 0) {
@@ -100,7 +101,19 @@ public class GameAdaptor implements IGame {
     }
 
     public void checkWallCollision() {
-        
+        if ((newX >= p1wall.getXPos()) && (currentBall.getXPos() <= p1wall.getXPos())) {
+            if ((newY >= p1wall.getYPos()) && (currentBall.getYPos() <= p1wall.getYPos())) {
+                // within the path of the of the ball going down and right
+                newX = newX - (newY - p1wall.getYPos());
+                newY = p1wall.getYPos();
+                // Y velocity to change
+                currentBall.setYVelocity(-(currentBall.getYVelocity()));
+                // Wall need to be destroyed
+                p1wall.setDestroyedWall(true);
+            }
+        } else {
+            p1wall.setDestroyedWall(false);
+        }
     }
 
 }
