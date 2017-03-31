@@ -9,12 +9,16 @@ public class PlayerAdapter implements IWarlord {
 
     private Player currentPlayer;
     private IBall currentBall;
+    private boolean playerWon;
     private int xPos;
     private int yPos;
 
     public PlayerAdapter(IBall ball) {
         currentPlayer = new Player("Test");
         currentBall = ball;
+        xPos = 0;
+        yPos = 0;
+        playerWon = false;
     }
 
     @Override
@@ -42,7 +46,11 @@ public class PlayerAdapter implements IWarlord {
 
     @Override
     public boolean hasWon() {
-        return false;
+        return playerWon;
+    }
+
+    public void setWin(boolean win) {
+        this.playerWon = win;
     }
 
 }

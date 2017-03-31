@@ -22,10 +22,26 @@ public class WarlordsTest extends TestSuite {
 
         //Instantiate objects to initialise the fields - and preferably no other game objects, to minimise the possibility of conflicts
         //All game objects should be instantiated at coordinates (0,0) with zero velocity
-        ball = new BallAdapter();
-        game = new GameAdaptor(ball);
-        player1 = new PlayerAdapter(ball);
-        //((GameAdaptor)game).moveBall();
+        BallAdapter currentBall = new BallAdapter();
+        this.ball = currentBall;
+
+        PlayerAdapter playerOne = new PlayerAdapter(ball);
+        this.player1 = playerOne;
+
+        PlayerAdapter playerTwo = new PlayerAdapter(ball);
+        this.player2 = playerTwo;
+
+        PaddleAdapter currentPaddle = new PaddleAdapter();
+        this.paddle = currentPaddle;
+
+        WallAdapter playerOneWall = new WallAdapter();
+        this.player1Wall = playerOneWall;
+
+        GameAdaptor currentGame = new GameAdaptor();
+        this.game = currentGame;
+
+        currentGame.GameSetUp(currentBall, playerOne, playerTwo, currentPaddle, playerOneWall);
+
     }
 
     @Test

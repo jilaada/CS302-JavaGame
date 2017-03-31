@@ -5,26 +5,43 @@ package Test_Root;
  */
 public class GameAdaptor implements IGame {
 
-    private IBall currentBall;
+    private BallAdapter currentBall;
+    private int timeRemaining;
+    private PlayerAdapter playerOne, playerTwo;
+    private PaddleAdapter currentPaddle;
+    private WallAdapter p1wall;
 
-    public GameAdaptor(IBall ball) {
-        this.currentBall = ball;
+    public GameAdaptor() {
+        timeRemaining = 120;
     }
 
 
     @Override
     public void tick() {
         moveBall();
+        timeRemaining = timeRemaining - 1;
+        checkWins();
     }
 
     @Override
     public boolean isFinished() {
+        if ((timeRemaining <= 0) || playerOne.hasWon() || playerTwo.hasWon()) {
+            return true;
+        }
         return false;
     }
 
     @Override
     public void setTimeRemaining(int seconds) {
+        this.timeRemaining = seconds;
+    }
 
+    public void GameSetUp(BallAdapter ball, PlayerAdapter player1, PlayerAdapter player2, PaddleAdapter paddle, WallAdapter player1wall) {
+        this.currentBall = ball;
+        this.playerOne = player1;
+        this.playerTwo = player2;
+        this.currentPaddle = paddle;
+        this.p1wall = player1wall;
     }
 
     public void moveBall() {
@@ -57,4 +74,13 @@ public class GameAdaptor implements IGame {
         currentBall.setYPos(newY);
     }
 
+    public void checkWins() {
+        if (playerOne.isDead()) {
+            playerTwo.setWin(true);
+            playerOne.setWin(false);
+        } else {
+            playerOne.setWin(true);
+            playerTwo.setWin(false);
+        }
+    }
 }
