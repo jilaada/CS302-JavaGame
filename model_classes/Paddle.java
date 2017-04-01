@@ -33,12 +33,12 @@ public class Paddle {
 	public void setBounds() {
 		int size = (int)paddleSize/2;
 		if (this.paddleToken == 1) {
-			this.paddleStart.setX(size);
+			this.paddleStart.setX(0);
 			this.paddleStart.setY(250);
 			this.paddleBounds.setX(350);
 			this.paddleBounds.setY(250);
 			this.paddleEnd.setX(350);
-			this.paddleEnd.setY(size);
+			this.paddleEnd.setY(0);
 		} else if (this.paddleToken == 2) {
 			this.paddleStart.setX(674);
 			this.paddleStart.setY(size);
