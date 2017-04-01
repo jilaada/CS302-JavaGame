@@ -1,6 +1,7 @@
 package control_classes;
 
 /**
+ * The AI class will contain the behaviour of the AI
  * Created by Jilada on 26/03/17.
  */
 public class AI {

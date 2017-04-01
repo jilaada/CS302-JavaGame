@@ -1,7 +1,8 @@
 package model_classes;
 
 public class Paddle extends modelSuperClass{
-	
+
+	// Declaring the attributes to be used by paddle
 	private Point currentPos;
 	private Point previousPos;
 	private Point paddleStart;
@@ -14,15 +15,16 @@ public class Paddle extends modelSuperClass{
 	/** Constructor of player paddle
 	 * The constructor will take three inputs and sets the speed, size and paddle bounds
 	 * of the object.
-	 * @param speed - sets the speed of the paddle
-	 * @param size - sets the size of the paddle
-	 * @param token - determines the player number (P1, P2, P3, P4)
+	 * @param speed - sets the speed of the paddle; double
+	 * @param size - sets the size of the paddle; double
+	 * @param token - determines the player number (P1, P2, P3, P4); int
 	 */
 	public Paddle(double speed, double size, int token) {
 		this.paddleSpeed = speed;
 		this.paddleSize = size;
 		this.paddleToken = token;
 
+		// Setting the pointers so they are not null
 		previousPos = new Point(0,0);
 		currentPos = new Point(0,0);
 		paddleStart = new Point(0 ,0);
@@ -30,8 +32,13 @@ public class Paddle extends modelSuperClass{
 		paddleBounds = new Point(0,0);
 	}
 
+	/**
+	 * setBounds will set the bounds of the paddle movement
+	 */
 	public void setBounds() {
+		//Create a padding for the sides
 		int size = (int)paddleSize/2;
+		// Set the start, bounds and end positions depending on the player token parsed
 		if (this.paddleToken == 1) {
 			this.paddleStart.setX(0);
 			this.paddleStart.setY(250);
@@ -64,7 +71,7 @@ public class Paddle extends modelSuperClass{
 	}
 
 	/** Sets the current position of the paddle
-	 * @param pos - a point class of the new coordinates for the paddle
+	 * @param pos - the new coordinates for the paddle; Point
 	 */
 	public void setCurrentPos(Point pos) {
 		this.currentPos = pos;
@@ -72,7 +79,7 @@ public class Paddle extends modelSuperClass{
 	
 	/**
 	 * Returns a point class containing the current position of the paddle
-	 * @return Returns a point class containing the current position of the paddle
+	 * @return the current position of the paddle; Point
 	 */
 	public Point getCurrentPos() {
 		if(this.currentPos == null) {
@@ -84,7 +91,7 @@ public class Paddle extends modelSuperClass{
 	
 	/**
 	 * Sets the previous position
-	 * @param pos - a point class containing the coordinates of the paddle
+	 * @param pos - the coordinates of the paddle; Point
 	 */
 	public void setPreviousPos(Point pos) {
 		this.previousPos = pos;
@@ -92,7 +99,7 @@ public class Paddle extends modelSuperClass{
 	
 	/**
 	 * Gets the previous position of the paddle
-	 * @return Returns a point class containing the previous position of the paddle
+	 * @return the previous position of the paddle; Point
 	 */
 	public Point getPreviousPos() {
 		if(this.previousPos == null) {
@@ -104,16 +111,24 @@ public class Paddle extends modelSuperClass{
 
 	/**
 	 * Get paddle bound point class
-	 * @return returns a point class containing the paddle bounds
+	 * @return the paddle bounds; Point
 	 */
 	public Point getPaddleBounds() {
 		return paddleBounds;
 	}
 
+	/**
+	 * Get the paddle start point
+	 * @return the start position of paddle; Point
+	 */
 	public Point getPaddleStart() {
 		return paddleStart;
 	}
 
+	/**
+	 * Get the paddle end point
+	 * @return the end position of the paddle; Point
+	 */
 	public Point getPaddleEnd() {
 		return paddleEnd;
 	}
@@ -121,7 +136,7 @@ public class Paddle extends modelSuperClass{
 	/**
 	 * Allows for the player to change the speed of the paddle
 	 * Paddle should not be allowed to go into speeds that are less than 1
-	 * @param speed input for the speed of the paddle
+	 * @param speed - input for the speed of the paddle; double
 	 */
 	public void setPaddleSpeed(double speed) {
 		if (speed < 1) {
@@ -134,7 +149,7 @@ public class Paddle extends modelSuperClass{
 	
 	/**
 	 * Returns the paddle speed 
-	 * @return Returns the paddle speed
+	 * @return the paddle speed; double
 	 */
 	public double getPaddleSpeed() {
 		return this.paddleSpeed;
@@ -143,7 +158,7 @@ public class Paddle extends modelSuperClass{
 	/**
 	 * Sets the size of the paddle 
 	 * Should not be less than the 10 or greater than 50
-	 * @param size size of the ball
+	 * @param size size of the ball; double
 	 */
 	public void setPaddleSize(double size) {
 		if (size < 10) {
@@ -157,16 +172,21 @@ public class Paddle extends modelSuperClass{
 	
 	/**
 	 * Get the paddle size
-	 * @return Returns the paddle size in type double
+	 * @return Returns the paddle size in type double; double
 	 */
 	public double getPaddleSize() {
 		return this.paddleSize;
 	}
 
+	/**
+	 * Get the token associated to the player the paddle belongs to
+	 * @return the token of the player; int
+	 */
 	public int getPaddleToken() {
 		return this.paddleToken;
 	}
 
+	//TODO: commenting for super class
 	@Override
 	public modelSuperClass getObj() { return this;}
 

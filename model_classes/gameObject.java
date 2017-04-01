@@ -6,6 +6,7 @@ import javafx.scene.shape.Shape;
  * Created by niles on 31/03/2017.
  */
 public class gameObject {
+    //TODO: add more to this class (array features) and commenting
     private Shape shapeTemp;
     private modelSuperClass modelTemp;
 

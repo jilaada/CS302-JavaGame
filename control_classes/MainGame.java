@@ -8,12 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.scene.shape.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.input.*;
 import model_classes.*;
-import control_classes.*;
 
 public class MainGame extends Application {
 

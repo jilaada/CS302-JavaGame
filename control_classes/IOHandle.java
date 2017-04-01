@@ -6,7 +6,7 @@ import javafx.scene.input.KeyEvent;
 
 /**
  * IOHandle will be a passive class that will determine whether objects need to be moved or not.
- * Makes the main game aware of any user inputs that have occured
+ * Makes the main game aware of any user inputs that have occurred
  * Created by Jilada on 26/03/17.
  */
 public class IOHandle {
@@ -21,7 +21,7 @@ public class IOHandle {
 
     /**
      * IOHandle constructor which will allow for key listening into the user inputs
-     * @param mainScene - a reference to the main scene input for rendering the screen
+     * @param mainScene - a reference to the main scene input for rendering the screen; scene
      */
     public IOHandle(Scene mainScene) {
         this.currentScene = mainScene;

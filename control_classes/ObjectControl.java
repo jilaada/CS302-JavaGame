@@ -6,7 +6,7 @@ import model_classes.Point;
 public class ObjectControl {
 
 	/**
-	 * ObjectControl contructor
+	 * ObjectControl constructor that will allow the game to control objects
 	 */
 	public ObjectControl() {
 		//Add some constructor information
@@ -16,8 +16,8 @@ public class ObjectControl {
 	//Need to add:
 	/**
 	 * movePaddle is a function that will move the paddle in a specific direction determined by keyboard inputs
-	 * @param currentPaddle - paddle to be moved
-	 * @param direction - direction of movement; determined via keyboard inputs (1 = right, 0 = left)
+	 * @param currentPaddle - paddle to be moved; Paddle
+	 * @param direction - direction of movement; int determined via keyboard inputs (1 = right, 0 = left)
 	 */
 	public void movePaddle(Paddle currentPaddle, int direction) {
 		//TODO: move paddle is a function that will move the paddle according to the inputs
@@ -100,7 +100,7 @@ public class ObjectControl {
 	/**
 	 * moveBall is a function that will move the ball when called. Direction of ball movement is dependent on the previous direction
 	 * and the angle as well as the speed of the ball
-	 * @param currentBall - the ball to be moved
+	 * @param currentBall - the ball to be moved; Ball
 	 */
 	public void moveBall(Ball currentBall) {
 		//TODO: change so angle can be changed randomly
