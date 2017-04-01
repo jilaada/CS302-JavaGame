@@ -2,7 +2,7 @@ package model_classes;
 
 import java.lang.Math;
 
-public class Ball {
+public class Ball extends modelSuperClass{
 
 	private Point currentPos;
 	private Point previousPos;
@@ -20,8 +20,8 @@ public class Ball {
 	public Ball(double speed, double rad) {
 		this.ballSpeed = speed;
 		this.ballRad = rad;
-		this.previousPos = new Point(300,300);
-		this.currentPos = new Point(299, 301);
+		this.previousPos = new Point(299,299);
+		this.currentPos = new Point(300, 300);
 	}
 
 	
@@ -94,20 +94,6 @@ public class Ball {
 		return this.ballAngle;
 	}
 
-	// For testing
-	public void setXVel(int dX) {
-		this.xVel = dX;
-	}
-
-	public void setYVel(int dY) {
-		this.yVel = dY;
-	}
-
-	public int getxVel() {
-		return this.xVel;
-	}
-
-	public int getyVel() {
-		return this.yVel;
-	}
+	@Override
+	public modelSuperClass getObj() { return this;}
 }

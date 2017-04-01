@@ -1,6 +1,6 @@
 package model_classes;
 
-public class Paddle {
+public class Paddle extends modelSuperClass{
 	
 	private Point currentPos;
 	private Point previousPos;
@@ -166,4 +166,8 @@ public class Paddle {
 	public int getPaddleToken() {
 		return this.paddleToken;
 	}
+
+	@Override
+	public modelSuperClass getObj() { return this;}
+
 }

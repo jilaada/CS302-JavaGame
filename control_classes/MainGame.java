@@ -8,10 +8,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import model_classes.Ball;
-import model_classes.Paddle;
-import model_classes.Player;
-import model_classes.Point;
+import javafx.scene.shape.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.input.*;
+import model_classes.*;
+import control_classes.*;
 
 public class MainGame extends Application {
 
@@ -29,14 +31,14 @@ public class MainGame extends Application {
 
         // Declaring the classes to be used
         ObjectControl ControlUnit = new ObjectControl();
-        Ball newBall = new Ball(5, 5);
+        Ball newBall = new Ball(10, 5);
         // Set player one
         Player player1 = new Player("TestPlayer");
-        Paddle paddle1 = new Paddle(5,40,1);
+        Paddle paddle1 = new Paddle(15,80,1);
         paddle1.setBounds();
         player1.addPlayerPaddle(paddle1);
-        Point ppoint = new Point(150, 250);
-        paddle1.setCurrentPos(ppoint);
+        Point point = new Point(150, 250);
+        paddle1.setCurrentPos(point);
 
         // Added a circle to scene to represent the ball
         Circle c1 = new Circle(newBall.getCurrentPos().getX(), newBall.getCurrentPos().getY(), newBall.getBallRadius(), Color.RED);
@@ -48,7 +50,13 @@ public class MainGame extends Application {
         p1.setFill(Color.AQUAMARINE);
         root.getChildren().add(p1);
 
+
+        Collision collisionDetection = new Collision();
+        gameObject ballObj = new gameObject(c1, newBall);
+        gameObject paddleObj = new gameObject(p1, paddle1);
+
         final long startNanoTime = System.nanoTime();
+
 
         new AnimationTimer()
         {
