@@ -89,13 +89,30 @@ public class GameAdaptor implements IGame {
     }
 
     public void checkPaddleCollision() {
-        if ((newX >= currentPaddle.getxPos()) && (currentBall.getXPos() <= currentPaddle.getxPos())) {
-            if ((newY >= currentPaddle.getyPos()) && (currentBall.getYPos() <= currentPaddle.getyPos())) {
-                // within the path of the of the ball going down and right
-                newX = newX - (newY - currentPaddle.getyPos());
-                newY = currentPaddle.getyPos();
-                // Y velocity to change
-                currentBall.setYVelocity(-(currentBall.getYVelocity()));
+        if ((currentBall.getXVelocity() < 15) && (currentBall.getYVelocity() < 15)) {
+            if ((newX >= currentPaddle.getxPos()) && (currentBall.getXPos() <= currentPaddle.getxPos())) {
+                if ((newY >= currentPaddle.getyPos()) && (currentBall.getYPos() <= currentPaddle.getyPos())) {
+                    // within the path of the of the ball going down and right
+                    newX = newX - (newY - currentPaddle.getyPos());
+                    newY = currentPaddle.getyPos();
+                    // Y velocity to change
+                    currentBall.setYVelocity(-(currentBall.getYVelocity()));
+                }
+            }
+        } else {
+            // velocity is very quick there cannot assume that the ball will pass
+            int j = currentBall.getYPos();
+            for (int i = currentBall.getXPos(); i < newX; i++) {
+                if ((i + 10 >= currentPaddle.getxPos()) && (i <= currentPaddle.getxPos())) {
+                    if ((j + 10 >= currentPaddle.getyPos()) && (j <= currentPaddle.getyPos())) {
+                        //within the path of the ball
+                        newX = newX - (newY - currentPaddle.getyPos());
+                        newY = currentPaddle.getyPos();
+                        // Y velocity to change
+                        currentBall.setYVelocity(-(currentBall.getYVelocity()));
+                    }
+                }
+                j++;
             }
         }
     }
