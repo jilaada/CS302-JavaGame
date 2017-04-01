@@ -1,6 +1,5 @@
 package control_classes;
 
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -20,12 +19,19 @@ public class IOHandle {
     boolean pauseGame;
     Scene currentScene;
 
-    // Declare the constructor
+    /**
+     * IOHandle constructor which will allow for key listening into the user inputs
+     * @param mainScene - a reference to the main scene input for rendering the screen
+     */
     public IOHandle(Scene mainScene) {
         this.currentScene = mainScene;
     }
+
     // Declare the scene events
     // If a key (A) was pressed then move paddle left will be set to 1 others = 0
+    /**
+     * HandleMovement is a function that will handle the triggering of booleans to tell the main game to move the object
+     */
     public void handleMovement() {
         //Handler for the key pressed for player one's paddle
         currentScene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
@@ -37,17 +43,29 @@ public class IOHandle {
                 movePaddle1right = true;
             }
         });
+        //TODO: Add the other players to the movement
     }
 
     // Declare getters and setters
+    /**
+     * HadMovedRightP1 is a function that will return player1's paddle RIGHT MOVE
+     * @return - movePaddle1Right; boolean signal to move the paddle RIGHT
+     */
     public boolean hasMovedRightP1() {
         return this.movePaddle1right;
     }
 
+    /**
+     * HasMovedLeftP1 is a function that will return player1's paddle LEFT MOVE
+     * @return - movePaddle1Left; boolean signal to move paddle LEFT
+     */
     public boolean hasMovedLeftP1() {
         return this.movePaddle1left;
     }
 
+    /**
+     * ResetP1 used to reset paddle to stationary - wait for next signal
+     */
     public void resetP1() {
         this.movePaddle1left = false;
         this.movePaddle1right = false;

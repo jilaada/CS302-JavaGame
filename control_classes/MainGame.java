@@ -4,23 +4,21 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.scene.shape.*;
-
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.input.*;
-import model_classes.*;
+import model_classes.Ball;
+import model_classes.Paddle;
+import model_classes.Player;
+import model_classes.Point;
 
 public class MainGame extends Application {
 
     @Override
     public void start(Stage theStage)
     {
+        // Create the group root and scene for rendering the GUI
         Group root = new Group();
         Scene scene = new Scene(root, 1024, 768, Color.BLACK);
         theStage.setScene( scene );
@@ -29,6 +27,7 @@ public class MainGame extends Application {
         // IO handle declaration
         IOHandle HandleIO = new IOHandle(scene);
 
+        // Declaring the classes to be used
         ObjectControl ControlUnit = new ObjectControl();
         Ball newBall = new Ball(5, 5);
         // Set player one
@@ -39,12 +38,12 @@ public class MainGame extends Application {
         Point ppoint = new Point(150, 250);
         paddle1.setCurrentPos(ppoint);
 
-
+        // Added a circle to scene to represent the ball
         Circle c1 = new Circle(newBall.getCurrentPos().getX(), newBall.getCurrentPos().getY(), newBall.getBallRadius(), Color.RED);
         c1.setFill(Color.RED);
         root.getChildren().add(c1);
 
-        // Added a rectangle to be painted on the scene
+        // Added a rectangle to be painted on the scene to represent the paddle
         Rectangle p1 = new Rectangle(paddle1.getCurrentPos().getX(), paddle1.getCurrentPos().getY(), paddle1.getPaddleSize(), 7);
         p1.setFill(Color.AQUAMARINE);
         root.getChildren().add(p1);
@@ -58,6 +57,7 @@ public class MainGame extends Application {
                 // Run the input handle
                 HandleIO.handleMovement();
 
+                //TODO: move the movement detection to another class to CONTROL the movement
                 if (HandleIO.hasMovedLeftP1()) {
                     ControlUnit.movePaddle(paddle1, 0);
                     HandleIO.resetP1();
@@ -66,15 +66,8 @@ public class MainGame extends Application {
                     HandleIO.resetP1();
                 }
 
-                double t = (currentNanoTime - startNanoTime) / 1000000000.0;
-
-                double x = 232 + 128 * Math.cos(t);
-                double y = 232 + 128 * Math.sin(t);
-
                 ControlUnit.moveBall(newBall);
-                /**System.out.print((double)newBall.getCurrentPos().getX());
-                System.out.print("  ");
-                System.out.println((double)newBall.getCurrentPos().getY());*/
+
                 c1.relocate((double)newBall.getCurrentPos().getX(), (double)newBall.getCurrentPos().getY());
                 p1.relocate((double)paddle1.getCurrentPos().getX(), (double)paddle1.getCurrentPos().getY());
             }

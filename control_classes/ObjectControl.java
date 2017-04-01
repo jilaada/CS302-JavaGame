@@ -1,15 +1,16 @@
 package control_classes;
 import model_classes.Ball;
 import model_classes.Paddle;
-import model_classes.Player;
 import model_classes.Point;
 
-import java.lang.Math;
-
 public class ObjectControl {
-	
+
+	/**
+	 * ObjectControl contructor
+	 */
 	public ObjectControl() {
 		//Add some constructor information
+		//TODO: Add additional attribute storage
 	}
 	
 	//Need to add:
@@ -43,9 +44,8 @@ public class ObjectControl {
 				if (direction == 1) {
 					// Move to the right
 					if (curPos.getY() == boundPos.getY()) {
-						// Horizontal
+						// Paddle is horizontal
 						if (curPos.getX() + paddleSpeed <= boundPos.getX()) {
-							// Get new x coordinates
 							newX = curPos.getX() + paddleSpeed;
 							newY = boundPos.getY();
 						} else {
@@ -53,7 +53,7 @@ public class ObjectControl {
 							newY = boundPos.getY() - ((curPos.getX() + paddleSpeed) - boundPos.getX());
 						}
 					} else {
-						// Vertical
+						// Paddle is vertical
 						if ((curPos.getY() - paddleSpeed) > endPos.getY()) {
 							newX = boundPos.getX();
 							newY = curPos.getY() - paddleSpeed;
@@ -65,7 +65,7 @@ public class ObjectControl {
 				} else {
 					// Moving to the left
 					if (curPos.getX() == boundPos.getX()) {
-						//Vertical
+						// Paddle is vertical
 						if ((curPos.getY() + paddleSpeed) <= boundPos.getY()) {
 							// Paddle moving down
 							newX = boundPos.getX();
@@ -76,7 +76,7 @@ public class ObjectControl {
 							newY = boundPos.getY();
 						}
 					} else {
-						// Horizontal
+						// Paddle is horizontal
 						if (curPos.getX() - paddleSpeed >= startPos.getX()) {
 							newX = curPos.getX() - paddleSpeed;
 							newY = boundPos.getY();
@@ -87,6 +87,7 @@ public class ObjectControl {
 					}
 				}
 			}
+			//TODO: Implement the paddle movement for player 2, 3 and 4
 
 			// Set the newY and newX coordinates and switch to old coordinates
 			currentPaddle.setPreviousPos(currentPaddle.getCurrentPos());
@@ -146,6 +147,7 @@ public class ObjectControl {
 
 
 		// Check to see if the new position will collide with the bounds
+		// Update previous position when collision is hit so angle is accurate
 		// Change the angle
 		if (newX > 1024) {
 			newX = 1024 - (newX - 1024);
