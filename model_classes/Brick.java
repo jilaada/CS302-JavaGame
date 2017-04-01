@@ -1,6 +1,6 @@
 package model_classes;
 
-public class Brick {
+public class Brick extends modelSuperClass{
 
 	private double length;
 	private double height;
@@ -44,5 +44,7 @@ public class Brick {
 			return this.position;
 		}
 	}
+	@Override
+	public modelSuperClass getObj() { return this;}
 	
 }
