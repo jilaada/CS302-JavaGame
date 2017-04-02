@@ -3,7 +3,8 @@
 ------------------------------------------------------------
 
 This README would normally document the steps are necessary 
-to get your application up and running.
+to get your application up and running. This game was 
+created by Group 10.
 
 ---------INSTRUCTIONS----------
 Press A to move paddle left
@@ -44,7 +45,7 @@ CHECK IF JAVAFX IS INSTALLED
 		Click "Install" ->
 		Click "Confirm" and accept terms and conditions ->
 		Download should start
-3.  From step 1. ->
+3.  	From step 1. ->
 		Select "JavaFX Project" in JavaFX folder ->
 		Click "Next" ->
 		In project name box type in "Prototype" ->
@@ -56,10 +57,10 @@ CHECK IF JAVAFX IS INSTALLED
 		Select JUnit4 ->
 		Click "Finish" -> 
 		Click "Finish" again
-4. Expand "src" folder ->
+4. 	Expand "src" folder ->
 		Right-click Applications package ->
 		Click Delete and confirm
-5. Go to file explorer -> 
+5. 	Go to file explorer -> 
 		Navigate to the folder of the downloaded project ->
 		Select all the packages ->
 		Drag and drop to src folder -> 
@@ -88,13 +89,18 @@ TO RUN JUNIT TESTS
 -------------------------------
 NOTES
 -------------------------------
-JUnit tests are avaiable in Test_Root
+JUnit tests are available in Test_Root
 We understand that the JUnit tests should implement the 
-methods wehave in our actual game, however because some 
-methods were imcomplete or have slightly varying 
+methods we have in our actual game, however because some 
+methods were incomplete or have slightly varying 
 implementations, we decided to take parts of our game code 
 to complete the tests. You can. however, see that we have 
 implemented the methods from Ball.java in BallAdapter.java
+
+The MVC Diagram can be found in the same directory as this
+file.
+
+
 
 
 
