@@ -73,15 +73,13 @@ public class MainGame extends Application {
                     HandleIO.resetP1();
                 }
 
-                double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
-                double x = 232 + 128 * Math.cos(t);
-                double y = 232 + 128 * Math.sin(t);
-
-                collisionDetection.checkCollisions(ballObj,paddleObj);
-                //ControlUnit.moveBall(newBall);
+                CollisionStruct move = collisionDetection.checkCollisions(ballObj,paddleObj);
+                ControlUnit.moveBall(newBall, move);
                 c1.relocate((double)newBall.getCurrentPos().getX(), (double)newBall.getCurrentPos().getY());
                 p1.relocate((double)paddle1.getCurrentPos().getX(), (double)paddle1.getCurrentPos().getY());
+
+
             }
         }.start();
 

@@ -5,6 +5,7 @@ import javafx.scene.shape.*;
 import javafx.scene.shape.Shape;
 import model_classes.*;
 
+
 /**
  * Created by niles on 24/03/2017.
  */
@@ -12,204 +13,117 @@ public class Collision {
     //TODO: This class is a controller and will control collisions
     Collision(){}
 
-    public void checkCollisions(gameObject ball, gameObject shape) {
-        if (ball.getShape().getBoundsInParent().intersects(shape.getShape().getBoundsInParent())) {
+    public CollisionStruct checkCollisions(gameObject ball, gameObject shape) {
 
-            //POSSIBLE POINTER ERROR STUFF
-//            double xMin = shape.getShape().getLayoutBounds().getMinX();
-//            double xMax = shape.getShape().getLayoutBounds().getMaxX();
-//            double yMin = shape.getShape().getLayoutBounds().getMinY();
-//            double yMax = shape.getShape().getLayoutBounds().getMaxY();
+            //Get coordinates of rectangular shape
+            double xMin = ((Paddle) shape.getObj()).getCurrentPos().getX();
+            double xMax = ((Paddle) shape.getObj()).getCurrentPos().getX() + ((Paddle) shape.getObj()).getPaddleSize();
+            double yMin = ((Paddle) shape.getObj()).getCurrentPos().getY();
+            double yMax = ((Paddle) shape.getObj()).getCurrentPos().getY() + ((Paddle) shape.getObj()).getHeight();
 
-            double xMin = ((Paddle)shape.getObj()).getPreviousPos().getX();
-            double xMax = ((Paddle)shape.getObj()).getPreviousPos().getX();
-            double yMin = ((Paddle)shape.getObj()).getPreviousPos().getY();
-            double yMax = ((Paddle)shape.getObj()).getPreviousPos().getY();
-
+            //Get previous and current positions of the ball
             Point bPrev = ((Ball) ball.getObj()).getPreviousPos();
             Point bCurr = ((Ball) ball.getObj()).getCurrentPos();
-            Point firstPoint = null;
-            Point secondPoint = null;
-            Point finalPoint = null;
 
-            System.out.print("SHAPE (xMin, xMax, yMin,yMax):");
-            System.out.print(xMin);
-            System.out.print(",");
-            System.out.print(xMax);
-            System.out.print(",");
-            System.out.print(yMin);
-            System.out.print(",");
-            System.out.print(yMax);
-            System.out.print("\n");
+            //Declare the 4 different possible interesction points (four walls: L, R, T, B) and respective collision booleans
+            Point firstPoint = null, secondPoint = null, thirdPoint = null, fourthPoint = null, finalPoint = null;
+            Boolean wallLeft = false, wallTop = false, wallRight = false, wallBottom = false;
 
-            System.out.print("PREVIOUS:");
-            System.out.print(bPrev.getX());
-            System.out.print(",");
-            System.out.print(bPrev.getY());
-            System.out.print("\n");
-            System.out.print("Current:");
-            System.out.print(bCurr.getX());
-            System.out.print(",");
-            System.out.print(bCurr.getY());
-            System.out.print("\n");
-            System.out.print("SHAPE:");
-            //System.out.print(((Circle) ball.getShape()).getCenterX());
-            double xCoord = ((Circle) ball.getShape()).getLayoutBounds().getMaxX() - ((Circle) ball.getShape()).getLayoutBounds().getMinX();
-            double yCoord = ((Circle) ball.getShape()).getLayoutBounds().getMaxY() - ((Circle) ball.getShape()).getLayoutBounds().getMinY();
-           // System.out.print(xCoord + ((Circle) ball.getShape()).getLayoutBounds().getMinX());
-            //System.out.print(((Rectangle) ball.getShape()).getLocation().getX());
-            System.out.print(((Rectangle) shape.getShape()).getX());
-            System.out.print(",");
-            //System.out.print(((Circle) ball.getShape()).getCenterY());
-            //System.out.print(yCoord + ((Circle) ball.getShape()).getLayoutBounds().getMinY());
-            System.out.print(((Rectangle) shape.getShape()).getY());
-            System.out.print("\n");
-
-
+            //Find difference between previous and current positions
             double xDel = Math.abs(bPrev.getX() - bCurr.getX());
             double yDel = Math.abs(bPrev.getY() - bCurr.getY());
 
-            double gradient = (bPrev.getY() - bCurr.getY())/(bPrev.getX() - bCurr.getX());
-
+            //Find equation of the line between previous and current positions
+            double gradient = (double) (bCurr.getY() - bPrev.getY()) / (bCurr.getX() - bPrev.getX());
             double c = bPrev.getY() - (gradient * bPrev.getX());
-            //double yE = (gradient * ) + c
-            Boolean wallLeft = false;
-            Boolean wallTop = false;
-            Boolean wallRight = false;
-            Boolean wallBottom = false;
 
-            //Line equations
-            //--algorithim: double xE = ((yMin - c) / gradient);
-            if ((yMin <= (gradient * xMin + c)) || ((gradient * xMin + c) < yMax)) {
-                firstPoint = new Point((int)xMin, (int)(gradient * xMin + c));
-                //firstPoint.setX((int)xMin);
-                //firstPoint.setY((int)(gradient * xMin + c));
+            //Using math, find intersection for each side of the shape
+            if ((yMin <= (gradient * xMin + c)) && ((gradient * xMin + c) < yMax)) { //Checking leftWall
+                firstPoint = new Point((int) xMin, (int) (gradient * xMin + c));
                 wallLeft = true;
-            } else if ((yMin <= (gradient * xMax + c)) || ((gradient * xMax + c) < yMax)) {
-                firstPoint = new Point((int)xMax, (int)(gradient * xMax + c));
-                //firstPoint.setX((int)xMax);
-                //firstPoint.setY((int)(gradient * xMin + c));
+            }
+            if ((yMin <= (gradient * xMax + c)) && ((gradient * xMax + c) < yMax)) { //Checking rightWall
+                secondPoint = new Point((int) xMax, (int) (gradient * xMax + c));
                 wallRight = true;
             }
-
-            if ((xMin <= ((yMin - c) / gradient)) || (((yMin - c) / gradient) < xMax)) {
-                secondPoint = new Point((int)((yMin - c) / gradient), (int)yMin);
-                //secondPoint.setX((int)((yMin - c) / gradient));
-                //secondPoint.setY((int)yMin);
+            if ((xMin <= ((yMin - c) / gradient)) && (((yMin - c) / gradient) < xMax)) { //Checking topWall
+                thirdPoint = new Point((int) ((yMin - c) / gradient), (int) yMin);
                 wallTop = true;
 
-            } else if ((xMin <= ((yMax - c) / gradient)) || (((yMax - c) / gradient) < xMax)) {
-                secondPoint = new Point((int)((yMax - c) / gradient), (int)yMax);
-                //secondPoint.setX((int)((yMax - c) / gradient));
-                //secondPoint.setY((int)yMax);
+            }
+            if ((xMin <= ((yMax - c) / gradient)) && (((yMax - c) / gradient) < xMax)) { //Checking bottomWall
+                fourthPoint = new Point((int) ((yMax - c) / gradient), (int) yMax);
                 wallBottom = true;
             }
 
-            //Checking which point intersects shape first
-            if((firstPoint != null) && (secondPoint != null)) {
-               // ball.getShape().getCenterX();
+            //Declare distances from ball for each point
+            double r1 = 10000, r2 = 10000, r3 = 10000, r4 = 10000;
 
-                double r1 = Math.pow((Math.pow(((Circle)ball.getShape()).getCenterX() - firstPoint.getX(), 2) + Math.pow(((Circle)ball.getShape()).getCenterY() - firstPoint.getY(), 2)), 0.5);
-                double r2 = Math.pow((Math.pow(((Circle)ball.getShape()).getCenterX() - secondPoint.getX(), 2) + Math.pow(((Circle)ball.getShape()).getCenterY() - secondPoint.getY(), 2)), 0.5);
+            //Checking which point intersects shape first by calculating their distance from the ball
+            if (firstPoint != null) {
+                r1 = Math.pow((Math.pow(((Ball) ball.getObj()).getCurrentPos().getX() - firstPoint.getX(), 2) + Math.pow(((Ball) ball.getObj()).getCurrentPos().getY() - firstPoint.getY(), 2)), 0.5);
+            }
+            if (secondPoint != null) {
+                r2 = Math.pow((Math.pow(((Ball) ball.getObj()).getCurrentPos().getX() - secondPoint.getX(), 2) + Math.pow(((Ball) ball.getObj()).getCurrentPos().getY() - secondPoint.getY(), 2)), 0.5);
+            }
+            if (thirdPoint != null) {
+                r3 = Math.pow((Math.pow(((Ball) ball.getObj()).getCurrentPos().getX() - thirdPoint.getX(), 2) + Math.pow(((Ball) ball.getObj()).getCurrentPos().getY() - thirdPoint.getY(), 2)), 0.5);
+            }
+            if (fourthPoint != null) {
+                r4 = Math.pow((Math.pow(((Ball) ball.getObj()).getCurrentPos().getX() - fourthPoint.getX(), 2) + Math.pow(((Ball) ball.getObj()).getCurrentPos().getY() - fourthPoint.getY(), 2)), 0.5);
+            }
 
-                if(r1 < r2) {
-                    finalPoint = firstPoint;
-                    wallBottom = false;
-                    wallTop = false;
-                } else {
-                    finalPoint = secondPoint;
-                    wallLeft = false;
-                    wallRight = false;
-                }
-            } else if((firstPoint != null) || (secondPoint != null)) {
-                if(firstPoint != null) {
-                    finalPoint = firstPoint;
-                } else {
-                    finalPoint = secondPoint;
+            //Declare arrays that will be used to find the minimum distance
+            Point[] pointArray = {firstPoint, secondPoint, thirdPoint, fourthPoint};
+            double[] checkingMin = {r1, r2, r3, r4};
+            boolean[] wallArray = {wallLeft, wallRight, wallTop, wallBottom};
+
+            //Find index of closest point
+            int index = 0;
+            for (int i = 1; i < checkingMin.length; i++) {
+                if (checkingMin[i - 1] > checkingMin[i]) {
+                    index = i;
                 }
             }
 
-//Make sure equation is within bounds
-            System.out.print("T,R,B,L: ");
-            System.out.print(wallTop);
-            System.out.print(wallRight);
-            System.out.print(wallBottom);
-            System.out.print(wallLeft);
-            System.out.print("\n");
+            //Make final intersection point, and set booleans
+            for (int i = 0; i < checkingMin.length; i++) {
+                if (i != index) {
+                    wallArray[i] = false;
+                } else {
+                    finalPoint = pointArray[i];
+                }
+            }
 
+            //Update local booleans
+            wallLeft = wallArray[0];
+            wallRight = wallArray[1];
+            wallTop = wallArray[2];
+            wallBottom = wallArray[3];
 
+            //Call function to find new coordinates for the ball
             Point check = this.getDels((Ball) ball.getObj());
+
+            //Get new and current positions
             double newX = check.getX();
             double newY = check.getY();
-            double updatePrevX = ((Ball)ball.getObj()).getCurrentPos().getX();
-            double updatePrevY = ((Ball)ball.getObj()).getCurrentPos().getY();
+            double updatePrevX = ((Ball) ball.getObj()).getCurrentPos().getX();
+            double updatePrevY = ((Ball) ball.getObj()).getCurrentPos().getY();
 
-            if ((newX > finalPoint.getX()) && (wallLeft = true)){ //(newX > leftPosWall
-                // Change the angle
-                newX = finalPoint.getX() - (newX - finalPoint.getX());
-                updatePrevX = newX + xDel;
-                System.out.println("leftDetected");
-            } else if ((newX < finalPoint.getX()) && (wallRight = true)) { //(newX > rightPosWall
-                newX = finalPoint.getX() + (finalPoint.getX() - newX);
-                updatePrevX = newX - xDel;
-                System.out.println("rightDetected");
+            //If finalPoint exists (was previous intersection detected) then make sure it was a collision near object
+            if(finalPoint != null) {
+                double diffX = Math.abs(finalPoint.getX() - updatePrevX);
+                double diffY = Math.abs(finalPoint.getY() - updatePrevY);
+                if ((xDel < diffX) && (yDel < diffY)) {
+                    finalPoint = null;
+                }
             }
 
-            if ((newY > finalPoint.getY()) && (wallBottom = true)) { ////top
-                newY = finalPoint.getY() - (newY - finalPoint.getY());
-                updatePrevY = newY + yDel;
-                System.out.println("topDetected");
-            } else if ((newY < finalPoint.getY()) && (wallTop = true)) { //(newX > leftPosWall
-                newY = finalPoint.getY() + (finalPoint.getY() - newY);
-                updatePrevY = newY - yDel;
-                System.out.println("bottom  Detected");
-            }
-
-            System.out.println("\n");
-
-            //Update previous coordinates
-            bPrev.setX((int)updatePrevX);
-            bPrev.setY((int)updatePrevY);
-
-            // Set the new point with the new x and y coordinate
-            bCurr.setX((int)Math.round(newX));
-            bCurr.setY((int)Math.round(newY));
-        } else {
-            Point check = this.getDels((Ball)ball.getObj());
-            double newX = check.getX();
-            double newY = check.getY();
-            double updatePrevX = ((Ball)ball.getObj()).getCurrentPos().getX();
-            double updatePrevY = ((Ball)ball.getObj()).getCurrentPos().getY();
-
-            double xDel = Math.abs(((Ball)ball.getObj()).getPreviousPos().getX() - updatePrevX);
-            double yDel = Math.abs(((Ball)ball.getObj()).getPreviousPos().getY() - updatePrevY);
-
-            if (newX > 1024) {
-                newX = 1024 - (newX - 1024);
-                updatePrevX = newX + xDel;
-            } else if (newX < 0) {
-                newX = Math.abs(newX);
-                updatePrevX = newX - xDel;
-            }
-
-            if (newY > 768) {
-                newY = 768 - (newY - 768);
-                updatePrevY = newY + yDel;
-            } else if (newY < 0) {
-                newY = Math.abs(newY);
-                updatePrevY = newY - yDel;
-            }
-
-            //Update previous coordinates
-            ((Ball)ball.getObj()).getPreviousPos().setX((int)updatePrevX);
-            ((Ball)ball.getObj()).getPreviousPos().setY((int)updatePrevY);
-
-            // Set the new point with the new x and y coordinate
-            ((Ball)ball.getObj()).getCurrentPos().setX((int)Math.round(newX));
-            ((Ball)ball.getObj()).getCurrentPos().setY((int)Math.round(newY));
-
-
-        }
+            //Prepare output
+            double[] newValues = {newX, newY};
+            double[] prevValues = {updatePrevX, updatePrevY};
+            CollisionStruct output = new CollisionStruct(finalPoint, wallArray, newValues);
+            return output;
     }
 
 
@@ -259,13 +173,4 @@ public class Collision {
         Point newValues = new Point((int)newX, (int)newY);
         return newValues;
     }
-
-
-//    public static boolean checkCollisions(Circle circle, Shape shape) {
-//        if (circle.getBoundsInParent().intersects(shape.getBoundsInParent())) {
-//            //shape.setFill(Color.YELLOW);
-//            return true;
-//        }
-//        return false;
-//    }
 }

@@ -1,8 +1,5 @@
 package control_classes;
-import model_classes.Ball;
-import model_classes.Paddle;
-import model_classes.Player;
-import model_classes.Point;
+import model_classes.*;
 
 import java.lang.Math;
 
@@ -101,74 +98,75 @@ public class ObjectControl {
 	 * and the angle as well as the speed of the ball
 	 * @param currentBall - the ball to be moved
 	 */
-	public void moveBall(Ball currentBall) {
+	public void moveBall(Ball currentBall, CollisionStruct inp) {
 		//TODO: change so angle can be changed randomly
-		// to the current position and previous position
-
-		Point previousPos = currentBall.getPreviousPos();
-		Point currentPos = currentBall.getCurrentPos();
-		double ballAngle;
-		double ballSpeed = currentBall.getBallSpeed();
-
-		//Find changes in x and y
-		double xDel = Math.abs(previousPos.getX() - currentPos.getX());
-		double yDel = Math.abs(previousPos.getY() - currentPos.getY());
-
-		double hypot = Math.pow((Math.pow(xDel, 2) + Math.pow(yDel, 2)), 0.5);
-		ballAngle = Math.atan(xDel / hypot);
 
 
-		double newX, newY;
-		// Determine direction X
-		if ((previousPos.getX() - currentPos.getX()) > 0) {
-			// Moving to the left
-			newX = currentPos.getX() - Math.cos(ballAngle) * ballSpeed;
-		} else if ((previousPos.getX() - currentPos.getX()) < 0) {
-			// Moving to the right
-			newX = Math.cos(ballAngle) * ballSpeed + currentPos.getX();
+		//Declare and get variables from checkCollision function
+		double newX = inp.getNewValues()[0], newY = inp.getNewValues()[1];
+		double updatePrevX = currentBall.getCurrentPos().getX(), updatePrevY = currentBall.getCurrentPos().getY();
+		boolean[] wallArray = inp.getWallHit();
+		boolean wallLeft = wallArray[0], wallRight = wallArray[1], wallTop = wallArray[2], wallBottom = wallArray[3];
+		Point finalPoint = inp.getFinalPoint();
+		double xDel = Math.abs(currentBall.getPreviousPos().getX() - updatePrevX), yDel = Math.abs(currentBall.getPreviousPos().getY() - updatePrevY);
+
+		// Check if there was a collision
+		if(finalPoint != null) {//IF INTERSECTS WORKS BUT THEN BALL WONT COLLIDE (line is from centre)
+
+			//Since collision has occured, account for it by updating current and previous ball coordinates
+
+			if ((newX > finalPoint.getX()) && (wallLeft == true)) { //Left wall collision
+				newX = finalPoint.getX() - (newX - finalPoint.getX());
+				updatePrevX = newX + xDel;
+			} else if ((newX < finalPoint.getX()) && (wallRight == true)) { //Right wall collision
+				newX = finalPoint.getX() + (finalPoint.getX() - newX);
+				updatePrevX = newX - xDel;
+			}
+
+			if ((newY > finalPoint.getY()) && (wallTop == true)) { //Top wall collision
+				newY = finalPoint.getY() - (newY - finalPoint.getY());
+				updatePrevY = newY + yDel;
+			} else if ((newY < finalPoint.getY()) && (wallBottom == true)) { //Bottom wall collision
+				newY = finalPoint.getY() + (finalPoint.getY() - newY);
+				updatePrevY = newY - yDel;
+			}
+
+			//Update previous coordinates
+			currentBall.getPreviousPos().setX((int)updatePrevX);
+			currentBall.getPreviousPos().setY((int)updatePrevY);
+
+			// Set the new point with the new x and y coordinate
+			currentBall.getCurrentPos().setX((int)Math.round(newX));
+			currentBall.getCurrentPos().setY((int)Math.round(newY));
 		} else {
-			newX = currentPos.getX();
+
+			//Object collision hasnt occured so check boundary collision
+			// Then account for it by updating current and previous ball coordinates
+			if (newX > 1024) { //Right boundary
+				newX = 1024 - (newX - 1024);
+				updatePrevX = newX + xDel;
+			} else if (newX < 0) { //Left boundary
+				newX = Math.abs(newX);
+				updatePrevX = newX - xDel;
+			}
+
+			if (newY > 768) { //Bottom boundary
+				newY = 768 - (newY - 768);
+				updatePrevY = newY + yDel;
+			} else if (newY < 0) { //Top boundary
+				newY = Math.abs(newY);
+				updatePrevY = newY - yDel;
+			}
+
+			//Update previous coordinates
+			currentBall.getPreviousPos().setX((int)updatePrevX);
+			currentBall.getPreviousPos().setY((int)updatePrevY);
+
+			// Set the new point with the new x and y coordinate
+			currentBall.getCurrentPos().setX((int)Math.round(newX));
+			currentBall.getCurrentPos().setY((int)Math.round(newY));
+
 		}
 
-		// Determine direction Y
-		if ((previousPos.getY() - currentPos.getY()) > 0) {
-			// Moving up
-			newY = currentPos.getY() - Math.sin(ballAngle) * ballSpeed;
-		} else if ((previousPos.getY() - currentPos.getY()) < 0) {
-			newY = Math.sin(ballAngle) * ballSpeed + currentPos.getY();
-		} else {
-			newY = currentPos.getY();
-		}
-
-		//Create variables to update previous positions
-		double updatePrevX = currentPos.getX();
-		double updatePrevY = currentPos.getY();
-
-
-		// Check to see if the new position will collide with the bounds
-		// Change the angle
-		if (newX > 1024) {
-			newX = 1024 - (newX - 1024);
-			updatePrevX = newX + xDel;
-		} else if (newX < 0) {
-			newX = Math.abs(newX);
-			updatePrevX = newX - xDel;
-		}
-
-		if (newY > 768) {
-			newY = 768 - (newY - 768);
-			updatePrevY = newY + yDel;
-		} else if (newY < 0) {
-			newY = Math.abs(newY);
-			updatePrevY = newY - yDel;
-		}
-
-		//Update previous coordinates
-		previousPos.setX((int)updatePrevX);
-		previousPos.setY((int)updatePrevY);
-
-		// Set the new point with the new x and y coordinate
-		currentPos.setX((int)Math.round(newX));
-		currentPos.setY((int)Math.round(newY));
 	}
 }

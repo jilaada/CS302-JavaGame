@@ -10,6 +10,7 @@ public class Paddle extends modelSuperClass{
 	private double paddleSpeed;
 	private double paddleSize;
 	private int paddleToken;
+	private double height;
 	
 	/** Constructor of player paddle
 	 * The constructor will take three inputs and sets the speed, size and paddle bounds
@@ -22,6 +23,7 @@ public class Paddle extends modelSuperClass{
 		this.paddleSpeed = speed;
 		this.paddleSize = size;
 		this.paddleToken = token;
+		this.height = 7;
 
 		previousPos = new Point(0,0);
 		currentPos = new Point(0,0);
@@ -170,4 +172,11 @@ public class Paddle extends modelSuperClass{
 	@Override
 	public modelSuperClass getObj() { return this;}
 
+	public double getHeight() {
+		return height;
+	}
+
+	public void setHeight(double height) {
+		this.height = height;
+	}
 }
