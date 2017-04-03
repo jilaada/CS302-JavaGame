@@ -127,6 +127,96 @@ public class ObjectControl {
 					}
 				}
 			}
+		} else if (token == 3) {
+			//Move player 2 paddle
+			if (direction == 1) {
+				// Move to the right
+				if (curPos.getY() == boundPos.getY()) {
+					// Horizontal
+					if (curPos.getX() + paddleSpeed <= boundPos.getX()) {
+						newX = curPos.getX() + paddleSpeed;
+						newY = boundPos.getY();
+					} else {
+						newX = endPos.getX();
+						newY = boundPos.getY() + ((curPos.getX() + paddleSpeed) - boundPos.getX());
+					}
+				} else {
+					// Vertical
+					if ((curPos.getY() + paddleSpeed) >= endPos.getY()) {
+						newX = boundPos.getX();
+						newY = endPos.getY();
+					} else {
+						newX = boundPos.getX();
+						newY = curPos.getY() + paddleSpeed;
+					}
+				}
+			} else {
+				// Moving to the left
+				if (curPos.getX() == boundPos.getX()) {
+					//Vertical
+					if ((curPos.getY() - paddleSpeed) <= boundPos.getY()) {
+						newX = boundPos.getX() - (curPos.getY() - boundPos.getY());
+						newY = boundPos.getY();
+					} else {
+						newX = boundPos.getX();
+						newY = curPos.getY() - paddleSpeed;
+					}
+				} else {
+					// Horizontal
+					if (curPos.getX() - paddleSpeed >= startPos.getX()) {
+						newX = curPos.getX() - paddleSpeed;
+						newY = boundPos.getY();
+					} else {
+						newX = startPos.getX();
+						newY = boundPos.getY();
+					}
+				}
+			}
+		} else if (token == 4) {
+			//Move player 2 paddle
+			if (direction == 1) {
+				// Move to the right
+				if (curPos.getY() == boundPos.getY()) {
+					// Horizontal
+					if (curPos.getX() + paddleSpeed <= endPos.getX()) {
+						newX = curPos.getX() + paddleSpeed;
+						newY = boundPos.getY();
+					} else {
+						newX = endPos.getX();
+						newY = boundPos.getY();
+					}
+				} else {
+					// Vertical
+					if ((curPos.getY() - paddleSpeed) >= boundPos.getY()) {
+						newX = boundPos.getX();
+						newY = curPos.getY() - paddleSpeed;
+					} else {
+						newX = boundPos.getX() + (curPos.getY() - boundPos.getY());
+						newY = boundPos.getY();
+					}
+				}
+			} else {
+				// Moving to the left
+				if (curPos.getX() == boundPos.getX()) {
+					//Vertical
+					if ((curPos.getY() + paddleSpeed) >= startPos.getY()) {
+						newX = boundPos.getX();
+						newY = startPos.getY();
+					} else {
+						newX = boundPos.getX();
+						newY = curPos.getY() + paddleSpeed;
+					}
+				} else {
+					// Horizontal
+					if (curPos.getX() - paddleSpeed >= boundPos.getX()) {
+						newX = curPos.getX() - paddleSpeed;
+						newY = boundPos.getY();
+					} else {
+						newX = boundPos.getX();
+						newY = boundPos.getY() + (curPos.getX() - boundPos.getX());
+					}
+				}
+			}
 		}
 
 		// Set the newY and newX coordinates and switch to old coordinates
@@ -189,7 +279,7 @@ public class ObjectControl {
 			currentBall.getCurrentPos().setY((int)Math.round(newY));
 		} else {
 
-			//Object collision hasnt occured so check boundary collision
+			//Object collision hasn't occurred so check boundary collision
 			// Then account for it by updating current and previous ball coordinates
 			if (newX > 1024) { //Right boundary
 				newX = 1024 - (newX - 1024);
