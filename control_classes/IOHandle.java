@@ -26,7 +26,7 @@ public class IOHandle {
     }
     // Declare the scene events
     // If a key (A) was pressed then move paddle left will be set to 1 others = 0
-    public void handleMovement() {
+    public void handleMovementP1() {
         //Handler for the key pressed for player one's paddle
         currentScene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.A) {
@@ -37,7 +37,9 @@ public class IOHandle {
                 movePaddle1right = true;
             }
         });
+    }
 
+    public void handleMovementP2() {
         //Handler for key pressed for player two's paddle
         currentScene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.F) {
@@ -57,6 +59,15 @@ public class IOHandle {
 
     public boolean hasMovedLeftP1() {
         return this.movePaddle1left;
+    }
+
+    // Declare getters and setters
+    public boolean hasMovedRightP2() {
+        return this.movePaddle2right;
+    }
+
+    public boolean hasMovedLeftP2() {
+        return this.movePaddle2left;
     }
 
     public void resetPaddle() {
