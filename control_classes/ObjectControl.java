@@ -15,7 +15,7 @@ public class ObjectControl {
 	 * @param currentPaddle - paddle to be moved
 	 * @param direction - direction of movement; determined via keyboard inputs (1 = right, 0 = left)
 	 */
-	public void movePaddle(Paddle currentPaddle, int direction) {
+	public boolean movePaddle(Paddle currentPaddle, int direction) {
 		//TODO: move paddle is a function that will move the paddle according to the inputs
 		int newX, newY;
 		int paddleSpeed = (int)currentPaddle.getPaddleSpeed();
@@ -89,6 +89,12 @@ public class ObjectControl {
 			currentPaddle.setPreviousPos(currentPaddle.getCurrentPos());
 			currentPaddle.getCurrentPos().setX(newX);
 			currentPaddle.getCurrentPos().setY(newY);
+		}
+
+		if (newX == boundPos.getX()) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 	

@@ -4,18 +4,11 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.scene.shape.*;
-
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.input.*;
 import model_classes.*;
-import control_classes.*;
 
 public class MainGame extends Application {
 
@@ -39,6 +32,7 @@ public class MainGame extends Application {
         player1.addPlayerPaddle(paddle1);
         Point point = new Point(150, 250);
         paddle1.setCurrentPos(point);
+        boolean h;
 
 
         Circle c1 = new Circle(newBall.getCurrentPos().getX(), newBall.getCurrentPos().getY(), newBall.getBallRadius(), Color.RED);
@@ -63,13 +57,28 @@ public class MainGame extends Application {
             public void handle(long currentNanoTime)
             {
                 // Run the input handle
+                //TODO: this repetitive action can be set in a different function game().tick()?
                 HandleIO.handleMovement();
 
                 if (HandleIO.hasMovedLeftP1()) {
-                    ControlUnit.movePaddle(paddle1, 0);
+                    if (ControlUnit.movePaddle(paddle1, 0)) {
+                        // Is not horizontal
+                        p1.setHeight(7);
+                        p1.setWidth(80);
+                    } else {
+                        p1.setHeight(80);
+                        p1.setWidth(7);
+                    }
                     HandleIO.resetP1();
                 } else if (HandleIO.hasMovedRightP1()) {
-                    ControlUnit.movePaddle(paddle1, 1);
+                    if (ControlUnit.movePaddle(paddle1, 1)) {
+                        // Is not horizontal
+                        p1.setHeight(7);
+                        p1.setWidth(80);
+                    } else {
+                        p1.setHeight(80);
+                        p1.setWidth(7);
+                    }
                     HandleIO.resetP1();
                 }
 
