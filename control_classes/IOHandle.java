@@ -15,8 +15,10 @@ public class IOHandle {
     boolean movePaddle1left;
     boolean movePaddle2right;
     boolean movePaddle2left;
-    boolean movePaddle3;
-    boolean movePaddle4;
+    boolean movePaddle3right;
+    boolean movePaddle3left;
+    boolean movePaddle4right;
+    boolean movePaddle4left;
     boolean pauseGame;
     Scene currentScene;
 
@@ -52,6 +54,32 @@ public class IOHandle {
         });
     }
 
+    public void handleMovementP3() {
+        //Handler for key pressed for player two's paddle
+        currentScene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if (key.getCode() == KeyCode.J) {
+                movePaddle3left = true;
+                movePaddle3right = false;
+            } else if (key.getCode() == KeyCode.K) {
+                movePaddle3left = false;
+                movePaddle3right = true;
+            }
+        });
+    }
+
+    public void handleMovementP4() {
+        //Handler for key pressed for player two's paddle
+        currentScene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if (key.getCode() == KeyCode.LEFT) {
+                movePaddle4left = true;
+                movePaddle4right = false;
+            } else if (key.getCode() == KeyCode.RIGHT) {
+                movePaddle4left = false;
+                movePaddle4right = true;
+            }
+        });
+    }
+
     // Declare getters and setters
     public boolean hasMovedRightP1() {
         return this.movePaddle1right;
@@ -70,11 +98,33 @@ public class IOHandle {
         return this.movePaddle2left;
     }
 
+    // Declare getters and setters
+    public boolean hasMovedRightP3() {
+        return this.movePaddle3right;
+    }
+
+    public boolean hasMovedLeftP3() {
+        return this.movePaddle3left;
+    }
+
+    // Declare getters and setters
+    public boolean hasMovedRightP4() {
+        return this.movePaddle4right;
+    }
+
+    public boolean hasMovedLeftP4() {
+        return this.movePaddle4left;
+    }
+
     public void resetPaddle() {
         this.movePaddle1left = false;
         this.movePaddle1right = false;
         this.movePaddle2left = false;
         this.movePaddle2right = false;
+        this.movePaddle3left = false;
+        this.movePaddle3right = false;
+        this.movePaddle4left = false;
+        this.movePaddle4right = false;
     }
 
 
