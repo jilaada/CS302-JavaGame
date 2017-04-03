@@ -43,24 +43,24 @@ public class Paddle extends modelSuperClass{
 			this.paddleEnd.setY(0);
 		} else if (this.paddleToken == 2) {
 			this.paddleStart.setX(674);
-			this.paddleStart.setY(size);
+			this.paddleStart.setY(0);
 			this.paddleBounds.setX(674);
 			this.paddleBounds.setY(250);
-			this.paddleEnd.setX(1024 - size);
+			this.paddleEnd.setX(1024 - (int)paddleSize);
 			this.paddleEnd.setY(250);
 		} else if (this.paddleToken == 3) {
-			this.paddleStart.setX(size);
+			this.paddleStart.setX(0);
 			this.paddleStart.setY(518);
 			this.paddleBounds.setX(350);
 			this.paddleBounds.setY(518);
 			this.paddleEnd.setX(350);
-			this.paddleEnd.setY(768 - size);
+			this.paddleEnd.setY(768 - (int)paddleSize);
 		} else if (this.paddleToken == 4) {
 			this.paddleStart.setX(674);
-			this.paddleStart.setY(768 - size);
+			this.paddleStart.setY(768 - (int)paddleSize);
 			this.paddleBounds.setX(674);
 			this.paddleBounds.setY(518);
-			this.paddleEnd.setX(1024 - size);
+			this.paddleEnd.setX(1024 - (int)paddleSize);
 			this.paddleEnd.setY(518);
 		}
 	}
