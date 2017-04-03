@@ -34,62 +34,105 @@ public class ObjectControl {
 		newX = curPos.getX();
 		newY = curPos.getY();
 
-		for (int i = 2; i < 3; i++) {
-			if (token == 1) {
-				//Move player 1 paddle
-				if (direction == 1) {
-					// Move to the right
-					if (curPos.getY() == boundPos.getY()) {
-						// Horizontal
-						if (curPos.getX() + paddleSpeed <= boundPos.getX()) {
-							// Get new x coordinates
-							newX = curPos.getX() + paddleSpeed;
-							newY = boundPos.getY();
-						} else {
-							newX = boundPos.getX();
-							newY = boundPos.getY() - ((curPos.getX() + paddleSpeed) - boundPos.getX());
-						}
+		if (token == 1) {
+			//Move player 1 paddle
+			if (direction == 1) {
+				// Move to the right
+				if (curPos.getY() == boundPos.getY()) {
+					// Horizontal
+					if (curPos.getX() + paddleSpeed <= boundPos.getX()) {
+						// Get new x coordinates
+						newX = curPos.getX() + paddleSpeed;
+						newY = boundPos.getY();
 					} else {
-						// Vertical
-						if ((curPos.getY() - paddleSpeed) > endPos.getY()) {
-							newX = boundPos.getX();
-							newY = curPos.getY() - paddleSpeed;
-						} else {
-							newX = boundPos.getX();
-							newY = endPos.getY();
-						}
+						newX = boundPos.getX();
+						newY = boundPos.getY() - ((curPos.getX() + paddleSpeed) - boundPos.getX());
 					}
 				} else {
-					// Moving to the left
-					if (curPos.getX() == boundPos.getX()) {
-						//Vertical
-						if ((curPos.getY() + paddleSpeed) <= boundPos.getY()) {
-							// Paddle moving down
-							newX = boundPos.getX();
-							newY = curPos.getY() + paddleSpeed;
-						} else {
-							// Paddle is moving down and across
-							newX = boundPos.getX() - ((curPos.getY() + paddleSpeed) - boundPos.getY());
-							newY = boundPos.getY();
-						}
+					// Vertical
+					if ((curPos.getY() - paddleSpeed) > endPos.getY()) {
+						newX = boundPos.getX();
+						newY = curPos.getY() - paddleSpeed;
 					} else {
-						// Horizontal
-						if (curPos.getX() - paddleSpeed >= startPos.getX()) {
-							newX = curPos.getX() - paddleSpeed;
-							newY = boundPos.getY();
-						} else {
-							newX = startPos.getX();
-							newY = boundPos.getY();
-						}
+						newX = boundPos.getX();
+						newY = endPos.getY();
+					}
+				}
+			} else {
+				// Moving to the left
+				if (curPos.getX() == boundPos.getX()) {
+					//Vertical
+					if ((curPos.getY() + paddleSpeed) <= boundPos.getY()) {
+						// Paddle moving down
+						newX = boundPos.getX();
+						newY = curPos.getY() + paddleSpeed;
+					} else {
+						// Paddle is moving down and across
+						newX = boundPos.getX() - ((curPos.getY() + paddleSpeed) - boundPos.getY());
+						newY = boundPos.getY();
+					}
+				} else {
+					// Horizontal
+					if (curPos.getX() - paddleSpeed >= startPos.getX()) {
+						newX = curPos.getX() - paddleSpeed;
+						newY = boundPos.getY();
+					} else {
+						newX = startPos.getX();
+						newY = boundPos.getY();
 					}
 				}
 			}
-
-			// Set the newY and newX coordinates and switch to old coordinates
-			currentPaddle.setPreviousPos(currentPaddle.getCurrentPos());
-			currentPaddle.getCurrentPos().setX(newX);
-			currentPaddle.getCurrentPos().setY(newY);
+		} else if (token == 2) {
+			//Move player 2 paddle
+			if (direction == 1) {
+				// Move to the right
+				if (curPos.getY() == boundPos.getY()) {
+					// Horizontal
+					if (curPos.getX() + paddleSpeed <= endPos.getX()) {
+						newX = curPos.getX() + paddleSpeed;
+						newY = boundPos.getY();
+					} else {
+						newX = endPos.getX();
+						newY = boundPos.getY();
+					}
+				} else {
+					// Vertical
+					if ((curPos.getY() + paddleSpeed) >= endPos.getY()) {
+						newX = boundPos.getX() + ((curPos.getY() + paddleSpeed) - boundPos.getY());
+						newY = boundPos.getY();
+					} else {
+						newX = boundPos.getX();
+						newY = curPos.getY() + paddleSpeed;
+					}
+				}
+			} else {
+				// Moving to the left
+				if (curPos.getX() == boundPos.getX()) {
+					//Vertical
+					if ((curPos.getY() - paddleSpeed) <= startPos.getY()) {
+						newX = boundPos.getX();
+						newY = startPos.getY();
+					} else {
+						newX = boundPos.getX();
+						newY = curPos.getY() - paddleSpeed;
+					}
+				} else {
+					// Horizontal
+					if (curPos.getX() - paddleSpeed >= startPos.getX()) {
+						newX = curPos.getX() - paddleSpeed;
+						newY = boundPos.getY();
+					} else {
+						newX = boundPos.getX();
+						newY = boundPos.getY() - (curPos.getX() - boundPos.getX());
+					}
+				}
+			}
 		}
+
+		// Set the newY and newX coordinates and switch to old coordinates
+		currentPaddle.setPreviousPos(currentPaddle.getCurrentPos());
+		currentPaddle.getCurrentPos().setX(newX);
+		currentPaddle.getCurrentPos().setY(newY);
 
 		if (newX == boundPos.getX()) {
 			return false;

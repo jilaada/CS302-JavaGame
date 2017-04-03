@@ -1,6 +1,5 @@
 package control_classes;
 
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -14,7 +13,8 @@ public class IOHandle {
     // Declare the attributes to be set:
     boolean movePaddle1right;
     boolean movePaddle1left;
-    boolean movePaddle2;
+    boolean movePaddle2right;
+    boolean movePaddle2left;
     boolean movePaddle3;
     boolean movePaddle4;
     boolean pauseGame;
@@ -37,6 +37,17 @@ public class IOHandle {
                 movePaddle1right = true;
             }
         });
+
+        //Handler for key pressed for player two's paddle
+        currentScene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if (key.getCode() == KeyCode.F) {
+                movePaddle2left = true;
+                movePaddle2right = false;
+            } else if (key.getCode() == KeyCode.G) {
+                movePaddle2left = false;
+                movePaddle2right = true;
+            }
+        });
     }
 
     // Declare getters and setters
@@ -48,8 +59,12 @@ public class IOHandle {
         return this.movePaddle1left;
     }
 
-    public void resetP1() {
+    public void resetPaddle() {
         this.movePaddle1left = false;
         this.movePaddle1right = false;
+        this.movePaddle2left = false;
+        this.movePaddle2right = false;
     }
+
+
 }

@@ -69,7 +69,6 @@ public class MainGame extends Application {
                         p1.setHeight(80);
                         p1.setWidth(7);
                     }
-                    HandleIO.resetP1();
                 } else if (HandleIO.hasMovedRightP1()) {
                     if (ControlUnit.movePaddle(paddle1, 1)) {
                         // Is not horizontal
@@ -79,9 +78,8 @@ public class MainGame extends Application {
                         p1.setHeight(80);
                         p1.setWidth(7);
                     }
-                    HandleIO.resetP1();
                 }
-
+                HandleIO.resetPaddle();
 
                 CollisionStruct move = collisionDetection.checkCollisions(ballObj,paddleObj);
                 ControlUnit.moveBall(newBall, move);
