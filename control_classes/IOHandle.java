@@ -46,7 +46,6 @@ public class IOHandle {
         currentScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                System.out.print(event.getCode().toString());
                 KeysPressed.remove(event.getCode().toString());
             }
         });
@@ -66,66 +65,22 @@ public class IOHandle {
             } else if (e == "G") {
                 movePaddle2left = false;
                 movePaddle2right = true;
+            } else if (e == "J") {
+                movePaddle3left = true;
+                movePaddle3right = false;
+            } else if (e == "K") {
+                movePaddle3left = false;
+                movePaddle3right = true;
+            } else if (e == "LEFT") {
+                movePaddle4left = true;
+                movePaddle4right = false;
+            } else if (e == "RIGHT") {
+                movePaddle4left = false;
+                movePaddle4right = true;
             }
 
         }
     }
-
-    public void removeKeys() {
-
-    }
-
-    /*public void handleMovementP1() {
-        //Handler for the key pressed for player one's paddle
-        currentScene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            if (key.getCode() == KeyCode.A) {
-                movePaddle1left = true;
-                movePaddle1right = false;
-            } else if (key.getCode() == KeyCode.S) {
-                movePaddle1left = false;
-                movePaddle1right = true;
-            }
-        });
-    }
-
-    public void handleMovementP2() {
-        //Handler for key pressed for player two's paddle
-        currentScene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            if (key.getCode() == KeyCode.F) {
-                movePaddle2left = true;
-                movePaddle2right = false;
-            } else if (key.getCode() == KeyCode.G) {
-                movePaddle2left = false;
-                movePaddle2right = true;
-            }
-        });
-    }
-
-    public void handleMovementP3() {
-        //Handler for key pressed for player two's paddle
-        currentScene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            if (key.getCode() == KeyCode.J) {
-                movePaddle3left = true;
-                movePaddle3right = false;
-            } else if (key.getCode() == KeyCode.K) {
-                movePaddle3left = false;
-                movePaddle3right = true;
-            }
-        });
-    }
-
-    public void handleMovementP4() {
-        //Handler for key pressed for player two's paddle
-        currentScene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            if (key.getCode() == KeyCode.LEFT) {
-                movePaddle4left = true;
-                movePaddle4right = false;
-            } else if (key.getCode() == KeyCode.RIGHT) {
-                movePaddle4left = false;
-                movePaddle4right = true;
-            }
-        });
-    }*/
 
     // Declare getters and setters
     public boolean hasMovedRightP1() {
