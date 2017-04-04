@@ -92,10 +92,11 @@ public class MainGame extends Application {
             {
                 // Run the input handle
                 //TODO: this repetitive action can be set in a different function game().tick()?
-                HandleIO.handleMovementP1();
+                /*HandleIO.handleMovementP1();
                 HandleIO.handleMovementP2();
                 HandleIO.handleMovementP3();
-                HandleIO.handleMovementP4();
+                HandleIO.handleMovementP4();*/
+                HandleIO.keyPressed();
 
                 if (HandleIO.hasMovedLeftP1()) {
                     if (ControlUnit.movePaddle(paddle1, 0)) {
@@ -179,8 +180,7 @@ public class MainGame extends Application {
 
                 HandleIO.resetPaddle();
 
-                CollisionStruct move = collisionDetection.checkCollisions(ballObj,paddleObj1);
-                move = collisionDetection.checkCollisions(ballObj, paddleObj1);
+                CollisionStruct move = collisionDetection.checkCollisions(ballObj, paddleObj1);
                 ControlUnit.moveBall(newBall, move);
                 c1.relocate((double)newBall.getCurrentPos().getX(), (double)newBall.getCurrentPos().getY());
                 p1.relocate((double)paddle1.getCurrentPos().getX(), (double)paddle1.getCurrentPos().getY());

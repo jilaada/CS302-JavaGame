@@ -1,8 +1,11 @@
 package control_classes;
 
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * IOHandle will be a passive class that will determine whether objects need to be moved or not.
@@ -11,8 +14,8 @@ import javafx.scene.input.KeyEvent;
  */
 public class IOHandle {
     // Declare the attributes to be set:
-    boolean movePaddle1right;
-    boolean movePaddle1left;
+    private boolean movePaddle1right;
+    private boolean movePaddle1left;
     boolean movePaddle2right;
     boolean movePaddle2left;
     boolean movePaddle3right;
@@ -21,6 +24,7 @@ public class IOHandle {
     boolean movePaddle4left;
     boolean pauseGame;
     Scene currentScene;
+    private final Set<String> KeysPressed = new HashSet<String>();
 
     // Declare the constructor
     public IOHandle(Scene mainScene) {
@@ -28,7 +32,50 @@ public class IOHandle {
     }
     // Declare the scene events
     // If a key (A) was pressed then move paddle left will be set to 1 others = 0
-    public void handleMovementP1() {
+    public void keyPressed() {
+        currentScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                System.out.print(event.getCode().toString());
+                if (!KeysPressed.contains(event.getCode().toString())) {
+                    KeysPressed.add(event.getCode().toString());
+                }
+                HandleMovement(KeysPressed);
+            }
+        });
+        currentScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                System.out.print(event.getCode().toString());
+                KeysPressed.remove(event.getCode().toString());
+            }
+        });
+    }
+
+    public void HandleMovement(Set<String> pressed) {
+        for (String e : KeysPressed) {
+            if (e == "A") {
+                movePaddle1left = true;
+                movePaddle1right = false;
+            } else if (e == "S") {
+                movePaddle1left = false;
+                movePaddle1right = true;
+            } else if (e == "F") {
+                movePaddle2left = true;
+                movePaddle2right = false;
+            } else if (e == "G") {
+                movePaddle2left = false;
+                movePaddle2right = true;
+            }
+
+        }
+    }
+
+    public void removeKeys() {
+
+    }
+
+    /*public void handleMovementP1() {
         //Handler for the key pressed for player one's paddle
         currentScene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.A) {
@@ -78,7 +125,7 @@ public class IOHandle {
                 movePaddle4right = true;
             }
         });
-    }
+    }*/
 
     // Declare getters and setters
     public boolean hasMovedRightP1() {
