@@ -22,9 +22,28 @@ public class IOHandle {
     boolean movePaddle3left;
     boolean movePaddle4right;
     boolean movePaddle4left;
-    boolean pauseGame;
+    volatile boolean pauseGame;
     Scene currentScene;
     private final Set<String> KeysPressed = new HashSet<String>();
+
+
+    EventHandler<KeyEvent> startEvent = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent event) {
+            System.out.print(event.getCode().toString());
+            if (!KeysPressed.contains(event.getCode().toString())) {
+                KeysPressed.add(event.getCode().toString());
+            }
+            HandleMovement(KeysPressed);
+        }
+    };
+
+    EventHandler<KeyEvent> closeEvent = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent event) {
+            KeysPressed.remove(event.getCode().toString());
+        }
+    };
 
     // Declare the constructor
     public IOHandle(Scene mainScene) {
@@ -33,26 +52,12 @@ public class IOHandle {
     // Declare the scene events
     // If a key (A) was pressed then move paddle left will be set to 1 others = 0
     public void keyPressed() {
-        currentScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                System.out.print(event.getCode().toString());
-                if (!KeysPressed.contains(event.getCode().toString())) {
-                    KeysPressed.add(event.getCode().toString());
-                }
-                HandleMovement(KeysPressed);
-            }
-        });
-        currentScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                KeysPressed.remove(event.getCode().toString());
-            }
-        });
+        currentScene.setOnKeyPressed(startEvent);
+        currentScene.setOnKeyReleased(closeEvent);
     }
 
     public void HandleMovement(Set<String> pressed) {
-        for (String e : KeysPressed) {
+        for (String e : pressed) {
             if (e == "A") {
                 movePaddle1left = true;
                 movePaddle1right = false;
@@ -77,6 +82,9 @@ public class IOHandle {
             } else if (e == "RIGHT") {
                 movePaddle4left = false;
                 movePaddle4right = true;
+            } else if (e == "P") {
+                pauseGame = !pauseGame;
+                System.out.print(pauseGame);
             }
 
         }
