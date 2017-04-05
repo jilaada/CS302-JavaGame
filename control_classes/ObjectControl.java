@@ -20,7 +20,7 @@ public class ObjectControl {
 		int newX, newY;
 		int paddleSpeed = (int)currentPaddle.getPaddleSpeed();
 		int paddleLength = (int)currentPaddle.getPaddleSize();
-		int paddleHeight = (int)currentPaddle.getHeight();
+		int paddleHeight = (int)currentPaddle.getPaddleHeight();
 		Point curPos = currentPaddle.getCurrentPos();
 		Point startPos = currentPaddle.getPaddleStart();
 		Point endPos = currentPaddle.getPaddleEnd();
@@ -254,7 +254,7 @@ public class ObjectControl {
 		double xDel = Math.abs(currentBall.getPreviousPos().getX() - updatePrevX), yDel = Math.abs(currentBall.getPreviousPos().getY() - updatePrevY);
 
 		// Check if there was a collision
-		if(finalPoint != null) {//IF INTERSECTS WORKS BUT THEN BALL WONT COLLIDE (line is from centre)
+		if (finalPoint != null) {//IF INTERSECTS WORKS BUT THEN BALL WONT COLLIDE (line is from centre)
 
 			//Since collision has occured, account for it by updating current and previous ball coordinates
 
@@ -275,16 +275,32 @@ public class ObjectControl {
 			}
 
 			//Update previous coordinates
-			currentBall.getPreviousPos().setX((int)updatePrevX);
-			currentBall.getPreviousPos().setY((int)updatePrevY);
+			currentBall.getPreviousPos().setX((int) updatePrevX);
+			currentBall.getPreviousPos().setY((int) updatePrevY);
 
 			// Set the new point with the new x and y coordinate
-			currentBall.getCurrentPos().setX((int)Math.round(newX));
-			currentBall.getCurrentPos().setY((int)Math.round(newY));
-		} else {
+			currentBall.getCurrentPos().setX((int) Math.round(newX));
+			currentBall.getCurrentPos().setY((int) Math.round(newY));
 
+			currentBall.setMoved(true);
+		}
+
+	}
+
+	public void moveInBounds(Ball currentBall, Collision col) {
 			//Object collision hasn't occurred so check boundary collision
 			// Then account for it by updating current and previous ball coordinates
+		Point check = col.getDels((Ball) currentBall.getObj());
+
+		//Get new and current positions
+		double newX = check.getX();
+		double newY = check.getY();
+		double updatePrevX = ((Ball) currentBall.getObj()).getCurrentPos().getX();
+		double updatePrevY = ((Ball) currentBall.getObj()).getCurrentPos().getY();
+
+		double xDel = Math.abs(currentBall.getCurrentPos().getX() - newX);
+		double yDel = Math.abs(currentBall.getCurrentPos().getY() - newY);
+
 			if (newX > 1024) { //Right boundary
 				newX = 1024 - (newX - 1024);
 				updatePrevX = newX + xDel;
@@ -309,7 +325,6 @@ public class ObjectControl {
 			currentBall.getCurrentPos().setX((int)Math.round(newX));
 			currentBall.getCurrentPos().setY((int)Math.round(newY));
 
-		}
-
 	}
+
 }

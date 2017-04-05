@@ -10,6 +10,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model_classes.*;
 
+import java.util.ArrayList;
+
 public class MainGame extends Application {
 
     @Override
@@ -31,10 +33,10 @@ public class MainGame extends Application {
         Player player3 = new Player("TestPlayer3");
         Player player4 = new Player("TestPlayer4");
         // set up paddles
-        Paddle paddle1 = new Paddle(15,80,1);
-        Paddle paddle2 = new Paddle(15,80,2);
-        Paddle paddle3 = new Paddle(15,80,3);
-        Paddle paddle4 = new Paddle(15,80,4);
+        Paddle paddle1 = new Paddle(15,80,15, 1);
+        Paddle paddle2 = new Paddle(15,80,15, 2);
+        Paddle paddle3 = new Paddle(15,80,15, 3);
+        Paddle paddle4 = new Paddle(15,80,15, 4);
         paddle1.setBounds();
         paddle2.setBounds();
         paddle3.setBounds();
@@ -97,6 +99,14 @@ public class MainGame extends Application {
         gameObject paddleObj3 = new gameObject(p3, paddle3);
         gameObject paddleObj4 = new gameObject(p4, paddle4);
 
+        //gameObject[] gameArray;
+        ArrayList<gameObject> gameArray = new ArrayList();
+        gameArray.add(paddleObj1);
+        gameArray.add(paddleObj2);
+        gameArray.add(paddleObj3);
+        gameArray.add(paddleObj4);
+
+
         final long startNanoTime = System.nanoTime();
 
         new AnimationTimer()
@@ -114,18 +124,22 @@ public class MainGame extends Application {
                 if (HandleIO.hasMovedLeftP1()) {
                     if (ControlUnit.movePaddle(paddle1, 0)) {
                         // Is not horizontal
+                        paddle1.setRotated(false);
                         p1.setHeight(15);
                         p1.setWidth(80);
                     } else {
+                        paddle1.setRotated(true);
                         p1.setHeight(80);
                         p1.setWidth(15);
                     }
                 } else if (HandleIO.hasMovedRightP1()) {
                     if (ControlUnit.movePaddle(paddle1, 1)) {
                         // Is not horizontal
+                        paddle1.setRotated(false);
                         p1.setHeight(15);
                         p1.setWidth(80);
                     } else {
+                        paddle1.setRotated(true);
                         p1.setHeight(80);
                         p1.setWidth(15);
                     }
@@ -134,18 +148,22 @@ public class MainGame extends Application {
                 if (HandleIO.hasMovedLeftP2()) {
                     if (ControlUnit.movePaddle(paddle2, 0)) {
                         // Is not horizontal
+                        paddle2.setRotated(false);
                         p2.setHeight(15);
                         p2.setWidth(80);
                     } else {
+                        paddle2.setRotated(true);
                         p2.setHeight(80);
                         p2.setWidth(15);
                     }
                 } else if (HandleIO.hasMovedRightP2()) {
                     if (ControlUnit.movePaddle(paddle2, 1)) {
                         // Is not horizontal
+                        paddle2.setRotated(false);
                         p2.setHeight(15);
                         p2.setWidth(80);
                     } else {
+                        paddle2.setRotated(true);
                         p2.setHeight(80);
                         p2.setWidth(15);
                     }
@@ -154,18 +172,22 @@ public class MainGame extends Application {
                 if (HandleIO.hasMovedLeftP3()) {
                     if (ControlUnit.movePaddle(paddle3, 0)) {
                         // Is not horizontal
+                        paddle3.setRotated(false);
                         p3.setHeight(15);
                         p3.setWidth(80);
                     } else {
+                        paddle3.setRotated(true);
                         p3.setHeight(80);
                         p3.setWidth(15);
                     }
                 } else if (HandleIO.hasMovedRightP3()) {
                     if (ControlUnit.movePaddle(paddle3, 1)) {
                         // Is not horizontal
+                        paddle3.setRotated(false);
                         p3.setHeight(15);
                         p3.setWidth(80);
                     } else {
+                        paddle3.setRotated(true);
                         p3.setHeight(80);
                         p3.setWidth(15);
                     }
@@ -174,18 +196,22 @@ public class MainGame extends Application {
                 if (HandleIO.hasMovedLeftP4()) {
                     if (ControlUnit.movePaddle(paddle4, 0)) {
                         // Is not horizontal
+                        paddle4.setRotated(false);
                         p4.setHeight(15);
                         p4.setWidth(80);
                     } else {
+                        paddle4.setRotated(true);
                         p4.setHeight(80);
                         p4.setWidth(15);
                     }
                 } else if (HandleIO.hasMovedRightP4()) {
                     if (ControlUnit.movePaddle(paddle4, 1)) {
                         // Is not horizontal
+                        paddle4.setRotated(false);
                         p4.setHeight(15);
                         p4.setWidth(80);
                     } else {
+                        paddle4.setRotated(true);
                         p4.setHeight(80);
                         p4.setWidth(15);
                     }
@@ -193,8 +219,22 @@ public class MainGame extends Application {
 
                 HandleIO.resetPaddle();
 
-                CollisionStruct move = collisionDetection.checkCollisions(ballObj, paddleObj1);
-                ControlUnit.moveBall(newBall, move);
+                ((Ball) ballObj.getObj()).setMoved(false);
+                for(gameObject temp:gameArray) {
+                    if(!((Ball) ballObj.getObj()).hasMoved()) {
+                        CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp);
+                        ControlUnit.moveBall(newBall, move);
+                    }
+                }
+
+                if(!((Ball) ballObj.getObj()).hasMoved()) {
+                    ControlUnit.moveInBounds(newBall, collisionDetection);
+                }
+
+
+
+               // CollisionStruct move = collisionDetection.checkCollisions(ballObj, paddleObj1);
+               // ControlUnit.moveBall(newBall, move);
                 c1.relocate((double)newBall.getCurrentPos().getX(), (double)newBall.getCurrentPos().getY());
                 p1.relocate((double)paddle1.getCurrentPos().getX(), (double)paddle1.getCurrentPos().getY());
                 p2.relocate((double)paddle2.getCurrentPos().getX(), (double)paddle2.getCurrentPos().getY());

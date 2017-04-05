@@ -12,12 +12,14 @@ public class Ball extends modelSuperClass{
 	private double ballRad;
 	private double ballArea;
 	private double ballAngle;
+	private boolean moved;
 	
 	public Ball(double speed, double rad) {
 		this.ballSpeed = speed;
 		this.ballRad = rad;
 		this.previousPos = new Point(299,299);
 		this.currentPos = new Point(300, 300);
+		this.moved = false;
 	}
 
 	
@@ -93,4 +95,12 @@ public class Ball extends modelSuperClass{
 	@Override
 	public modelSuperClass getObj() { return this;}
 
+
+	public boolean hasMoved() {
+		return moved;
+	}
+
+	public void setMoved(boolean moved) {
+		this.moved = moved;
+	}
 }

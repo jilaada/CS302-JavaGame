@@ -36,7 +36,7 @@ public class IOHandle {
         currentScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                System.out.print(event.getCode().toString());
+                //System.out.print(event.getCode().toString());
                 if (!KeysPressed.contains(event.getCode().toString())) {
                     KeysPressed.add(event.getCode().toString());
                 }

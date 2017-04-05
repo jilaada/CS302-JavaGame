@@ -15,11 +15,28 @@ public class Collision {
 
     public CollisionStruct checkCollisions(gameObject ball, gameObject shape) {
 
-            //Get coordinates of rectangular shape
-            double xMin = ((Paddle) shape.getObj()).getCurrentPos().getX();
-            double xMax = ((Paddle) shape.getObj()).getCurrentPos().getX() + ((Paddle) shape.getObj()).getPaddleSize();
-            double yMin = ((Paddle) shape.getObj()).getCurrentPos().getY();
-            double yMax = ((Paddle) shape.getObj()).getCurrentPos().getY() + ((Paddle) shape.getObj()).getHeight();
+
+            double xMin;
+            double xMax;
+            double yMin;
+            double yMax;
+
+            if(((Paddle) shape.getObj()).isRotated()) {
+                //Get coordinates of rectangular shape
+                xMin = ((Paddle) shape.getObj()).getCurrentPos().getX();
+                xMax = ((Paddle) shape.getObj()).getCurrentPos().getX() + ((Paddle) shape.getObj()).getPaddleHeight();
+                yMin = ((Paddle) shape.getObj()).getCurrentPos().getY();
+                yMax = ((Paddle) shape.getObj()).getCurrentPos().getY() + ((Paddle) shape.getObj()).getPaddleSize();
+            } else {
+                //Get coordinates of rectangular shape
+                xMin = ((Paddle) shape.getObj()).getCurrentPos().getX();
+                xMax = ((Paddle) shape.getObj()).getCurrentPos().getX() + ((Paddle) shape.getObj()).getPaddleSize();
+                yMin = ((Paddle) shape.getObj()).getCurrentPos().getY();
+                yMax = ((Paddle) shape.getObj()).getCurrentPos().getY() + ((Paddle) shape.getObj()).getPaddleHeight();
+            }
+
+
+
 
             //Get previous and current positions of the ball
             Point bPrev = ((Ball) ball.getObj()).getPreviousPos();
@@ -127,7 +144,7 @@ public class Collision {
     }
 
 
-    private Point getDels(Ball currentBall) {
+    protected Point getDels(Ball currentBall) {
         //TODO: change so angle can be changed randomly
         // to the current position and previous position
 
