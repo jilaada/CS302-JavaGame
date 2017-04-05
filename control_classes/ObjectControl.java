@@ -99,8 +99,8 @@ public class ObjectControl {
 					}
 				} else {
 					// Vertical
-					if ((curPos.getY() + paddleSpeed) >= endPos.getY()) {
-						newX = boundPos.getX() + ((curPos.getY() + paddleSpeed) - boundPos.getY());
+					if ((curPos.getY() + paddleSpeed + paddleLength) >= endPos.getY()) {
+						newX = boundPos.getX() + paddleSpeed - (boundPos.getY() - (curPos.getY() + paddleLength));
 						newY = boundPos.getY();
 					} else {
 						newX = boundPos.getX();
@@ -120,12 +120,12 @@ public class ObjectControl {
 					}
 				} else {
 					// Horizontal
-					if (curPos.getX() - paddleSpeed >= startPos.getX()) {
+					if ((curPos.getX() - paddleSpeed) <= startPos.getX()) {
+						newX = boundPos.getX();
+						newY = boundPos.getY() - paddleLength + paddleHeight;
+					} else {
 						newX = curPos.getX() - paddleSpeed;
 						newY = boundPos.getY();
-					} else {
-						newX = boundPos.getX();
-						newY = boundPos.getY() - (curPos.getX() - boundPos.getX());
 					}
 				}
 			}
@@ -133,14 +133,14 @@ public class ObjectControl {
 			//Move player 2 paddle
 			if (direction == 1) {
 				// Move to the right
-				if (curPos.getY() == boundPos.getY()) {
+				if ((curPos.getY() == boundPos.getY()) && (curPos.getX() != boundPos.getX())) {
 					// Horizontal
-					if (curPos.getX() + paddleSpeed <= boundPos.getX()) {
+					if (curPos.getX() + paddleSpeed + paddleLength < boundPos.getX()) {
 						newX = curPos.getX() + paddleSpeed;
 						newY = boundPos.getY();
 					} else {
 						newX = endPos.getX();
-						newY = boundPos.getY() + ((curPos.getX() + paddleSpeed) - boundPos.getX());
+						newY = boundPos.getY() + paddleSpeed - (boundPos.getX() - (curPos.getX() + paddleLength));
 					}
 				} else {
 					// Vertical
@@ -157,7 +157,7 @@ public class ObjectControl {
 				if (curPos.getX() == boundPos.getX()) {
 					//Vertical
 					if ((curPos.getY() - paddleSpeed) <= boundPos.getY()) {
-						newX = boundPos.getX() - (curPos.getY() - boundPos.getY());
+						newX = boundPos.getX() - (curPos.getY() - boundPos.getY()) - paddleLength;
 						newY = boundPos.getY();
 					} else {
 						newX = boundPos.getX();
@@ -226,7 +226,9 @@ public class ObjectControl {
 		currentPaddle.getCurrentPos().setX(newX);
 		currentPaddle.getCurrentPos().setY(newY);
 
-		if (newX == boundPos.getX()) {
+		if (newX == boundPos.getX() && newY == boundPos.getY()) {
+			return false;
+		} else if (newX == boundPos.getX()) {
 			return false;
 		} else {
 			return true;
