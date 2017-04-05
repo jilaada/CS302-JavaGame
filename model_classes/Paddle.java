@@ -23,7 +23,7 @@ public class Paddle extends modelSuperClass{
 		this.paddleSpeed = speed;
 		this.paddleSize = size;
 		this.paddleToken = token;
-		this.height = 7;
+		this.height = 15;
 
 		previousPos = new Point(0,0);
 		currentPos = new Point(0,0);
@@ -42,26 +42,26 @@ public class Paddle extends modelSuperClass{
 			this.paddleEnd.setX(350);
 			this.paddleEnd.setY(0);
 		} else if (this.paddleToken == 2) {
-			this.paddleStart.setX(674);
+			this.paddleStart.setX(674 - (int)height);
 			this.paddleStart.setY(0);
-			this.paddleBounds.setX(674);
+			this.paddleBounds.setX(674 - (int)height);
 			this.paddleBounds.setY(250);
 			this.paddleEnd.setX(1024 - (int)paddleSize);
 			this.paddleEnd.setY(250);
 		} else if (this.paddleToken == 3) {
 			this.paddleStart.setX(0);
-			this.paddleStart.setY(518);
+			this.paddleStart.setY(518 - (int)height);
 			this.paddleBounds.setX(350);
-			this.paddleBounds.setY(518);
+			this.paddleBounds.setY(518 - (int)height);
 			this.paddleEnd.setX(350);
 			this.paddleEnd.setY(768 - (int)paddleSize);
 		} else if (this.paddleToken == 4) {
-			this.paddleStart.setX(674);
+			this.paddleStart.setX(674 - (int)height);
 			this.paddleStart.setY(768 - (int)paddleSize);
-			this.paddleBounds.setX(674);
-			this.paddleBounds.setY(518);
+			this.paddleBounds.setX(674 - (int)height);
+			this.paddleBounds.setY(518 - (int)height);
 			this.paddleEnd.setX(1024 - (int)paddleSize);
-			this.paddleEnd.setY(518);
+			this.paddleEnd.setY(518 - (int)height);
 		}
 	}
 
