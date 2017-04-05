@@ -46,14 +46,28 @@ public class MainGame extends Application {
         player4.addPlayerPaddle(paddle4);
         Point point1 = new Point(150,250);
         Point point2 = new Point(850,250);
-        Point point3 = new Point(150,518);
-        Point point4 = new Point(850,518);
+        Point point3 = new Point(150,503);
+        Point point4 = new Point(850,503);
         paddle1.setCurrentPos(point1);
         paddle2.setCurrentPos(point2);
         paddle3.setCurrentPos(point3);
         paddle4.setCurrentPos(point4);
         //boolean h;
 
+        //Testing
+        Rectangle t1 = new Rectangle(0, 0,350, 250);
+        Rectangle t2 = new Rectangle(674, 0,350, 250);
+        Rectangle t3 = new Rectangle(0, 518,350, 250);
+        Rectangle t4 = new Rectangle(674, 518,350, 250);
+
+        t1.setFill(Color.CRIMSON);
+        t2.setFill(Color.CRIMSON);
+        t3.setFill(Color.CRIMSON);
+        t4.setFill(Color.CRIMSON);
+        root.getChildren().add(t1);
+        root.getChildren().add(t2);
+        root.getChildren().add(t3);
+        root.getChildren().add(t4);
 
         Circle c1 = new Circle(newBall.getCurrentPos().getX(), newBall.getCurrentPos().getY(), newBall.getBallRadius(), Color.RED);
         c1.setFill(Color.RED);
@@ -84,7 +98,6 @@ public class MainGame extends Application {
         gameObject paddleObj4 = new gameObject(p4, paddle4);
 
         final long startNanoTime = System.nanoTime();
-
 
         new AnimationTimer()
         {
