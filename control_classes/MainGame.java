@@ -4,7 +4,9 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -59,8 +61,11 @@ public class MainGame extends Application {
         Rectangle t2 = new Rectangle(674, 0,350, 250);
         Rectangle t3 = new Rectangle(0, 518,350, 250);
         Rectangle t4 = new Rectangle(674, 518,350, 250);
+        Rectangle w1 = new Rectangle(0,180,20,20);
 
-        t1.setFill(Color.CRIMSON);
+        Image img = new Image("/images/boxGreen1.png");
+        w1.setFill(new ImagePattern(img));
+        t1.setFill(Color.BLACK);
         t2.setFill(Color.CRIMSON);
         t3.setFill(Color.CRIMSON);
         t4.setFill(Color.CRIMSON);
@@ -68,6 +73,7 @@ public class MainGame extends Application {
         root.getChildren().add(t2);
         root.getChildren().add(t3);
         root.getChildren().add(t4);
+        root.getChildren().add(w1);
 
         Circle c1 = new Circle(newBall.getCurrentPos().getX(), newBall.getCurrentPos().getY(), newBall.getBallRadius(), Color.RED);
         c1.setFill(Color.RED);
@@ -103,108 +109,107 @@ public class MainGame extends Application {
         {
             public void handle(long currentNanoTime)
             {
-                // Run the input handle
-                //TODO: this repetitive action can be set in a different function game().tick()?
-                /*HandleIO.handleMovementP1();
-                HandleIO.handleMovementP2();
-                HandleIO.handleMovementP3();
-                HandleIO.handleMovementP4();*/
-                HandleIO.keyPressed();
 
-                if (HandleIO.hasMovedLeftP1()) {
-                    if (ControlUnit.movePaddle(paddle1, 0)) {
-                        // Is not horizontal
-                        p1.setHeight(15);
-                        p1.setWidth(80);
-                    } else {
-                        p1.setHeight(80);
-                        p1.setWidth(15);
+                if (HandleIO.pauseGame == false) {
+                    // Run the input handle
+                    //TODO: this repetitive action can be set in a different function game().tick()?
+                    HandleIO.keyPressed();
+
+                    if (HandleIO.hasMovedLeftP1()) {
+                        if (ControlUnit.movePaddle(paddle1, 0)) {
+                            // Is not horizontal
+                            p1.setHeight(15);
+                            p1.setWidth(80);
+                        } else {
+                            p1.setHeight(80);
+                            p1.setWidth(15);
+                        }
+                    } else if (HandleIO.hasMovedRightP1()) {
+                        if (ControlUnit.movePaddle(paddle1, 1)) {
+                            // Is not horizontal
+                            p1.setHeight(15);
+                            p1.setWidth(80);
+                        } else {
+                            p1.setHeight(80);
+                            p1.setWidth(15);
+                        }
                     }
-                } else if (HandleIO.hasMovedRightP1()) {
-                    if (ControlUnit.movePaddle(paddle1, 1)) {
-                        // Is not horizontal
-                        p1.setHeight(15);
-                        p1.setWidth(80);
-                    } else {
-                        p1.setHeight(80);
-                        p1.setWidth(15);
+
+                    if (HandleIO.hasMovedLeftP2()) {
+                        if (ControlUnit.movePaddle(paddle2, 0)) {
+                            // Is not horizontal
+                            p2.setHeight(15);
+                            p2.setWidth(80);
+                        } else {
+                            p2.setHeight(80);
+                            p2.setWidth(15);
+                        }
+                    } else if (HandleIO.hasMovedRightP2()) {
+                        if (ControlUnit.movePaddle(paddle2, 1)) {
+                            // Is not horizontal
+                            p2.setHeight(15);
+                            p2.setWidth(80);
+                        } else {
+                            p2.setHeight(80);
+                            p2.setWidth(15);
+                        }
                     }
+
+                    if (HandleIO.hasMovedLeftP3()) {
+                        if (ControlUnit.movePaddle(paddle3, 0)) {
+                            // Is not horizontal
+                            p3.setHeight(15);
+                            p3.setWidth(80);
+                        } else {
+                            p3.setHeight(80);
+                            p3.setWidth(15);
+                        }
+                    } else if (HandleIO.hasMovedRightP3()) {
+                        if (ControlUnit.movePaddle(paddle3, 1)) {
+                            // Is not horizontal
+                            p3.setHeight(15);
+                            p3.setWidth(80);
+                        } else {
+                            p3.setHeight(80);
+                            p3.setWidth(15);
+                        }
+                    }
+
+                    if (HandleIO.hasMovedLeftP4()) {
+                        if (ControlUnit.movePaddle(paddle4, 0)) {
+                            // Is not horizontal
+                            p4.setHeight(15);
+                            p4.setWidth(80);
+                        } else {
+                            p4.setHeight(80);
+                            p4.setWidth(15);
+                        }
+                    } else if (HandleIO.hasMovedRightP4()) {
+                        if (ControlUnit.movePaddle(paddle4, 1)) {
+                            // Is not horizontal
+                            p4.setHeight(15);
+                            p4.setWidth(80);
+                        } else {
+                            p4.setHeight(80);
+                            p4.setWidth(15);
+                        }
+                    }
+
+                    HandleIO.resetPaddle();
+
+                    CollisionStruct move = collisionDetection.checkCollisions(ballObj, paddleObj1);
+                    ControlUnit.moveBall(newBall, move);
+                    c1.relocate((double) newBall.getCurrentPos().getX(), (double) newBall.getCurrentPos().getY());
+                    p1.relocate((double) paddle1.getCurrentPos().getX(), (double) paddle1.getCurrentPos().getY());
+                    p2.relocate((double) paddle2.getCurrentPos().getX(), (double) paddle2.getCurrentPos().getY());
+                    p3.relocate((double) paddle3.getCurrentPos().getX(), (double) paddle3.getCurrentPos().getY());
+                    p4.relocate((double) paddle4.getCurrentPos().getX(), (double) paddle4.getCurrentPos().getY());
+                } else {
+                    HandleIO.keyPressed();
                 }
-
-                if (HandleIO.hasMovedLeftP2()) {
-                    if (ControlUnit.movePaddle(paddle2, 0)) {
-                        // Is not horizontal
-                        p2.setHeight(15);
-                        p2.setWidth(80);
-                    } else {
-                        p2.setHeight(80);
-                        p2.setWidth(15);
-                    }
-                } else if (HandleIO.hasMovedRightP2()) {
-                    if (ControlUnit.movePaddle(paddle2, 1)) {
-                        // Is not horizontal
-                        p2.setHeight(15);
-                        p2.setWidth(80);
-                    } else {
-                        p2.setHeight(80);
-                        p2.setWidth(15);
-                    }
-                }
-
-                if (HandleIO.hasMovedLeftP3()) {
-                    if (ControlUnit.movePaddle(paddle3, 0)) {
-                        // Is not horizontal
-                        p3.setHeight(15);
-                        p3.setWidth(80);
-                    } else {
-                        p3.setHeight(80);
-                        p3.setWidth(15);
-                    }
-                } else if (HandleIO.hasMovedRightP3()) {
-                    if (ControlUnit.movePaddle(paddle3, 1)) {
-                        // Is not horizontal
-                        p3.setHeight(15);
-                        p3.setWidth(80);
-                    } else {
-                        p3.setHeight(80);
-                        p3.setWidth(15);
-                    }
-                }
-
-                if (HandleIO.hasMovedLeftP4()) {
-                    if (ControlUnit.movePaddle(paddle4, 0)) {
-                        // Is not horizontal
-                        p4.setHeight(15);
-                        p4.setWidth(80);
-                    } else {
-                        p4.setHeight(80);
-                        p4.setWidth(15);
-                    }
-                } else if (HandleIO.hasMovedRightP4()) {
-                    if (ControlUnit.movePaddle(paddle4, 1)) {
-                        // Is not horizontal
-                        p4.setHeight(15);
-                        p4.setWidth(80);
-                    } else {
-                        p4.setHeight(80);
-                        p4.setWidth(15);
-                    }
-                }
-
-                HandleIO.resetPaddle();
-
-                CollisionStruct move = collisionDetection.checkCollisions(ballObj, paddleObj1);
-                ControlUnit.moveBall(newBall, move);
-                c1.relocate((double)newBall.getCurrentPos().getX(), (double)newBall.getCurrentPos().getY());
-                p1.relocate((double)paddle1.getCurrentPos().getX(), (double)paddle1.getCurrentPos().getY());
-                p2.relocate((double)paddle2.getCurrentPos().getX(), (double)paddle2.getCurrentPos().getY());
-                p3.relocate((double)paddle3.getCurrentPos().getX(), (double)paddle3.getCurrentPos().getY());
-                p4.relocate((double)paddle4.getCurrentPos().getX(), (double)paddle4.getCurrentPos().getY());
-
             }
         }.start();
 
         theStage.show();
     }
-
 }
