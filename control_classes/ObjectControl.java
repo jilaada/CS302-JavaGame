@@ -19,6 +19,8 @@ public class ObjectControl {
 		//TODO: move paddle is a function that will move the paddle according to the inputs
 		int newX, newY;
 		int paddleSpeed = (int)currentPaddle.getPaddleSpeed();
+		int paddleLength = (int)currentPaddle.getPaddleSize();
+		int paddleHeight = (int)currentPaddle.getHeight();
 		Point curPos = currentPaddle.getCurrentPos();
 		Point startPos = currentPaddle.getPaddleStart();
 		Point endPos = currentPaddle.getPaddleEnd();
@@ -40,13 +42,13 @@ public class ObjectControl {
 				// Move to the right
 				if (curPos.getY() == boundPos.getY()) {
 					// Horizontal
-					if (curPos.getX() + paddleSpeed <= boundPos.getX()) {
+					if (curPos.getX() + paddleSpeed + paddleLength <= boundPos.getX()) {
 						// Get new x coordinates
 						newX = curPos.getX() + paddleSpeed;
 						newY = boundPos.getY();
 					} else {
 						newX = boundPos.getX();
-						newY = boundPos.getY() - ((curPos.getX() + paddleSpeed) - boundPos.getX());
+						newY = boundPos.getY() - paddleLength + paddleHeight;
 					}
 				} else {
 					// Vertical
@@ -62,13 +64,13 @@ public class ObjectControl {
 				// Moving to the left
 				if (curPos.getX() == boundPos.getX()) {
 					//Vertical
-					if ((curPos.getY() + paddleSpeed) <= boundPos.getY()) {
+					if ((curPos.getY() + paddleSpeed + paddleLength) <= boundPos.getY()) {
 						// Paddle moving down
 						newX = boundPos.getX();
 						newY = curPos.getY() + paddleSpeed;
 					} else {
 						// Paddle is moving down and across
-						newX = boundPos.getX() - ((curPos.getY() + paddleSpeed) - boundPos.getY());
+						newX = boundPos.getX() - paddleLength + paddleHeight;
 						newY = boundPos.getY();
 					}
 				} else {
