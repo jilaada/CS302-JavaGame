@@ -30,7 +30,6 @@ public class IOHandle {
     EventHandler<KeyEvent> startEvent = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
-            System.out.print(event.getCode().toString());
             if (!KeysPressed.contains(event.getCode().toString())) {
                 KeysPressed.add(event.getCode().toString());
             }
