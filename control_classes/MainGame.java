@@ -6,11 +6,16 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+<<<<<<< HEAD
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+=======
+>>>>>>> TrialShiftClasses
 import javafx.stage.Stage;
-import model_classes.*;
+import model_classes.CollisionStruct;
+import model_classes.gameObject;
+import view_classes.RenderView;
 
 import java.util.ArrayList;
 
@@ -24,9 +29,13 @@ public class MainGame extends Application {
         theStage.setScene( scene );
         theStage.setTitle("Game window");
 
+        // Set up object control
+        ObjectControl ControlUnit = new ObjectControl();
+
         // IO handle declaration
         IOHandle HandleIO = new IOHandle(scene);
 
+<<<<<<< HEAD
         ObjectControl ControlUnit = new ObjectControl();
         Ball newBall = new Ball(10, 5);
         // Set player one and player two
@@ -97,13 +106,33 @@ public class MainGame extends Application {
         Rectangle p4 = new Rectangle(paddle4.getCurrentPos().getX(), paddle4.getCurrentPos().getY(), paddle4.getPaddleSize(), 15);
         p4.setFill(Color.LAVENDER);
         root.getChildren().add(p4);
+=======
+        // Set up a new game
+        GameSetUp SetUpGame = new GameSetUp();
+
+        // Add Players via GameSetUp
+        //SetUpGame.SetUpPlayers();
+        SetUpGame.SetUpBall(10, 5);
+        SetUpGame.SetUpPaddles(15, 80);
+
+        // Set up rendering of objects
+        RenderView render = new RenderView(SetUpGame.getPlayer1(), SetUpGame.getPlayer2(), SetUpGame.getPlayer3(), SetUpGame.getPlayer4(), SetUpGame.getBall());
+        render.SetUpRender();
+
+        // Render the paddles and balls
+        root.getChildren().add(render.getBallRender());
+        root.getChildren().add(render.getP1Render());
+        root.getChildren().add(render.getP2Render());
+        root.getChildren().add(render.getP3Render());
+        root.getChildren().add(render.getP4Render());
+>>>>>>> TrialShiftClasses
 
         Collision collisionDetection = new Collision();
-        gameObject ballObj = new gameObject(c1, newBall);
-        gameObject paddleObj1 = new gameObject(p1, paddle1);
-        gameObject paddleObj2 = new gameObject(p2, paddle2);
-        gameObject paddleObj3 = new gameObject(p3, paddle3);
-        gameObject paddleObj4 = new gameObject(p4, paddle4);
+        gameObject ballObj = new gameObject(render.getBallRender(), SetUpGame.getBall());
+        gameObject paddleObj1 = new gameObject(render.getP1Render(), SetUpGame.getPlayer1().getPlayerPaddle());
+        gameObject paddleObj2 = new gameObject(render.getP2Render(), SetUpGame.getPlayer2().getPlayerPaddle());
+        gameObject paddleObj3 = new gameObject(render.getP3Render(), SetUpGame.getPlayer3().getPlayerPaddle());
+        gameObject paddleObj4 = new gameObject(render.getP4Render(), SetUpGame.getPlayer4().getPlayerPaddle());
 
         //gameObject[] gameArray;
         ArrayList<gameObject> gameArray = new ArrayList();
@@ -121,110 +150,86 @@ public class MainGame extends Application {
             {
                 // Run the input handle
                 //TODO: this repetitive action can be set in a different function game().tick()?
-                /*HandleIO.handleMovementP1();
-                HandleIO.handleMovementP2();
-                HandleIO.handleMovementP3();
-                HandleIO.handleMovementP4();*/
 
                 if (HandleIO.pauseGame == false) {
                     HandleIO.keyPressed();
 
                     if (HandleIO.hasMovedLeftP1()) {
-                        if (ControlUnit.movePaddle(paddle1, 0)) {
+                        if (ControlUnit.movePaddle(SetUpGame.getPlayer1().getPlayerPaddle(), 0)) {
                             // Is not horizontal
-                            paddle1.setRotated(false);
-                            p1.setHeight(15);
-                            p1.setWidth(80);
+                            render.getP1Render().setHeight(15);
+                            render.getP1Render().setWidth(80);
                         } else {
-                            paddle1.setRotated(true);
-                            p1.setHeight(80);
-                            p1.setWidth(15);
+                            render.getP1Render().setHeight(80);
+                            render.getP1Render().setWidth(15);
                         }
                     } else if (HandleIO.hasMovedRightP1()) {
-                        if (ControlUnit.movePaddle(paddle1, 1)) {
+                        if (ControlUnit.movePaddle(SetUpGame.getPlayer1().getPlayerPaddle(), 1)) {
                             // Is not horizontal
-                            paddle1.setRotated(false);
-                            p1.setHeight(15);
-                            p1.setWidth(80);
+                            render.getP1Render().setHeight(15);
+                            render.getP1Render().setWidth(80);
                         } else {
-                            paddle1.setRotated(true);
-                            p1.setHeight(80);
-                            p1.setWidth(15);
+                            render.getP1Render().setHeight(80);
+                            render.getP1Render().setWidth(15);
                         }
                     }
 
                     if (HandleIO.hasMovedLeftP2()) {
-                        if (ControlUnit.movePaddle(paddle2, 0)) {
+                        if (ControlUnit.movePaddle(SetUpGame.getPlayer2().getPlayerPaddle(), 0)) {
                             // Is not horizontal
-                            paddle2.setRotated(false);
-                            p2.setHeight(15);
-                            p2.setWidth(80);
+                            render.getP2Render().setHeight(15);
+                            render.getP2Render().setWidth(80);
                         } else {
-                            paddle2.setRotated(true);
-                            p2.setHeight(80);
-                            p2.setWidth(15);
+                            render.getP2Render().setHeight(80);
+                            render.getP2Render().setWidth(15);
                         }
                     } else if (HandleIO.hasMovedRightP2()) {
-                        if (ControlUnit.movePaddle(paddle2, 1)) {
+                        if (ControlUnit.movePaddle(SetUpGame.getPlayer2().getPlayerPaddle(), 1)) {
                             // Is not horizontal
-                            paddle2.setRotated(false);
-                            p2.setHeight(15);
-                            p2.setWidth(80);
+                            render.getP2Render().setHeight(15);
+                            render.getP2Render().setWidth(80);
                         } else {
-                            paddle2.setRotated(true);
-                            p2.setHeight(80);
-                            p2.setWidth(15);
-
+                            render.getP2Render().setHeight(80);
+                            render.getP2Render().setWidth(15);
                         }
-                    }
 
                     if (HandleIO.hasMovedLeftP3()) {
-                        if (ControlUnit.movePaddle(paddle3, 0)) {
+                        if (ControlUnit.movePaddle(SetUpGame.getPlayer3().getPlayerPaddle(), 0)) {
                             // Is not horizontal
-                            paddle3.setRotated(false);
-                            p3.setHeight(15);
-                            p3.setWidth(80);
+                            render.getP3Render().setHeight(15);
+                            render.getP3Render().setWidth(80);
                         } else {
-                            paddle3.setRotated(true);
-                            p3.setHeight(80);
-                            p3.setWidth(15);
+                            render.getP3Render().setHeight(80);
+                            render.getP3Render().setWidth(15);
                         }
                     } else if (HandleIO.hasMovedRightP3()) {
-                        if (ControlUnit.movePaddle(paddle3, 1)) {
+                        if (ControlUnit.movePaddle(SetUpGame.getPlayer3().getPlayerPaddle(), 1)) {
                             // Is not horizontal
-                            paddle3.setRotated(false);
-                            p3.setHeight(15);
-                            p3.setWidth(80);
+                            render.getP3Render().setHeight(15);
+                            render.getP3Render().setWidth(80);
                         } else {
-                            paddle3.setRotated(true);
-                            p3.setHeight(80);
-                            p3.setWidth(15);
+                            render.getP3Render().setHeight(80);
+                            render.getP3Render().setWidth(15);
                         }
-                    }
-
+                    
                     if (HandleIO.hasMovedLeftP4()) {
-                        if (ControlUnit.movePaddle(paddle4, 0)) {
+                        if (ControlUnit.movePaddle(SetUpGame.getPlayer4().getPlayerPaddle(), 0)) {
                             // Is not horizontal
-                            paddle4.setRotated(false);
-                            p4.setHeight(15);
-                            p4.setWidth(80);
+                            render.getP4Render().setHeight(15);
+                            render.getP4Render().setWidth(80);
                         } else {
-                            paddle4.setRotated(true);
-                            p4.setHeight(80);
-                            p4.setWidth(15);
+                            render.getP4Render().setHeight(80);
+                            render.getP4Render().setWidth(15);
                         }
                     } else if (HandleIO.hasMovedRightP4()) {
-                        if (ControlUnit.movePaddle(paddle4, 1)) {
+                        if (ControlUnit.movePaddle(SetUpGame.getPlayer4().getPlayerPaddle(), 1)) {
                             // Is not horizontal
-                            paddle4.setRotated(false);
-                            p4.setHeight(15);
-                            p4.setWidth(80);
+                            render.getP4Render().setHeight(15);
+                            render.getP4Render().setWidth(80);
                         } else {
-                            paddle4.setRotated(true);
-                            p4.setHeight(80);
-                            p4.setWidth(15);
+                            render.getP4Render().setHeight(80);
+                            render.getP4Render().setWidth(15);
                         }
-                    }
 
                     HandleIO.resetPaddle();
 
@@ -239,17 +244,10 @@ public class MainGame extends Application {
                     if(!((Ball) ballObj.getObj()).hasMoved()) {
                         ControlUnit.moveInBounds(newBall, collisionDetection);
                     }
-
-
-
-                   // CollisionStruct move = collisionDetection.checkCollisions(ballObj, paddleObj1);
-                   // ControlUnit.moveBall(newBall, move);
-                    c1.relocate((double)newBall.getCurrentPos().getX(), (double)newBall.getCurrentPos().getY());
-                    p1.relocate((double)paddle1.getCurrentPos().getX(), (double)paddle1.getCurrentPos().getY());
-                    p2.relocate((double)paddle2.getCurrentPos().getX(), (double)paddle2.getCurrentPos().getY());
-                    p3.relocate((double)paddle3.getCurrentPos().getX(), (double)paddle3.getCurrentPos().getY());
-                    p4.relocate((double)paddle4.getCurrentPos().getX(), (double)paddle4.getCurrentPos().getY());
-
+                        
+                    render.tickRender();
+                        
+                        
                 } else {
                     HandleIO.keyPressed();
                 }

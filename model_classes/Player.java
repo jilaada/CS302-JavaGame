@@ -50,13 +50,14 @@ public class Player {
 		this.playerPaddle = blocker;
 	}
 	
-	protected Paddle getPlayerPaddle() {
+	public Paddle getPlayerPaddle() {
 		if(this.playerPaddle == null) {
 			return null;
 		} else {
 			return this.playerPaddle;
 		}
 	}
+
 
 
 }
