@@ -33,6 +33,8 @@ public class RenderView {
     public void SetUpRender() {
         Image imgP1Hori = new Image("/images/paddleH1.png");
         Image imgP2Hori = new Image("/images/paddleH2.png");
+        Image imgP3Hori = new Image("/images/paddleH3.png");
+        Image imgP4Hori = new Image("/images/paddleH4.png");
         c1 = new Circle(ball.getCurrentPos().getX(), ball.getCurrentPos().getY(), ball.getBallRadius(), Color.RED);
         this.c1.setFill(Color.RED);
 
@@ -44,10 +46,10 @@ public class RenderView {
         this.p2.setFill(new ImagePattern(imgP2Hori));
 
         p3 = new Rectangle(player3.getPlayerPaddle().getCurrentPos().getX(), player3.getPlayerPaddle().getCurrentPos().getY(), player3.getPlayerPaddle().getPaddleSize(), player3.getPlayerPaddle().getPaddleHeight());
-        this.p3.setFill(Color.PALEGREEN);
+        this.p3.setFill(new ImagePattern(imgP3Hori));
 
         p4 = new Rectangle(player4.getPlayerPaddle().getCurrentPos().getX(), player4.getPlayerPaddle().getCurrentPos().getY(), player4.getPlayerPaddle().getPaddleSize(), player4.getPlayerPaddle().getPaddleHeight());
-        this.p4.setFill(Color.LAVENDER);
+        this.p4.setFill(new ImagePattern(imgP4Hori));
     }
 
     public void tickRender() {
