@@ -1,6 +1,8 @@
 package view_classes;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import model_classes.Ball;
@@ -29,20 +31,22 @@ public class RenderView {
     }
 
     public void SetUpRender() {
+        Image imgP1Hori = new Image("/images/paddleH1.png");
+        Image imgP2Hori = new Image("/images/paddleH2.png");
         c1 = new Circle(ball.getCurrentPos().getX(), ball.getCurrentPos().getY(), ball.getBallRadius(), Color.RED);
         this.c1.setFill(Color.RED);
 
         // Added a rectangle to be painted on the scene
-        p1 = new Rectangle(player1.getPlayerPaddle().getCurrentPos().getX(), player1.getPlayerPaddle().getCurrentPos().getY(), player1.getPlayerPaddle().getPaddleSize(), 15);
-        this.p1.setFill(Color.AQUAMARINE);
+        p1 = new Rectangle(player1.getPlayerPaddle().getCurrentPos().getX(), player1.getPlayerPaddle().getCurrentPos().getY(), player1.getPlayerPaddle().getPaddleSize(), player1.getPlayerPaddle().getPaddleHeight());
+        this.p1.setFill(new ImagePattern(imgP1Hori));
 
-        p2 = new Rectangle(player2.getPlayerPaddle().getCurrentPos().getX(), player2.getPlayerPaddle().getCurrentPos().getY(), player2.getPlayerPaddle().getPaddleSize(), 15);
-        this.p2.setFill(Color.CORAL);
+        p2 = new Rectangle(player2.getPlayerPaddle().getCurrentPos().getX(), player2.getPlayerPaddle().getCurrentPos().getY(), player2.getPlayerPaddle().getPaddleSize(), player2.getPlayerPaddle().getPaddleHeight());
+        this.p2.setFill(new ImagePattern(imgP2Hori));
 
-        p3 = new Rectangle(player3.getPlayerPaddle().getCurrentPos().getX(), player3.getPlayerPaddle().getCurrentPos().getY(), player3.getPlayerPaddle().getPaddleSize(), 15);
+        p3 = new Rectangle(player3.getPlayerPaddle().getCurrentPos().getX(), player3.getPlayerPaddle().getCurrentPos().getY(), player3.getPlayerPaddle().getPaddleSize(), player3.getPlayerPaddle().getPaddleHeight());
         this.p3.setFill(Color.PALEGREEN);
 
-        p4 = new Rectangle(player4.getPlayerPaddle().getCurrentPos().getX(), player4.getPlayerPaddle().getCurrentPos().getY(), player4.getPlayerPaddle().getPaddleSize(), 15);
+        p4 = new Rectangle(player4.getPlayerPaddle().getCurrentPos().getX(), player4.getPlayerPaddle().getCurrentPos().getY(), player4.getPlayerPaddle().getPaddleSize(), player4.getPlayerPaddle().getPaddleHeight());
         this.p4.setFill(Color.LAVENDER);
     }
 
