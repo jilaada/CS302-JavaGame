@@ -4,10 +4,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model_classes.Ball;
 import model_classes.CollisionStruct;
@@ -15,7 +12,6 @@ import model_classes.gameObject;
 import view_classes.RenderView;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class MainGame extends Application {
 
@@ -53,41 +49,7 @@ public class MainGame extends Application {
         root.getChildren().add(render.getP4Render());
 
         // Testing rectangle wall
-        Image img = new Image("/images/boxWhite1.png");
-        Image img1 = new Image("/images/boxWhite2.png");
-        Image img2 = new Image("/images/boxWhite3.png");
-        //Rectangle w1 = new Rectangle(0,150,50,50);
-        //w1.setFill(new ImagePattern(img));
-        //root.getChildren().add(w1);
-        Rectangle w2 = new Rectangle(50,150,50,50);
-        w2.setFill(new ImagePattern(img1));
-        root.getChildren().add(w2);
-        Rectangle w3 = new Rectangle(100,150,50,50);
-        w3.setFill(new ImagePattern(img2));
-        root.getChildren().add(w3);
-
-        int count;
-        Random c = new Random();
-        for (int i = 0; i < 325; i+=25) {
-            for (int j = 0; j < 225; j+=25) {
-                if (!((i < 225) && (j < 125))) {
-                    Rectangle w1 = new Rectangle(i,j,25,25);
-
-                    count = c.nextInt(3);
-                    switch (count) {
-                        case 0 :    w1.setFill(new ImagePattern(img));
-                                    break;
-                        case 1 :    w1.setFill(new ImagePattern(img1));
-                                    break;
-                        case 2 :    w1.setFill(new ImagePattern(img2));
-                                    break;
-                        default:    w1.setFill(new ImagePattern(img));
-                                    break;
-                    }
-                    root.getChildren().add(w1);
-                }
-            }
-        }
+        SetUpGame.SetUpWall(root);
 
         Collision collisionDetection = new Collision();
         gameObject ballObj = new gameObject(render.getBallRender(), SetUpGame.getBall());

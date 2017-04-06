@@ -1,9 +1,15 @@
 package control_classes;
 
+import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import model_classes.Ball;
 import model_classes.Paddle;
 import model_classes.Player;
 import model_classes.Point;
+
+import java.util.Random;
 
 /**
  * Created by Jilada on 5/04/17.
@@ -82,7 +88,105 @@ public class GameSetUp {
         paddle4.setCurrentPos(point4);
     }
 
-    public void SetUpWall() {
+    public void SetUpWall(Group root) {
+        Image imgp11 = new Image("/images/boxBlue1.png");
+        Image imgp12 = new Image("/images/boxBlue2.png");
+        Image imgp13 = new Image("/images/boxBlue3.png");
+        Image imgp21 = new Image("/images/boxOrange1.png");
+        Image imgp22 = new Image("/images/boxOrange2.png");
+        Image imgp23 = new Image("/images/boxOrange3.png");
+        Image imgp31 = new Image("/images/boxGreen1.png");
+        Image imgp32 = new Image("/images/boxGreen2.png");
+        Image imgp33 = new Image("/images/boxGreen3.png");
+        Image imgp41 = new Image("/images/boxWhite1.png");
+        Image imgp42 = new Image("/images/boxWhite2.png");
+        Image imgp43 = new Image("/images/boxWhite3.png");
+
+        int count;
+        Random c = new Random();
+        for (int i = 0; i < 325; i+=25) {
+            for (int j = 0; j < 225; j+=25) {
+                if (!((i < 225) && (j < 125))) {
+                    Rectangle w1 = new Rectangle(i,j,25,25);
+                    // TODO: add to brick and wall classes
+                    count = c.nextInt(3);
+                    switch (count) {
+                        case 0 :    w1.setFill(new ImagePattern(imgp11));
+                                    break;
+                        case 1 :    w1.setFill(new ImagePattern(imgp12));
+                                    break;
+                        case 2 :    w1.setFill(new ImagePattern(imgp13));
+                                    break;
+                        default:    w1.setFill(new ImagePattern(imgp11));
+                                    break;
+                    }
+                    root.getChildren().add(w1);
+                }
+            }
+        }
+
+        for (int i = 699; i < 1024; i+=25) {
+            for (int j = 0; j < 225; j+=25) {
+                if (!((i > 777) && (j < 124))) {
+                    Rectangle w1 = new Rectangle(i,j,25,25);
+                    // TODO: add to brick and wall classes
+                    count = c.nextInt(3);
+                    switch (count) {
+                        case 0 :    w1.setFill(new ImagePattern(imgp21));
+                            break;
+                        case 1 :    w1.setFill(new ImagePattern(imgp22));
+                            break;
+                        case 2 :    w1.setFill(new ImagePattern(imgp23));
+                            break;
+                        default:    w1.setFill(new ImagePattern(imgp21));
+                            break;
+                    }
+                    root.getChildren().add(w1);
+                }
+            }
+        }
+
+        for (int i = 0; i < 325; i+=25) {
+            for (int j = 543; j < 768; j+=25) {
+                if (!((i < 225) && (j > 618))) {
+                    Rectangle w1 = new Rectangle(i,j,25,25);
+                    // TODO: add to brick and wall classes
+                    count = c.nextInt(3);
+                    switch (count) {
+                        case 0 :    w1.setFill(new ImagePattern(imgp31));
+                            break;
+                        case 1 :    w1.setFill(new ImagePattern(imgp32));
+                            break;
+                        case 2 :    w1.setFill(new ImagePattern(imgp33));
+                            break;
+                        default:    w1.setFill(new ImagePattern(imgp31));
+                            break;
+                    }
+                    root.getChildren().add(w1);
+                }
+            }
+        }
+
+        for (int i = 699; i < 1024; i+=25) {
+            for (int j = 543; j < 768; j+=25) {
+                if (!((i > 777) && (j > 618))) {
+                    Rectangle w1 = new Rectangle(i,j,25,25);
+                    // TODO: add to brick and wall classes
+                    count = c.nextInt(3);
+                    switch (count) {
+                        case 0 :    w1.setFill(new ImagePattern(imgp41));
+                            break;
+                        case 1 :    w1.setFill(new ImagePattern(imgp42));
+                            break;
+                        case 2 :    w1.setFill(new ImagePattern(imgp43));
+                            break;
+                        default:    w1.setFill(new ImagePattern(imgp41));
+                            break;
+                    }
+                    root.getChildren().add(w1);
+                }
+            }
+        }
 
     }
 
