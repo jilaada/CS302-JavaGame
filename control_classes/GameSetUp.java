@@ -27,12 +27,7 @@ public class GameSetUp {
         //this.player3 = player3;
         player4 = new Player("Test4");
         //this.player4 = player4;
-        ball = new Ball(0, 0);
         numPlayers = 4;
-        paddle1 = new Paddle(0,0,0);
-        paddle2 = new Paddle(0,0,0);
-        paddle3 = new Paddle(0,0,0);
-        paddle4 = new Paddle(0,0,0);
     }
 
     public void SetUpPlayers() {
@@ -48,7 +43,7 @@ public class GameSetUp {
     }
 
     public void SetUpBall(int speed, int rad) {
-        Ball ball = new Ball(speed, rad);
+        ball = new Ball(speed, rad);
     }
 
     public void SetUpPaddles(int speed, int size) {
