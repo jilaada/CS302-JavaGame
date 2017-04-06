@@ -6,6 +6,7 @@ public class Player {
 	private String playerName;	
 	private Wall playerWall;
 	private Paddle playerPaddle;
+	private Point playerPosition;
 	
 	public Player(String name) {
 		this.playerScore = 0;
