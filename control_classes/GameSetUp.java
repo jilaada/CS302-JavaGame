@@ -46,15 +46,15 @@ public class GameSetUp {
         ball = new Ball(speed, rad);
     }
 
-    public void SetUpPaddles(int speed, int size) {
+    public void SetUpPaddles(double speed, double size, double height) {
         // Instantiate all the paddles
-        Paddle paddle1 = new Paddle(speed, size, 1);
+        Paddle paddle1 = new Paddle(speed, size, height, 1);
         this.paddle1 = paddle1;
-        Paddle paddle2 = new Paddle(speed, size, 2);
+        Paddle paddle2 = new Paddle(speed, size, height, 2);
         this.paddle2 = paddle2;
-        Paddle paddle3 = new Paddle(speed, size, 3);
+        Paddle paddle3 = new Paddle(speed, size, height, 3);
         this.paddle3 = paddle3;
-        Paddle paddle4 = new Paddle(speed, size, 4);
+        Paddle paddle4 = new Paddle(speed, size, height, 4);
         this.paddle4 = paddle4;
 
         // Set up the bounds for all the paddles
