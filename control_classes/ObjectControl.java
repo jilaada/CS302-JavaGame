@@ -1,5 +1,6 @@
 package control_classes;
 import model_classes.*;
+import view_classes.RenderView;
 
 import java.lang.Math;
 
@@ -325,6 +326,87 @@ public class ObjectControl {
 			currentBall.getCurrentPos().setX((int)Math.round(newX));
 			currentBall.getCurrentPos().setY((int)Math.round(newY));
 
+	}
+
+	public void moveAllPaddles(RenderView render, IOHandle HandleIO, GameSetUp SetUpGame) {
+		if (HandleIO.hasMovedLeftP1()) {
+			if (movePaddle(SetUpGame.getPlayer1().getPlayerPaddle(), 0)) {
+				// Is not horizontal
+				render.getP1Render().setHeight(15);
+				render.getP1Render().setWidth(80);
+			} else {
+				render.getP1Render().setHeight(80);
+				render.getP1Render().setWidth(15);
+			}
+		} else if (HandleIO.hasMovedRightP1()) {
+			if (movePaddle(SetUpGame.getPlayer1().getPlayerPaddle(), 1)) {
+				// Is not horizontal
+				render.getP1Render().setHeight(15);
+				render.getP1Render().setWidth(80);
+			} else {
+				render.getP1Render().setHeight(80);
+				render.getP1Render().setWidth(15);
+			}
+		}
+
+		if (HandleIO.hasMovedLeftP2()) {
+			if (movePaddle(SetUpGame.getPlayer2().getPlayerPaddle(), 0)) {
+				// Is not horizontal
+				render.getP2Render().setHeight(15);
+				render.getP2Render().setWidth(80);
+			} else {
+				render.getP2Render().setHeight(80);
+				render.getP2Render().setWidth(15);
+			}
+		} else if (HandleIO.hasMovedRightP2()) {
+			if (movePaddle(SetUpGame.getPlayer2().getPlayerPaddle(), 1)) {
+				// Is not horizontal
+				render.getP2Render().setHeight(15);
+				render.getP2Render().setWidth(80);
+			} else {
+				render.getP2Render().setHeight(80);
+				render.getP2Render().setWidth(15);
+			}
+		}
+
+		if (HandleIO.hasMovedLeftP3()) {
+			if (movePaddle(SetUpGame.getPlayer3().getPlayerPaddle(), 0)) {
+				// Is not horizontal
+				render.getP3Render().setHeight(15);
+				render.getP3Render().setWidth(80);
+			} else {
+				render.getP3Render().setHeight(80);
+				render.getP3Render().setWidth(15);
+			}
+		} else if (HandleIO.hasMovedRightP3()) {
+			if (movePaddle(SetUpGame.getPlayer3().getPlayerPaddle(), 1)) {
+				// Is not horizontal
+				render.getP3Render().setHeight(15);
+				render.getP3Render().setWidth(80);
+			} else {
+				render.getP3Render().setHeight(80);
+				render.getP3Render().setWidth(15);
+			}
+		}
+		if (HandleIO.hasMovedLeftP4()) {
+			if (movePaddle(SetUpGame.getPlayer4().getPlayerPaddle(), 0)) {
+				// Is not horizontal
+				render.getP4Render().setHeight(15);
+				render.getP4Render().setWidth(80);
+			} else {
+				render.getP4Render().setHeight(80);
+				render.getP4Render().setWidth(15);
+			}
+		} else if (HandleIO.hasMovedRightP4()) {
+			if (movePaddle(SetUpGame.getPlayer4().getPlayerPaddle(), 1)) {
+				// Is not horizontal
+				render.getP4Render().setHeight(15);
+				render.getP4Render().setWidth(80);
+			} else {
+				render.getP4Render().setHeight(80);
+				render.getP4Render().setWidth(15);
+			}
+		}
 	}
 
 }
