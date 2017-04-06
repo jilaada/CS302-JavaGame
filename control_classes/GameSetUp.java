@@ -72,8 +72,8 @@ public class GameSetUp {
         // Set up start points
         Point point1 = new Point(150,250);
         Point point2 = new Point(850,250);
-        Point point3 = new Point(150,503);
-        Point point4 = new Point(850,503);
+        Point point3 = new Point(150,(int)(518 - height));
+        Point point4 = new Point(850,(int)(518 - height));
 
         // Add points to current position
         paddle1.setCurrentPos(point1);
