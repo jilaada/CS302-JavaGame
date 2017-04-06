@@ -39,7 +39,7 @@ public class MainGame extends Application {
         render.SetUpRender();
 
         // IO handle declaration
-        IOHandle HandleIO = new IOHandle(scene, render, ControlUnit);
+        IOHandle HandleIO = new IOHandle(scene);
 
         // Render the paddles and balls
         root.getChildren().add(render.getBallRender());
