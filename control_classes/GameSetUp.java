@@ -82,6 +82,10 @@ public class GameSetUp {
         paddle4.setCurrentPos(point4);
     }
 
+    public void SetUpWall() {
+
+    }
+
     /*private String GetName(int playerNumber) {
         if (playerNumber == 1) {
             return name1;
