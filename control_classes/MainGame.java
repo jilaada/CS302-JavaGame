@@ -12,6 +12,7 @@ import model_classes.gameObject;
 import view_classes.RenderView;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class MainGame extends Application {
 
@@ -69,6 +70,8 @@ public class MainGame extends Application {
         // Testing rectangle wall
         SetUpGame.SetUpWall(root, gameArray);
 
+        //Set up delay boolean
+        final boolean[] delayStart = {true};
 
         final long startNanoTime = System.nanoTime();
 
@@ -76,28 +79,38 @@ public class MainGame extends Application {
             public void handle(long currentNanoTime) {
                 // Run the input handle
                 //TODO: this repetitive action can be set in a different function game().tick()?
+                // Determine the time difference
+                long elapsedTime = System.nanoTime() - startNanoTime;
+                // Calculate the seconds value;
+                TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
 
-                if (HandleIO.isPaused() == false) {
-                    HandleIO.keyPressed();
-                    ControlUnit.moveAllPaddles(render, HandleIO, SetUpGame);
-                    HandleIO.resetPaddle();
+                if (!delayStart[0]) {
+                    if (HandleIO.isPaused() == false) {
+                        HandleIO.keyPressed();
+                        ControlUnit.moveAllPaddles(render, HandleIO, SetUpGame);
+                        HandleIO.resetPaddle();
 
-                    ((Ball) ballObj.getObj()).setMoved(false);
-                    for (gameObject temp : gameArray) {
-                        if (!((Ball) ballObj.getObj()).hasMoved()) {
-                            CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp);
-                            ControlUnit.moveBall(SetUpGame.getBall(), move);
+                        ((Ball) ballObj.getObj()).setMoved(false);
+                        for (gameObject temp : gameArray) {
+                            if (!((Ball) ballObj.getObj()).hasMoved()) {
+                                CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp);
+                                ControlUnit.moveBall(SetUpGame.getBall(), move);
+                            }
                         }
-                    }
 
-                    if (!((Ball) ballObj.getObj()).hasMoved()) {
-                        ControlUnit.moveInBounds(SetUpGame.getBall(), collisionDetection);
-                    }
-                    render.tickRender();
+                        if (!((Ball) ballObj.getObj()).hasMoved()) {
+                            ControlUnit.moveInBounds(SetUpGame.getBall(), collisionDetection);
+                        }
+                        render.tickRender();
 
+                    } else {
+                        HandleIO.resetPaddle();
+                        HandleIO.keyPressed();
+                    }
                 } else {
-                    HandleIO.resetPaddle();
-                    HandleIO.keyPressed();
+                    if (TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS) > 3) {
+                        delayStart[0] = false;
+                    }
                 }
             }
         }.start();
