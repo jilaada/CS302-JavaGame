@@ -8,9 +8,10 @@ public class Player {
 	private Paddle playerPaddle;
 	private Point playerPosition;
 	
-	public Player(String name) {
+	public Player(String name, Point position) {
 		this.playerScore = 0;
 		this.playerName = name;
+		this.playerPosition = position;
 		
 		//Object constructors
 		//this.playerWall = 0;
@@ -58,6 +59,12 @@ public class Player {
 		}
 	}
 
+	public int getXPos() {
+		return playerPosition.getX();
+	}
 
+	public int getYPos() {
+		return playerPosition.getY();
+	}
 
 }

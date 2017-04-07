@@ -47,6 +47,10 @@ public class MainGame extends Application {
         root.getChildren().add(render.getP2Render());
         root.getChildren().add(render.getP3Render());
         root.getChildren().add(render.getP4Render());
+        root.getChildren().add(render.getPl1Render());
+        root.getChildren().add(render.getPl2Render());
+        root.getChildren().add(render.getPl3Render());
+        root.getChildren().add(render.getPl4Render());
 
         Collision collisionDetection = new Collision();
         gameObject ballObj = new gameObject(render.getBallRender(), SetUpGame.getBall());

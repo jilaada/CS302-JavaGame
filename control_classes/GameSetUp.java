@@ -24,23 +24,27 @@ public class GameSetUp {
 
     public GameSetUp() {
         //TODO: Add names to the players
-        player1 = new Player("Test1");
-        player2 = new Player("Test2");
-        player3 = new Player("Test3");
-        player4 = new Player("Test4");
+        Point p1 = new Point(87, 37);
+        Point p2 = new Point(886, 37);
+        Point p3 = new Point(87, 684);
+        Point p4 = new Point(886, 684);
+        player1 = new Player("Test1", p1);
+        player2 = new Player("Test2", p2);
+        player3 = new Player("Test3", p3);
+        player4 = new Player("Test4", p4);
         numPlayers = 4;
     }
 
     public void SetUpPlayers() {
         //TODO: Detect the number of players
-        Player player1 = new Player("Test1");
-        this.player1 = player1;
-        Player player2 = new Player("Test2");
-        this.player2 = player2;
-        Player player3 = new Player("Test3");
-        this.player3 = player3;
-        Player player4 = new Player("Test4");
-        this.player4 = player4;
+//        Player player1 = new Player("Test1");
+//        this.player1 = player1;
+//        Player player2 = new Player("Test2");
+//        this.player2 = player2;
+//        Player player3 = new Player("Test3");
+//        this.player3 = player3;
+//        Player player4 = new Player("Test4");
+//        this.player4 = player4;
     }
 
     public void SetUpBall(int speed, int rad) {
