@@ -34,7 +34,7 @@ public class Player {
 	}
 	
 	//Object implementation
-	protected void addPlayerWall(Wall barrier) {
+	public void addPlayerWall(Wall barrier) {
 		this.playerWall = barrier;
 	}
 	

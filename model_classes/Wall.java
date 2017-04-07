@@ -8,6 +8,8 @@ public class Wall {
 	private ArrayList<Brick> brickList;
 	
 	public Wall() {
+		this.brickList = new ArrayList<Brick>();
+		this.brickCoordinates = new ArrayList<Point>();
 	}
 
 	public void setNumberOfBricks(int number) {

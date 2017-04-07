@@ -20,17 +20,14 @@ public class GameSetUp {
     private int numPlayers;
     private Ball ball;
     private Paddle paddle1, paddle2, paddle3, paddle4;
+    private ArrayList<gameObject> wallSet1, wallSet2, wallSet3, wallSet4;
 
     public GameSetUp() {
         //TODO: Add names to the players
         player1 = new Player("Test1");
-        //this.player1 = player1;
         player2 = new Player("Test2");
-        //this.player2 = player2;
         player3 = new Player("Test3");
-        //this.player3 = player3;
         player4 = new Player("Test4");
-        //this.player4 = player4;
         numPlayers = 4;
     }
 
@@ -88,6 +85,14 @@ public class GameSetUp {
 
     public void SetUpWall(Group root, ArrayList<gameObject> gameArray) {
         //Declaring the walls for each player so the bricks will go in them
+        Wall player1Wall = new Wall();
+        Wall player2Wall = new Wall();
+        Wall player3Wall = new Wall();
+        Wall player4Wall = new Wall();
+        this.wallSet1 = new ArrayList<gameObject>();
+        this.wallSet2 = new ArrayList<gameObject>();
+        this.wallSet3 = new ArrayList<gameObject>();
+        this.wallSet4 = new ArrayList<gameObject>();
 
         //Declaring the images to be used
         Image imgp11 = new Image("/images/boxBlue1.png");
@@ -110,7 +115,8 @@ public class GameSetUp {
             for (int j = 0; j < 225; j+=25) {
                 if (!((i < 225) && (j < 125))) {
                     Rectangle w1 = new Rectangle(i,j,25,25);
-                    Brick b1 = new Brick(25, 25, new Point(i, j));
+                    Point p1 = new Point(i, j);
+                    Brick b1 = new Brick(25, 25, p1);
                     count = c.nextInt(3);
                     switch (count) {
                         case 0 :    w1.setFill(new ImagePattern(imgp11));
@@ -124,7 +130,9 @@ public class GameSetUp {
                     }
                     // Add to game array
                     //TODO: fix the game object bug
-                    //gameArray.add(new gameObject(w1, b1));
+                    this.wallSet1.add(new gameObject(w1, b1));
+                    // Add to the wall array list
+                    player1Wall.addBrick(b1);
                     root.getChildren().add(w1);
                 }
             }
@@ -133,22 +141,23 @@ public class GameSetUp {
         for (int i = 699; i < 1024; i+=25) {
             for (int j = 0; j < 225; j+=25) {
                 if (!((i > 777) && (j < 124))) {
-                    Rectangle w1 = new Rectangle(i,j,25,25);
-                    Brick b1 = new Brick(25, 25, new Point(i, j));
+                    Rectangle w2 = new Rectangle(i,j,25,25);
+                    Brick b2 = new Brick(25, 25, new Point(i, j));
                     count = c.nextInt(3);
                     switch (count) {
-                        case 0 :    w1.setFill(new ImagePattern(imgp21));
+                        case 0 :    w2.setFill(new ImagePattern(imgp21));
                             break;
-                        case 1 :    w1.setFill(new ImagePattern(imgp22));
+                        case 1 :    w2.setFill(new ImagePattern(imgp22));
                             break;
-                        case 2 :    w1.setFill(new ImagePattern(imgp23));
+                        case 2 :    w2.setFill(new ImagePattern(imgp23));
                             break;
-                        default:    w1.setFill(new ImagePattern(imgp21));
+                        default:    w2.setFill(new ImagePattern(imgp21));
                             break;
                     }
                     //TODO: fix the game object bug
-                    //gameArray.add(new gameObject(w1, b1));
-                    root.getChildren().add(w1);
+                    this.wallSet2.add(new gameObject(w2, b2));
+                    player2Wall.addBrick(b2);
+                    root.getChildren().add(w2);
                 }
             }
         }
@@ -156,22 +165,23 @@ public class GameSetUp {
         for (int i = 0; i < 325; i+=25) {
             for (int j = 543; j < 768; j+=25) {
                 if (!((i < 225) && (j > 618))) {
-                    Rectangle w1 = new Rectangle(i,j,25,25);
-                    Brick b1 = new Brick(25, 25, new Point(i, j));
+                    Rectangle w3 = new Rectangle(i,j,25,25);
+                    Brick b3 = new Brick(25, 25, new Point(i, j));
                     count = c.nextInt(3);
                     switch (count) {
-                        case 0 :    w1.setFill(new ImagePattern(imgp31));
+                        case 0 :    w3.setFill(new ImagePattern(imgp31));
                             break;
-                        case 1 :    w1.setFill(new ImagePattern(imgp32));
+                        case 1 :    w3.setFill(new ImagePattern(imgp32));
                             break;
-                        case 2 :    w1.setFill(new ImagePattern(imgp33));
+                        case 2 :    w3.setFill(new ImagePattern(imgp33));
                             break;
-                        default:    w1.setFill(new ImagePattern(imgp31));
+                        default:    w3.setFill(new ImagePattern(imgp31));
                             break;
                     }
                     //TODO: fix the game object bug
-                    //gameArray.add(new gameObject(w1, b1));
-                    root.getChildren().add(w1);
+                    this.wallSet3.add(new gameObject(w3, b3));
+                    player3Wall.addBrick(b3);
+                    root.getChildren().add(w3);
                 }
             }
         }
@@ -179,26 +189,31 @@ public class GameSetUp {
         for (int i = 699; i < 1024; i+=25) {
             for (int j = 543; j < 768; j+=25) {
                 if (!((i > 777) && (j > 618))) {
-                    Rectangle w1 = new Rectangle(i,j,25,25);
-                    Brick b1 = new Brick(25, 25, new Point(i, j));
+                    Rectangle w4 = new Rectangle(i,j,25,25);
+                    Brick b4 = new Brick(25, 25, new Point(i, j));
                     count = c.nextInt(3);
                     switch (count) {
-                        case 0 :    w1.setFill(new ImagePattern(imgp41));
+                        case 0 :    w4.setFill(new ImagePattern(imgp41));
                             break;
-                        case 1 :    w1.setFill(new ImagePattern(imgp42));
+                        case 1 :    w4.setFill(new ImagePattern(imgp42));
                             break;
-                        case 2 :    w1.setFill(new ImagePattern(imgp43));
+                        case 2 :    w4.setFill(new ImagePattern(imgp43));
                             break;
-                        default:    w1.setFill(new ImagePattern(imgp41));
+                        default:    w4.setFill(new ImagePattern(imgp41));
                             break;
                     }
                     //TODO: fix the game object bug
-                    //gameArray.add(new gameObject(w1, b1));
-                    root.getChildren().add(w1);
+                    this.wallSet4.add(new gameObject(w4, b4));
+                    player4Wall.addBrick(b4);
+                    root.getChildren().add(w4);
                 }
             }
         }
 
+        player1.addPlayerWall(player1Wall);
+        player2.addPlayerWall(player2Wall);
+        player3.addPlayerWall(player3Wall);
+        player4.addPlayerWall(player4Wall);
     }
 
     /*private String GetName(int playerNumber) {
