@@ -92,6 +92,7 @@ public class MainGame extends Application {
                     render.tickRender();
 
                 } else {
+                    HandleIO.resetPaddle();
                     HandleIO.keyPressed();
                 }
             }
