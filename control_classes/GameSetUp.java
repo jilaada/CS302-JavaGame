@@ -4,11 +4,9 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import model_classes.Ball;
-import model_classes.Paddle;
-import model_classes.Player;
-import model_classes.Point;
+import model_classes.*;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -88,7 +86,10 @@ public class GameSetUp {
         paddle4.setCurrentPos(point4);
     }
 
-    public void SetUpWall(Group root) {
+    public void SetUpWall(Group root, ArrayList<gameObject> gameArray) {
+        //Declaring the walls for each player so the bricks will go in them
+
+        //Declaring the images to be used
         Image imgp11 = new Image("/images/boxBlue1.png");
         Image imgp12 = new Image("/images/boxBlue2.png");
         Image imgp13 = new Image("/images/boxBlue3.png");
@@ -104,11 +105,12 @@ public class GameSetUp {
 
         int count;
         Random c = new Random();
+
         for (int i = 0; i < 325; i+=25) {
             for (int j = 0; j < 225; j+=25) {
                 if (!((i < 225) && (j < 125))) {
                     Rectangle w1 = new Rectangle(i,j,25,25);
-                    // TODO: add to brick and wall classes
+                    Brick b1 = new Brick(25, 25, new Point(i, j));
                     count = c.nextInt(3);
                     switch (count) {
                         case 0 :    w1.setFill(new ImagePattern(imgp11));
@@ -120,6 +122,9 @@ public class GameSetUp {
                         default:    w1.setFill(new ImagePattern(imgp11));
                                     break;
                     }
+                    // Add to game array
+                    //TODO: fix the game object bug
+                    //gameArray.add(new gameObject(w1, b1));
                     root.getChildren().add(w1);
                 }
             }
@@ -129,7 +134,7 @@ public class GameSetUp {
             for (int j = 0; j < 225; j+=25) {
                 if (!((i > 777) && (j < 124))) {
                     Rectangle w1 = new Rectangle(i,j,25,25);
-                    // TODO: add to brick and wall classes
+                    Brick b1 = new Brick(25, 25, new Point(i, j));
                     count = c.nextInt(3);
                     switch (count) {
                         case 0 :    w1.setFill(new ImagePattern(imgp21));
@@ -141,6 +146,8 @@ public class GameSetUp {
                         default:    w1.setFill(new ImagePattern(imgp21));
                             break;
                     }
+                    //TODO: fix the game object bug
+                    //gameArray.add(new gameObject(w1, b1));
                     root.getChildren().add(w1);
                 }
             }
@@ -150,7 +157,7 @@ public class GameSetUp {
             for (int j = 543; j < 768; j+=25) {
                 if (!((i < 225) && (j > 618))) {
                     Rectangle w1 = new Rectangle(i,j,25,25);
-                    // TODO: add to brick and wall classes
+                    Brick b1 = new Brick(25, 25, new Point(i, j));
                     count = c.nextInt(3);
                     switch (count) {
                         case 0 :    w1.setFill(new ImagePattern(imgp31));
@@ -162,6 +169,8 @@ public class GameSetUp {
                         default:    w1.setFill(new ImagePattern(imgp31));
                             break;
                     }
+                    //TODO: fix the game object bug
+                    //gameArray.add(new gameObject(w1, b1));
                     root.getChildren().add(w1);
                 }
             }
@@ -171,7 +180,7 @@ public class GameSetUp {
             for (int j = 543; j < 768; j+=25) {
                 if (!((i > 777) && (j > 618))) {
                     Rectangle w1 = new Rectangle(i,j,25,25);
-                    // TODO: add to brick and wall classes
+                    Brick b1 = new Brick(25, 25, new Point(i, j));
                     count = c.nextInt(3);
                     switch (count) {
                         case 0 :    w1.setFill(new ImagePattern(imgp41));
@@ -183,6 +192,8 @@ public class GameSetUp {
                         default:    w1.setFill(new ImagePattern(imgp41));
                             break;
                     }
+                    //TODO: fix the game object bug
+                    //gameArray.add(new gameObject(w1, b1));
                     root.getChildren().add(w1);
                 }
             }
