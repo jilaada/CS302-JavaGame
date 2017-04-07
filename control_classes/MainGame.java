@@ -99,9 +99,11 @@ public class MainGame extends Application {
                         HandleIO.resetPaddle();
 
                         ((Ball) ballObj.getObj()).setMoved(false);
-                        for (gameObject temp : gameArray) {
+
+                        for (int pos = 0; pos < gameArray.size(); pos++) {
+                            gameObject temp = gameArray.get(pos);
                             if (!((Ball) ballObj.getObj()).hasMoved()) {
-                                CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp);
+                                CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp, root, gameArray, pos);
                                 ControlUnit.moveBall(SetUpGame.getBall(), move);
                             }
                         }

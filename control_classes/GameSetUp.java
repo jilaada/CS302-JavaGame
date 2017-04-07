@@ -218,6 +218,11 @@ public class GameSetUp {
         player2.addPlayerWall(player2Wall);
         player3.addPlayerWall(player3Wall);
         player4.addPlayerWall(player4Wall);
+        gameArray.addAll(this.wallSet1);
+        gameArray.addAll(this.wallSet2);
+        gameArray.addAll(this.wallSet3);
+        gameArray.addAll(this.wallSet4);
+
     }
 
     /*private String GetName(int playerNumber) {

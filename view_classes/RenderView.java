@@ -39,16 +39,16 @@ public class RenderView {
         this.c1.setFill(Color.RED);
 
         // Added a rectangle to be painted on the scene
-        p1 = new Rectangle(player1.getPlayerPaddle().getCurrentPos().getX(), player1.getPlayerPaddle().getCurrentPos().getY(), player1.getPlayerPaddle().getPaddleSize(), player1.getPlayerPaddle().getPaddleHeight());
+        p1 = new Rectangle(player1.getPlayerPaddle().getCurrentPos().getX(), player1.getPlayerPaddle().getCurrentPos().getY(), player1.getPlayerPaddle().getLength(), player1.getPlayerPaddle().getHeight());
         p1.setFill(new ImagePattern(imgP1Hori));
 
-        p2 = new Rectangle(player2.getPlayerPaddle().getCurrentPos().getX(), player2.getPlayerPaddle().getCurrentPos().getY(), player2.getPlayerPaddle().getPaddleSize(), player2.getPlayerPaddle().getPaddleHeight());
+        p2 = new Rectangle(player2.getPlayerPaddle().getCurrentPos().getX(), player2.getPlayerPaddle().getCurrentPos().getY(), player2.getPlayerPaddle().getLength(), player2.getPlayerPaddle().getHeight());
         p2.setFill(new ImagePattern(imgP2Hori));
 
-        p3 = new Rectangle(player3.getPlayerPaddle().getCurrentPos().getX(), player3.getPlayerPaddle().getCurrentPos().getY(), player3.getPlayerPaddle().getPaddleSize(), player3.getPlayerPaddle().getPaddleHeight());
+        p3 = new Rectangle(player3.getPlayerPaddle().getCurrentPos().getX(), player3.getPlayerPaddle().getCurrentPos().getY(), player3.getPlayerPaddle().getLength(), player3.getPlayerPaddle().getHeight());
         p3.setFill(new ImagePattern(imgP3Hori));
 
-        p4 = new Rectangle(player4.getPlayerPaddle().getCurrentPos().getX(), player4.getPlayerPaddle().getCurrentPos().getY(), player4.getPlayerPaddle().getPaddleSize(), player4.getPlayerPaddle().getPaddleHeight());
+        p4 = new Rectangle(player4.getPlayerPaddle().getCurrentPos().getX(), player4.getPlayerPaddle().getCurrentPos().getY(), player4.getPlayerPaddle().getLength(), player4.getPlayerPaddle().getHeight());
         p4.setFill(new ImagePattern(imgP4Hori));
 
         // Render the player's sprite

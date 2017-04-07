@@ -17,7 +17,8 @@ public class Brick extends modelSuperClass{
 	public void setLength(double length) {
 		this.length = length;
 	}
-	
+
+	@Override
 	public double getLength() {
 		return this.length;
 	}
@@ -25,7 +26,8 @@ public class Brick extends modelSuperClass{
 	public void setHeight(double height) {
 		this.height = height;
 	}
-	
+
+	@Override
 	public double getHeight() {
 		return this.height;
 	}
@@ -47,6 +49,6 @@ public class Brick extends modelSuperClass{
 	}
 
 	@Override
-	public modelSuperClass getObj() { return this;}
-	
+	public Point getCurrentPos() { return this.getPoint();}
+
 }
