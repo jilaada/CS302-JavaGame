@@ -75,10 +75,12 @@ public class MainGame extends Application {
         //Set up delay boolean
         final boolean[] delayStart = {true};
         final long[] seconds = new long[1];
+        final long[] pauseSeconds = new long[1];
         final long[] startNanoTime = {System.nanoTime()};
         Text timerLabel = new Text(512, 20, "3");
         timerLabel.setFont(new Font(16));
         timerLabel.setFill(Color.WHITE);
+        final long[] gameTime = {120};
         root.getChildren().add(timerLabel);
 
         new AnimationTimer() {
@@ -87,12 +89,12 @@ public class MainGame extends Application {
                 //TODO: this repetitive action can be set in a different function game().tick()?
                 // Determine the time difference
                 long elapsedTime = System.nanoTime() - startNanoTime[0];
+                pauseSeconds[0] = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
                 // Calculate the seconds value;
-                seconds[0] = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
-                String str = String.valueOf(3-seconds[0]);
 
                 if (!delayStart[0]) {
                     if (HandleIO.isPaused() == false) {
+                        seconds[0] = pauseSeconds[0];
                         HandleIO.keyPressed();
                         ControlUnit.moveAllPaddles(render, HandleIO, SetUpGame);
                         HandleIO.resetPaddle();
@@ -110,18 +112,30 @@ public class MainGame extends Application {
                         }
                         render.tickRender();
 
+                        //Declaring
+                        String str = String.valueOf(gameTime[0] -seconds[0]);
+                        timerLabel.setText(str);
                     } else {
                         HandleIO.resetPaddle();
                         HandleIO.keyPressed();
+                        // Don't update seconds, instead store a current time
+                        if (!HandleIO.isPaused()) {
+                            // Change the to the new game time so the game seconds pause doesn't register as elapsed time
+                            gameTime[0] = gameTime[0] - (pauseSeconds[0] - seconds[0]);
+                        }
                     }
                 } else {
+                    seconds[0] = pauseSeconds[0];
                     // Render the countdown timer
+                    String str = String.valueOf(3-seconds[0]);
                     timerLabel.setText(str);
-                    if (TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS) > 2) {
+                    if (TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS) > 3) {
                         // Game has started
                         delayStart[0] = false;
                         // Reset the start time
                         startNanoTime[0] = System.nanoTime();
+                        // Set text to go when the paddles are ready to move
+                        //timerLabel.setText("GO!");
                     }
                 }
             }
