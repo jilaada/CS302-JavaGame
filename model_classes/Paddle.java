@@ -78,6 +78,8 @@ public class Paddle extends modelSuperClass{
 	 * Returns a point class containing the current position of the paddle
 	 * @return Returns a point class containing the current position of the paddle
 	 */
+
+	@Override
 	public Point getCurrentPos() {
 		if(this.currentPos == null) {
 			return null;
@@ -163,7 +165,9 @@ public class Paddle extends modelSuperClass{
 	 * Get the paddle size
 	 * @return Returns the paddle size in type double
 	 */
-	public double getPaddleSize() {
+
+	@Override
+	public double getLength() {
 		return this.paddleSize;
 	}
 
@@ -174,11 +178,13 @@ public class Paddle extends modelSuperClass{
 	@Override
 	public modelSuperClass getObj() { return this;}
 
-	public double getPaddleHeight() {
+	@Override
+	public double getHeight() {
 		return height;
 	}
 
-	public void setPaddleHeight(double height) {
+	//@Override
+	public void setHeight(double height) {
 		this.height = height;
 	}
 

@@ -5,39 +5,37 @@
 
 package control_classes;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
-import javafx.scene.shape.Shape;
+import javafx.scene.Group;
 import model_classes.*;
+
+import java.util.ArrayList;
 
 
 /**
  * Created by niles on 24/03/2017.
  */
 public class Collision {
-    //TODO: This class is a controller and will control collisions
     Collision(){}
 
-    public CollisionStruct checkCollisions(gameObject ball, gameObject shape) {
-        System.out.println("////////////// START ");
+    public CollisionStruct checkCollisions(gameObject ball, gameObject shape, Group root, ArrayList<gameObject> gameArray, int pos) {
 
         double xMin;
         double xMax;
         double yMin;
         double yMax;
 
-        if(((Paddle) shape.getObj()).isRotated()) {
+        if( shape.getObj().isRotated()) {
             //Get coordinates of rectangular shape
-            xMin = ((Paddle) shape.getObj()).getCurrentPos().getX() - ((Ball) ball.getObj()).getBallRadius();
-            xMax = ((Paddle) shape.getObj()).getCurrentPos().getX() + ((Paddle) shape.getObj()).getPaddleHeight() + ((Ball) ball.getObj()).getBallRadius();
-            yMin = ((Paddle) shape.getObj()).getCurrentPos().getY() - ((Ball) ball.getObj()).getBallRadius();
-            yMax = ((Paddle) shape.getObj()).getCurrentPos().getY() + ((Paddle) shape.getObj()).getPaddleSize() + ((Ball) ball.getObj()).getBallRadius();
+            xMin = shape.getObj().getCurrentPos().getX() - ((Ball) ball.getObj()).getBallRadius();
+            xMax = shape.getObj().getCurrentPos().getX() + shape.getObj().getHeight() + ((Ball) ball.getObj()).getBallRadius();
+            yMin = shape.getObj().getCurrentPos().getY() - ((Ball) ball.getObj()).getBallRadius();
+            yMax = shape.getObj().getCurrentPos().getY() + shape.getObj().getLength() + ((Ball) ball.getObj()).getBallRadius();
         } else {
             //Get coordinates of rectangular shape
-            xMin = ((Paddle) shape.getObj()).getCurrentPos().getX() - ((Ball) ball.getObj()).getBallRadius();
-            xMax = ((Paddle) shape.getObj()).getCurrentPos().getX() + ((Paddle) shape.getObj()).getPaddleSize() + ((Ball) ball.getObj()).getBallRadius();
-            yMin = ((Paddle) shape.getObj()).getCurrentPos().getY() - ((Ball) ball.getObj()).getBallRadius();
-            yMax = ((Paddle) shape.getObj()).getCurrentPos().getY() + ((Paddle) shape.getObj()).getPaddleHeight() + ((Ball) ball.getObj()).getBallRadius();
+            xMin = shape.getObj().getCurrentPos().getX() - ((Ball) ball.getObj()).getBallRadius();
+            xMax = shape.getObj().getCurrentPos().getX() + shape.getObj().getLength() + ((Ball) ball.getObj()).getBallRadius();
+            yMin = shape.getObj().getCurrentPos().getY() - ((Ball) ball.getObj()).getBallRadius();
+            yMax = shape.getObj().getCurrentPos().getY() + shape.getObj().getHeight() + ((Ball) ball.getObj()).getBallRadius();
         }
 
 
@@ -78,41 +76,6 @@ public class Collision {
             wallBottom = true;
         }
 
-        System.out.println("First Function");
-        System.out.print(wallLeft);
-        System.out.print(", ");
-        System.out.print(wallRight);
-        System.out.print(", ");
-        System.out.print(wallTop);
-        System.out.print(", ");
-        System.out.print(wallBottom);
-        System.out.print("- L R T B ");
-        System.out.print("\n");
-
-
-
-        System.out.print("Previous Point: ");
-        System.out.print(bPrev.getX());
-        System.out.print(", ");
-        System.out.print(bPrev.getY());
-        System.out.print("   Current Point: ");
-        System.out.print(bCurr.getX());
-        System.out.print(", ");
-        System.out.print(bCurr.getY());
-        System.out.print("\n");
-        System.out.print("xMin, yMin, xMax, yMax: ");
-        System.out.print(xMin);
-        System.out.print(", ");
-        System.out.print(yMin);
-        System.out.print(", ");
-        System.out.print(xMax);
-        System.out.print(", ");
-        System.out.print(yMax);
-        System.out.print("\n");
-
-
-
-
         //Declare distances from ball for each point
         double r1 = 10000, r2 = 10000, r3 = 10000, r4 = 10000;
 
@@ -135,15 +98,6 @@ public class Collision {
         double[] checkingMin = {r1, r2, r3, r4};
         boolean[] wallArray = {wallLeft, wallRight, wallTop, wallBottom};
 
-        System.out.print("r1, r2, r3, r4;");
-        System.out.print(r1);
-        System.out.print(", ");
-        System.out.print(r2);
-        System.out.print(", ");
-        System.out.print(r3);
-        System.out.print(", ");
-        System.out.print(r4);
-        System.out.print("\n");
 
 
 
@@ -191,9 +145,11 @@ public class Collision {
             }
         }
 
-        if(finalPoint != null) {
-            System.out.println("Token:");
-            System.out.println(((Paddle) shape.getObj()).getPaddleToken());
+
+        if((finalPoint != null) && (shape.getObj() instanceof Brick)) {
+            root.getChildren().remove(shape.getShape());
+            //gameArray.remove(shape.getObj());
+            gameArray.remove(pos);
         }
 
         //Prepare output

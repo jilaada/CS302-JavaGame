@@ -4,15 +4,17 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model_classes.*;
+import model_classes.Ball;
+import model_classes.CollisionStruct;
+import model_classes.gameObject;
+import view_classes.RenderView;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class MainGame extends Application {
 
@@ -24,86 +26,41 @@ public class MainGame extends Application {
         theStage.setScene( scene );
         theStage.setTitle("Game window");
 
+        // Set up object control
+        ObjectControl ControlUnit = new ObjectControl();
+
+        // Set up a new game
+        GameSetUp SetUpGame = new GameSetUp();
+
+        // Add Players via GameSetUp
+        //SetUpGame.SetUpPlayers();
+        SetUpGame.SetUpBall(10, 5);
+        SetUpGame.SetUpPaddles(15, 80, 20);
+
+        // Set up rendering of objects
+        RenderView render = new RenderView(SetUpGame.getPlayer1(), SetUpGame.getPlayer2(), SetUpGame.getPlayer3(), SetUpGame.getPlayer4(), SetUpGame.getBall());
+        render.SetUpRender();
+
         // IO handle declaration
         IOHandle HandleIO = new IOHandle(scene);
 
-        ObjectControl ControlUnit = new ObjectControl();
-        Ball newBall = new Ball(10, 5);
-        // Set player one and player two
-        Player player1 = new Player("TestPlayer1");
-        Player player2 = new Player("TestPlayer2");
-        Player player3 = new Player("TestPlayer3");
-        Player player4 = new Player("TestPlayer4");
-        // set up paddles
-        Paddle paddle1 = new Paddle(15,80,15, 1);
-        Paddle paddle2 = new Paddle(15,80,15, 2);
-        Paddle paddle3 = new Paddle(15,80,15, 3);
-        Paddle paddle4 = new Paddle(15,80,15, 4);
-        paddle1.setBounds();
-        paddle2.setBounds();
-        paddle3.setBounds();
-        paddle4.setBounds();
-        // Add paddles to players
-        player1.addPlayerPaddle(paddle1);
-        player2.addPlayerPaddle(paddle2);
-        player3.addPlayerPaddle(paddle3);
-        player4.addPlayerPaddle(paddle4);
-        Point point1 = new Point(150,250);
-        Point point2 = new Point(850,250);
-        Point point3 = new Point(150,503);
-        Point point4 = new Point(850,503);
-        paddle1.setCurrentPos(point1);
-        paddle2.setCurrentPos(point2);
-        paddle3.setCurrentPos(point3);
-        paddle4.setCurrentPos(point4);
-        //boolean h;
-
-        //Testing
-        Rectangle t1 = new Rectangle(0, 0,350, 250);
-        Rectangle t2 = new Rectangle(674, 0,350, 250);
-        Rectangle t3 = new Rectangle(0, 518,350, 250);
-        Rectangle t4 = new Rectangle(674, 518,350, 250);
-        Rectangle w1 = new Rectangle(0,180,20,20);
-
-        Image img = new Image("/images/boxGreen1.png");
-        w1.setFill(new ImagePattern(img));
-        t1.setFill(Color.BLACK);
-        t2.setFill(Color.CRIMSON);
-        t3.setFill(Color.CRIMSON);
-        t4.setFill(Color.CRIMSON);
-        root.getChildren().add(t1);
-        root.getChildren().add(t2);
-        root.getChildren().add(t3);
-        root.getChildren().add(t4);
-        root.getChildren().add(w1);
-
-        Circle c1 = new Circle(newBall.getCurrentPos().getX(), newBall.getCurrentPos().getY(), newBall.getBallRadius(), Color.RED);
-        c1.setFill(Color.RED);
-        root.getChildren().add(c1);
-
-        // Added a rectangle to be painted on the scene
-        Rectangle p1 = new Rectangle(paddle1.getCurrentPos().getX(), paddle1.getCurrentPos().getY(), paddle1.getPaddleSize(), 15);
-        p1.setFill(Color.AQUAMARINE);
-        root.getChildren().add(p1);
-
-        Rectangle p2 = new Rectangle(paddle2.getCurrentPos().getX(), paddle2.getCurrentPos().getY(), paddle2.getPaddleSize(), 15);
-        p2.setFill(Color.CORAL);
-        root.getChildren().add(p2);
-
-        Rectangle p3 = new Rectangle(paddle3.getCurrentPos().getX(), paddle3.getCurrentPos().getY(), paddle3.getPaddleSize(), 15);
-        p3.setFill(Color.PALEGREEN);
-        root.getChildren().add(p3);
-
-        Rectangle p4 = new Rectangle(paddle4.getCurrentPos().getX(), paddle4.getCurrentPos().getY(), paddle4.getPaddleSize(), 15);
-        p4.setFill(Color.LAVENDER);
-        root.getChildren().add(p4);
+        // Render the paddles and balls
+        root.getChildren().add(render.getBallRender());
+        root.getChildren().add(render.getP1Render());
+        root.getChildren().add(render.getP2Render());
+        root.getChildren().add(render.getP3Render());
+        root.getChildren().add(render.getP4Render());
+        root.getChildren().add(render.getPl1Render());
+        root.getChildren().add(render.getPl2Render());
+        root.getChildren().add(render.getPl3Render());
+        root.getChildren().add(render.getPl4Render());
 
         Collision collisionDetection = new Collision();
-        gameObject ballObj = new gameObject(c1, newBall);
-        gameObject paddleObj1 = new gameObject(p1, paddle1);
-        gameObject paddleObj2 = new gameObject(p2, paddle2);
-        gameObject paddleObj3 = new gameObject(p3, paddle3);
-        gameObject paddleObj4 = new gameObject(p4, paddle4);
+        gameObject ballObj = new gameObject(render.getBallRender(), SetUpGame.getBall());
+        gameObject paddleObj1 = new gameObject(render.getP1Render(), SetUpGame.getPlayer1().getPlayerPaddle());
+        gameObject paddleObj2 = new gameObject(render.getP2Render(), SetUpGame.getPlayer2().getPlayerPaddle());
+        gameObject paddleObj3 = new gameObject(render.getP3Render(), SetUpGame.getPlayer3().getPlayerPaddle());
+        gameObject paddleObj4 = new gameObject(render.getP4Render(), SetUpGame.getPlayer4().getPlayerPaddle());
 
         //gameObject[] gameArray;
         ArrayList<gameObject> gameArray = new ArrayList();
@@ -112,147 +69,76 @@ public class MainGame extends Application {
         gameArray.add(paddleObj3);
         gameArray.add(paddleObj4);
 
+        // Testing rectangle wall
+        SetUpGame.SetUpWall(root, gameArray);
 
-        final long startNanoTime = System.nanoTime();
+        //Set up delay boolean
+        final boolean[] delayStart = {true};
+        final long[] seconds = new long[1];
+        final long[] pauseSeconds = new long[1];
+        final long[] startNanoTime = {System.nanoTime()};
+        Text timerLabel = new Text(512, 20, "3");
+        timerLabel.setFont(new Font(16));
+        timerLabel.setFill(Color.WHITE);
+        final long[] gameTime = {120};
+        root.getChildren().add(timerLabel);
 
-        new AnimationTimer()
-        {
-            @Override
-            public void handle(long currentNanoTime)
-            {
+        new AnimationTimer() {
+            public void handle(long currentNanoTime) {
                 // Run the input handle
                 //TODO: this repetitive action can be set in a different function game().tick()?
-                /*HandleIO.handleMovementP1();
-                HandleIO.handleMovementP2();
-                HandleIO.handleMovementP3();
-                HandleIO.handleMovementP4();*/
+                // Determine the time difference
+                long elapsedTime = System.nanoTime() - startNanoTime[0];
+                pauseSeconds[0] = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
+                // Calculate the seconds value;
 
-                if (HandleIO.pauseGame == false) {
-                    HandleIO.keyPressed();
+                if (!delayStart[0]) {
+                    if (HandleIO.isPaused() == false) {
+                        seconds[0] = pauseSeconds[0];
+                        HandleIO.keyPressed();
+                        ControlUnit.moveAllPaddles(render, HandleIO, SetUpGame);
+                        HandleIO.resetPaddle();
 
-                    if (HandleIO.hasMovedLeftP1()) {
-                        if (ControlUnit.movePaddle(paddle1, 0)) {
-                            // Is not horizontal
-                            paddle1.setRotated(false);
-                            p1.setHeight(15);
-                            p1.setWidth(80);
-                        } else {
-                            paddle1.setRotated(true);
-                            p1.setHeight(80);
-                            p1.setWidth(15);
+                        ((Ball) ballObj.getObj()).setMoved(false);
+
+                        for (int pos = 0; pos < gameArray.size(); pos++) {
+                            gameObject temp = gameArray.get(pos);
+                            if (!((Ball) ballObj.getObj()).hasMoved()) {
+                                CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp, root, gameArray, pos);
+                                ControlUnit.moveBall(SetUpGame.getBall(), move);
+                            }
                         }
-                    } else if (HandleIO.hasMovedRightP1()) {
-                        if (ControlUnit.movePaddle(paddle1, 1)) {
-                            // Is not horizontal
-                            paddle1.setRotated(false);
-                            p1.setHeight(15);
-                            p1.setWidth(80);
-                        } else {
-                            paddle1.setRotated(true);
-                            p1.setHeight(80);
-                            p1.setWidth(15);
-                        }
-                    }
 
-                    if (HandleIO.hasMovedLeftP2()) {
-                        if (ControlUnit.movePaddle(paddle2, 0)) {
-                            // Is not horizontal
-                            paddle2.setRotated(false);
-                            p2.setHeight(15);
-                            p2.setWidth(80);
-                        } else {
-                            paddle2.setRotated(true);
-                            p2.setHeight(80);
-                            p2.setWidth(15);
+                        if (!((Ball) ballObj.getObj()).hasMoved()) {
+                            ControlUnit.moveInBounds(SetUpGame.getBall(), collisionDetection);
                         }
-                    } else if (HandleIO.hasMovedRightP2()) {
-                        if (ControlUnit.movePaddle(paddle2, 1)) {
-                            // Is not horizontal
-                            paddle2.setRotated(false);
-                            p2.setHeight(15);
-                            p2.setWidth(80);
-                        } else {
-                            paddle2.setRotated(true);
-                            p2.setHeight(80);
-                            p2.setWidth(15);
+                        render.tickRender();
 
+                        //Declaring
+                        String str = String.valueOf(gameTime[0] -seconds[0]);
+                        timerLabel.setText(str);
+                    } else {
+                        HandleIO.resetPaddle();
+                        HandleIO.keyPressed();
+                        // Don't update seconds, instead store a current time
+                        if (!HandleIO.isPaused()) {
+                            // Change the to the new game time so the game seconds pause doesn't register as elapsed time
+                            gameTime[0] = gameTime[0] - (pauseSeconds[0] - seconds[0]);
                         }
                     }
-
-                    if (HandleIO.hasMovedLeftP3()) {
-                        if (ControlUnit.movePaddle(paddle3, 0)) {
-                            // Is not horizontal
-                            paddle3.setRotated(false);
-                            p3.setHeight(15);
-                            p3.setWidth(80);
-                        } else {
-                            paddle3.setRotated(true);
-                            p3.setHeight(80);
-                            p3.setWidth(15);
-                        }
-                    } else if (HandleIO.hasMovedRightP3()) {
-                        if (ControlUnit.movePaddle(paddle3, 1)) {
-                            // Is not horizontal
-                            paddle3.setRotated(false);
-                            p3.setHeight(15);
-                            p3.setWidth(80);
-                        } else {
-                            paddle3.setRotated(true);
-                            p3.setHeight(80);
-                            p3.setWidth(15);
-                        }
-                    }
-
-                    if (HandleIO.hasMovedLeftP4()) {
-                        if (ControlUnit.movePaddle(paddle4, 0)) {
-                            // Is not horizontal
-                            paddle4.setRotated(false);
-                            p4.setHeight(15);
-                            p4.setWidth(80);
-                        } else {
-                            paddle4.setRotated(true);
-                            p4.setHeight(80);
-                            p4.setWidth(15);
-                        }
-                    } else if (HandleIO.hasMovedRightP4()) {
-                        if (ControlUnit.movePaddle(paddle4, 1)) {
-                            // Is not horizontal
-                            paddle4.setRotated(false);
-                            p4.setHeight(15);
-                            p4.setWidth(80);
-                        } else {
-                            paddle4.setRotated(true);
-                            p4.setHeight(80);
-                            p4.setWidth(15);
-                        }
-                    }
-
-                    HandleIO.resetPaddle();
-
-                    ((Ball) ballObj.getObj()).setMoved(false);
-                    for(gameObject temp:gameArray) {
-                        if(!((Ball) ballObj.getObj()).hasMoved()) {
-                            CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp);
-                            ControlUnit.moveBall(newBall, move);
-                        }
-                    }
-
-                    if(!((Ball) ballObj.getObj()).hasMoved()) {
-                        ControlUnit.moveInBounds(newBall, collisionDetection);
-                    }
-
-
-
-                   // CollisionStruct move = collisionDetection.checkCollisions(ballObj, paddleObj1);
-                   // ControlUnit.moveBall(newBall, move);
-                    c1.relocate((double)newBall.getCurrentPos().getX(), (double)newBall.getCurrentPos().getY());
-                    p1.relocate((double)paddle1.getCurrentPos().getX(), (double)paddle1.getCurrentPos().getY());
-                    p2.relocate((double)paddle2.getCurrentPos().getX(), (double)paddle2.getCurrentPos().getY());
-                    p3.relocate((double)paddle3.getCurrentPos().getX(), (double)paddle3.getCurrentPos().getY());
-                    p4.relocate((double)paddle4.getCurrentPos().getX(), (double)paddle4.getCurrentPos().getY());
-
                 } else {
-                    HandleIO.keyPressed();
+                    seconds[0] = pauseSeconds[0];
+                    // Render the countdown timer
+                    String str = String.valueOf(3-seconds[0]);
+                    timerLabel.setText(str);
+                    if (TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS) > 3) {
+                        // Game has started
+                        delayStart[0] = false;
+                        // Reset the start time
+                        startNanoTime[0] = System.nanoTime();
+                        // Set text to go when the paddles are ready to move
+                        //timerLabel.setText("GO!");
+                    }
                 }
             }
         }.start();

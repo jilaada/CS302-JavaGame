@@ -7,8 +7,9 @@ public class Wall {
 	private ArrayList<Point> brickCoordinates;
 	private ArrayList<Brick> brickList;
 	
-	public Wall(int brickNo) {		
-		this.numberOfBricks = brickNo;
+	public Wall() {
+		this.brickList = new ArrayList<Brick>();
+		this.brickCoordinates = new ArrayList<Point>();
 	}
 
 	public void setNumberOfBricks(int number) {
@@ -37,17 +38,5 @@ public class Wall {
 		} else {
 			return this.brickCoordinates;
 		}
-	}
-	
-	public void constructWall(int brickNo, int quarter) {
-		for(int i = 0; i < brickNo; i++) {
-			//Brick b1 = new Brick(globalLength, globalHeight);
-			Brick b1 = new Brick(40, 10);
-			this.addBrick(b1);
-		}
-
-
-
-
 	}
 }

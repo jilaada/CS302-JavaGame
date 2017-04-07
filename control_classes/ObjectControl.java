@@ -1,7 +1,12 @@
 package control_classes;
-import model_classes.*;
 
-import java.lang.Math;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import model_classes.Ball;
+import model_classes.CollisionStruct;
+import model_classes.Paddle;
+import model_classes.Point;
+import view_classes.RenderView;
 
 public class ObjectControl {
 	
@@ -19,8 +24,8 @@ public class ObjectControl {
 		//TODO: move paddle is a function that will move the paddle according to the inputs
 		int newX, newY;
 		int paddleSpeed = (int)currentPaddle.getPaddleSpeed();
-		int paddleLength = (int)currentPaddle.getPaddleSize();
-		int paddleHeight = (int)currentPaddle.getPaddleHeight();
+		int paddleLength = (int)currentPaddle.getLength();
+		int paddleHeight = (int)currentPaddle.getHeight();
 		Point curPos = currentPaddle.getCurrentPos();
 		Point startPos = currentPaddle.getPaddleStart();
 		Point endPos = currentPaddle.getPaddleEnd();
@@ -256,18 +261,6 @@ public class ObjectControl {
 
 		// Check if there was a collision
 		if (finalPoint != null) {//IF INTERSECTS WORKS BUT THEN BALL WONT COLLIDE (line is from centre)
-
-			System.out.println("Second function:");
-			System.out.print((newX > finalPoint.getX()) && (wallLeft == true));
-			System.out.print(", ");
-			System.out.print(((newX < finalPoint.getX()) && (wallRight == true)));
-			System.out.print(", ");
-			System.out.print((newY > finalPoint.getY()) && (wallTop == true));
-			System.out.print(", ");
-			System.out.print((newY < finalPoint.getY()) && (wallBottom == true));
-			System.out.print("- L R T B ");
-			System.out.print("\n");
-
 			//Since collision has occured, account for it by updating current and previous ball coordinates
 
 			if ((newX > finalPoint.getX()) && (wallLeft == true)) { //Left wall collision
@@ -349,9 +342,129 @@ public class ObjectControl {
 			currentBall.getCurrentPos().setX((int)Math.round(newX));
 			currentBall.getCurrentPos().setY((int)Math.round(newY));
 
-			System.out.println("/////// END");
-			System.out.println("\n");
 
+	}
+
+	public void moveAllPaddles(RenderView render, IOHandle HandleIO, GameSetUp SetUpGame) {
+		Image imgP1Vert = new Image("/images/paddleV1.png");
+		Image imgP1Hori = new Image("/images/paddleH1.png");
+		Image imgP2Vert = new Image("/images/paddleV2.png");
+		Image imgP2Hori = new Image("/images/paddleH2.png");
+		Image imgP3Vert = new Image("/images/paddleV3.png");
+		Image imgP3Hori = new Image("/images/paddleH3.png");
+		Image imgP4Vert = new Image("/images/paddleV4.png");
+		Image imgP4Hori = new Image("/images/paddleH4.png");
+
+		if (HandleIO.hasMovedLeftP1()) {
+			if (movePaddle(SetUpGame.getPlayer1().getPlayerPaddle(), 0)) {
+				// Is not horizontal
+				SetUpGame.getPlayer1().getPlayerPaddle().setRotated(false);
+				render.getP1Render().setHeight(SetUpGame.getPlayer1().getPlayerPaddle().getHeight());
+				render.getP1Render().setWidth(SetUpGame.getPlayer1().getPlayerPaddle().getLength());
+				render.getP1Render().setFill(new ImagePattern(imgP1Hori));
+			} else {
+				SetUpGame.getPlayer1().getPlayerPaddle().setRotated(true);
+				render.getP1Render().setHeight(SetUpGame.getPlayer1().getPlayerPaddle().getLength());
+				render.getP1Render().setWidth(SetUpGame.getPlayer1().getPlayerPaddle().getHeight());
+				render.getP1Render().setFill(new ImagePattern(imgP1Vert));
+			}
+		} else if (HandleIO.hasMovedRightP1()) {
+			if (movePaddle(SetUpGame.getPlayer1().getPlayerPaddle(), 1)) {
+				// Is not horizontal
+				SetUpGame.getPlayer1().getPlayerPaddle().setRotated(false);
+				render.getP1Render().setHeight(SetUpGame.getPlayer1().getPlayerPaddle().getHeight());
+				render.getP1Render().setWidth(SetUpGame.getPlayer1().getPlayerPaddle().getLength());
+				render.getP1Render().setFill(new ImagePattern(imgP1Hori));
+			} else {
+				SetUpGame.getPlayer1().getPlayerPaddle().setRotated(true);
+				render.getP1Render().setHeight(SetUpGame.getPlayer1().getPlayerPaddle().getLength());
+				render.getP1Render().setWidth(SetUpGame.getPlayer1().getPlayerPaddle().getHeight());
+				render.getP1Render().setFill(new ImagePattern(imgP1Vert));
+			}
+		}
+
+		if (HandleIO.hasMovedLeftP2()) {
+			if (movePaddle(SetUpGame.getPlayer2().getPlayerPaddle(), 0)) {
+				// Is not horizontal
+				SetUpGame.getPlayer2().getPlayerPaddle().setRotated(false);
+				render.getP2Render().setHeight(SetUpGame.getPlayer2().getPlayerPaddle().getHeight());
+				render.getP2Render().setWidth(SetUpGame.getPlayer2().getPlayerPaddle().getLength());
+				render.getP2Render().setFill(new ImagePattern(imgP2Hori));
+			} else {
+				SetUpGame.getPlayer2().getPlayerPaddle().setRotated(true);
+				render.getP2Render().setHeight(SetUpGame.getPlayer2().getPlayerPaddle().getLength());
+				render.getP2Render().setWidth(SetUpGame.getPlayer2().getPlayerPaddle().getHeight());
+				render.getP2Render().setFill(new ImagePattern(imgP2Vert));
+			}
+		} else if (HandleIO.hasMovedRightP2()) {
+			if (movePaddle(SetUpGame.getPlayer2().getPlayerPaddle(), 1)) {
+				// Is not horizontal
+				SetUpGame.getPlayer2().getPlayerPaddle().setRotated(false);
+				render.getP2Render().setHeight(SetUpGame.getPlayer2().getPlayerPaddle().getHeight());
+				render.getP2Render().setWidth(SetUpGame.getPlayer2().getPlayerPaddle().getLength());
+				render.getP2Render().setFill(new ImagePattern(imgP2Hori));
+			} else {
+				SetUpGame.getPlayer2().getPlayerPaddle().setRotated(true);
+				render.getP2Render().setHeight(SetUpGame.getPlayer2().getPlayerPaddle().getLength());
+				render.getP2Render().setWidth(SetUpGame.getPlayer2().getPlayerPaddle().getHeight());
+				render.getP2Render().setFill(new ImagePattern(imgP2Vert));
+			}
+		}
+
+		if (HandleIO.hasMovedLeftP3()) {
+			if (movePaddle(SetUpGame.getPlayer3().getPlayerPaddle(), 0)) {
+				// Is not horizontal
+				SetUpGame.getPlayer3().getPlayerPaddle().setRotated(false);
+				render.getP3Render().setHeight(SetUpGame.getPlayer3().getPlayerPaddle().getHeight());
+				render.getP3Render().setWidth(SetUpGame.getPlayer3().getPlayerPaddle().getLength());
+				render.getP3Render().setFill(new ImagePattern(imgP3Hori));
+			} else {
+				SetUpGame.getPlayer3().getPlayerPaddle().setRotated(true);
+				render.getP3Render().setHeight(SetUpGame.getPlayer3().getPlayerPaddle().getLength());
+				render.getP3Render().setWidth(SetUpGame.getPlayer3().getPlayerPaddle().getHeight());
+				render.getP3Render().setFill(new ImagePattern(imgP3Vert));
+			}
+		} else if (HandleIO.hasMovedRightP3()) {
+			if (movePaddle(SetUpGame.getPlayer3().getPlayerPaddle(), 1)) {
+				// Is not horizontal
+				SetUpGame.getPlayer3().getPlayerPaddle().setRotated(false);
+				render.getP3Render().setHeight(SetUpGame.getPlayer3().getPlayerPaddle().getHeight());
+				render.getP3Render().setWidth(SetUpGame.getPlayer3().getPlayerPaddle().getLength());
+				render.getP3Render().setFill(new ImagePattern(imgP3Hori));
+			} else {
+				SetUpGame.getPlayer3().getPlayerPaddle().setRotated(true);
+				render.getP3Render().setHeight(SetUpGame.getPlayer3().getPlayerPaddle().getLength());
+				render.getP3Render().setWidth(SetUpGame.getPlayer3().getPlayerPaddle().getHeight());
+				render.getP3Render().setFill(new ImagePattern(imgP3Vert));
+			}
+		}
+		if (HandleIO.hasMovedLeftP4()) {
+			if (movePaddle(SetUpGame.getPlayer4().getPlayerPaddle(), 0)) {
+				// Is not horizontal
+				SetUpGame.getPlayer4().getPlayerPaddle().setRotated(false);
+				render.getP4Render().setHeight(SetUpGame.getPlayer4().getPlayerPaddle().getHeight());
+				render.getP4Render().setWidth(SetUpGame.getPlayer4().getPlayerPaddle().getLength());
+				render.getP4Render().setFill(new ImagePattern(imgP4Hori));
+			} else {
+				SetUpGame.getPlayer4().getPlayerPaddle().setRotated(true);
+				render.getP4Render().setHeight(SetUpGame.getPlayer4().getPlayerPaddle().getLength());
+				render.getP4Render().setWidth(SetUpGame.getPlayer4().getPlayerPaddle().getHeight());
+				render.getP4Render().setFill(new ImagePattern(imgP4Vert));
+			}
+		} else if (HandleIO.hasMovedRightP4()) {
+			if (movePaddle(SetUpGame.getPlayer4().getPlayerPaddle(), 1)) {
+				// Is not horizontal
+				SetUpGame.getPlayer4().getPlayerPaddle().setRotated(false);
+				render.getP4Render().setHeight(SetUpGame.getPlayer4().getPlayerPaddle().getHeight());
+				render.getP4Render().setWidth(SetUpGame.getPlayer4().getPlayerPaddle().getLength());
+				render.getP4Render().setFill(new ImagePattern(imgP4Hori));
+			} else {
+				SetUpGame.getPlayer4().getPlayerPaddle().setRotated(true);
+				render.getP4Render().setHeight(SetUpGame.getPlayer4().getPlayerPaddle().getLength());
+				render.getP4Render().setWidth(SetUpGame.getPlayer4().getPlayerPaddle().getHeight());
+				render.getP4Render().setFill(new ImagePattern(imgP4Vert));
+			}
+		}
 	}
 
 }

@@ -6,10 +6,12 @@ public class Player {
 	private String playerName;	
 	private Wall playerWall;
 	private Paddle playerPaddle;
+	private Point playerPosition;
 	
-	public Player(String name) {
+	public Player(String name, Point position) {
 		this.playerScore = 0;
 		this.playerName = name;
+		this.playerPosition = position;
 		
 		//Object constructors
 		//this.playerWall = 0;
@@ -33,7 +35,7 @@ public class Player {
 	}
 	
 	//Object implementation
-	protected void addPlayerWall(Wall barrier) {
+	public void addPlayerWall(Wall barrier) {
 		this.playerWall = barrier;
 	}
 	
@@ -49,7 +51,7 @@ public class Player {
 		this.playerPaddle = blocker;
 	}
 	
-	protected Paddle getPlayerPaddle() {
+	public Paddle getPlayerPaddle() {
 		if(this.playerPaddle == null) {
 			return null;
 		} else {
@@ -57,5 +59,12 @@ public class Player {
 		}
 	}
 
+	public int getXPos() {
+		return playerPosition.getX();
+	}
+
+	public int getYPos() {
+		return playerPosition.getY();
+	}
 
 }

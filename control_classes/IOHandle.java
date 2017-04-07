@@ -16,21 +16,22 @@ public class IOHandle {
     // Declare the attributes to be set:
     private boolean movePaddle1right;
     private boolean movePaddle1left;
-    boolean movePaddle2right;
-    boolean movePaddle2left;
-    boolean movePaddle3right;
-    boolean movePaddle3left;
-    boolean movePaddle4right;
-    boolean movePaddle4left;
-    volatile boolean pauseGame;
-    Scene currentScene;
+    private boolean movePaddle2right;
+    private boolean movePaddle2left;
+    private boolean movePaddle3right;
+    private boolean movePaddle3left;
+    private boolean movePaddle4right;
+    private boolean movePaddle4left;
+    private boolean pauseGame;
+    private Scene currentScene;
     private final Set<String> KeysPressed = new HashSet<String>();
 
 
     EventHandler<KeyEvent> startEvent = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
-           // System.out.print(event.getCode().toString());
+
+
             if (!KeysPressed.contains(event.getCode().toString())) {
                 KeysPressed.add(event.getCode().toString());
             }
@@ -49,6 +50,7 @@ public class IOHandle {
     public IOHandle(Scene mainScene) {
         this.currentScene = mainScene;
     }
+
     // Declare the scene events
     // If a key (A) was pressed then move paddle left will be set to 1 others = 0
     public void keyPressed() {
@@ -84,11 +86,12 @@ public class IOHandle {
                 movePaddle4right = true;
             } else if (e == "P") {
                 pauseGame = !pauseGame;
-               // System.out.print(pauseGame);
+
             }
 
         }
     }
+
 
     // Declare getters and setters
     public boolean hasMovedRightP1() {
@@ -124,6 +127,10 @@ public class IOHandle {
 
     public boolean hasMovedLeftP4() {
         return this.movePaddle4left;
+    }
+
+    public boolean isPaused() {
+        return this.pauseGame;
     }
 
     public void resetPaddle() {
