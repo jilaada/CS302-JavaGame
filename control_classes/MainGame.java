@@ -117,6 +117,7 @@ public class MainGame extends Application {
 
         new AnimationTimer()
         {
+            @Override
             public void handle(long currentNanoTime)
             {
                 // Run the input handle

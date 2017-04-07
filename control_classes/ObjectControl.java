@@ -252,25 +252,49 @@ public class ObjectControl {
 		boolean wallLeft = wallArray[0], wallRight = wallArray[1], wallTop = wallArray[2], wallBottom = wallArray[3];
 		Point finalPoint = inp.getFinalPoint();
 		double xDel = Math.abs(currentBall.getPreviousPos().getX() - updatePrevX), yDel = Math.abs(currentBall.getPreviousPos().getY() - updatePrevY);
+		double ballRadius = currentBall.getBallRadius();
 
 		// Check if there was a collision
 		if (finalPoint != null) {//IF INTERSECTS WORKS BUT THEN BALL WONT COLLIDE (line is from centre)
 
+			System.out.println("Second function:");
+			System.out.print((newX > finalPoint.getX()) && (wallLeft == true));
+			System.out.print(", ");
+			System.out.print(((newX < finalPoint.getX()) && (wallRight == true)));
+			System.out.print(", ");
+			System.out.print((newY > finalPoint.getY()) && (wallTop == true));
+			System.out.print(", ");
+			System.out.print((newY < finalPoint.getY()) && (wallBottom == true));
+			System.out.print("- L R T B ");
+			System.out.print("\n");
+
 			//Since collision has occured, account for it by updating current and previous ball coordinates
 
 			if ((newX > finalPoint.getX()) && (wallLeft == true)) { //Left wall collision
-				newX = finalPoint.getX() - (newX - finalPoint.getX());
+//				newX = finalPoint.getX() - (newX - finalPoint.getX());
+//				updatePrevX = newX + xDel;
+				//newX = finalPoint.getX() - ballRadius;
+				newX = finalPoint.getX();
 				updatePrevX = newX + xDel;
 			} else if ((newX < finalPoint.getX()) && (wallRight == true)) { //Right wall collision
-				newX = finalPoint.getX() + (finalPoint.getX() - newX);
+//				newX = finalPoint.getX() + (finalPoint.getX() - newX);
+//				updatePrevX = newX - xDel;
+				//newX = finalPoint.getX() + ballRadius;
+				newX = finalPoint.getX();
 				updatePrevX = newX - xDel;
 			}
 
 			if ((newY > finalPoint.getY()) && (wallTop == true)) { //Top wall collision
-				newY = finalPoint.getY() - (newY - finalPoint.getY());
+//				newY = finalPoint.getY() - (newY - finalPoint.getY());
+//				updatePrevY = newY + yDel;
+				//newY = finalPoint.getY() - ballRadius;
+				newY = finalPoint.getY();
 				updatePrevY = newY + yDel;
 			} else if ((newY < finalPoint.getY()) && (wallBottom == true)) { //Bottom wall collision
-				newY = finalPoint.getY() + (finalPoint.getY() - newY);
+//				newY = finalPoint.getY() + (finalPoint.getY() - newY);
+//				updatePrevY = newY - yDel;
+				//newY = finalPoint.getY() + ballRadius;
+				newY = finalPoint.getY();
 				updatePrevY = newY - yDel;
 			}
 
@@ -324,6 +348,9 @@ public class ObjectControl {
 			// Set the new point with the new x and y coordinate
 			currentBall.getCurrentPos().setX((int)Math.round(newX));
 			currentBall.getCurrentPos().setY((int)Math.round(newY));
+
+			System.out.println("/////// END");
+			System.out.println("\n");
 
 	}
 

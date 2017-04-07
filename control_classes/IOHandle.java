@@ -30,7 +30,7 @@ public class IOHandle {
     EventHandler<KeyEvent> startEvent = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
-            System.out.print(event.getCode().toString());
+           // System.out.print(event.getCode().toString());
             if (!KeysPressed.contains(event.getCode().toString())) {
                 KeysPressed.add(event.getCode().toString());
             }
@@ -84,7 +84,7 @@ public class IOHandle {
                 movePaddle4right = true;
             } else if (e == "P") {
                 pauseGame = !pauseGame;
-                System.out.print(pauseGame);
+               // System.out.print(pauseGame);
             }
 
         }
