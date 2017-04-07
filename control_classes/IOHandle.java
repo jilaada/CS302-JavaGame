@@ -89,6 +89,7 @@ public class IOHandle {
         }
     }
 
+
     // Declare getters and setters
     public boolean hasMovedRightP1() {
         return this.movePaddle1right;

@@ -5,12 +5,13 @@ public class Brick extends modelSuperClass{
 	private double length;
 	private double height;
 	private double area;
-	//private Point coordinate;
 	private Point position;
 	
-	public Brick(double length, double height) {
+	public Brick(double length, double height, Point position) {
 		this.length = length;
 		this.height = height;
+		this.area = length*height;
+		this.position = position;
 	}
 	
 	public void setLength(double length) {
@@ -44,6 +45,7 @@ public class Brick extends modelSuperClass{
 			return this.position;
 		}
 	}
+
 	@Override
 	public modelSuperClass getObj() { return this;}
 	

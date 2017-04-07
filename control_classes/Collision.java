@@ -1,8 +1,5 @@
 package control_classes;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
-import javafx.scene.shape.Shape;
 import model_classes.*;
 
 
@@ -10,7 +7,6 @@ import model_classes.*;
  * Created by niles on 24/03/2017.
  */
 public class Collision {
-    //TODO: This class is a controller and will control collisions
     Collision(){}
 
     public CollisionStruct checkCollisions(gameObject ball, gameObject shape) {

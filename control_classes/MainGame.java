@@ -48,9 +48,6 @@ public class MainGame extends Application {
         root.getChildren().add(render.getP3Render());
         root.getChildren().add(render.getP4Render());
 
-        // Testing rectangle wall
-        SetUpGame.SetUpWall(root);
-
         Collision collisionDetection = new Collision();
         gameObject ballObj = new gameObject(render.getBallRender(), SetUpGame.getBall());
         gameObject paddleObj1 = new gameObject(render.getP1Render(), SetUpGame.getPlayer1().getPlayerPaddle());
@@ -64,6 +61,9 @@ public class MainGame extends Application {
         gameArray.add(paddleObj2);
         gameArray.add(paddleObj3);
         gameArray.add(paddleObj4);
+
+        // Testing rectangle wall
+        SetUpGame.SetUpWall(root, gameArray);
 
 
         final long startNanoTime = System.nanoTime();
