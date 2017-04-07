@@ -5,6 +5,8 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model_classes.Ball;
 import model_classes.CollisionStruct;
@@ -72,17 +74,22 @@ public class MainGame extends Application {
 
         //Set up delay boolean
         final boolean[] delayStart = {true};
-
-        final long startNanoTime = System.nanoTime();
+        final long[] seconds = new long[1];
+        final long[] startNanoTime = {System.nanoTime()};
+        Text timerLabel = new Text(512, 20, "3");
+        timerLabel.setFont(new Font(16));
+        timerLabel.setFill(Color.WHITE);
+        root.getChildren().add(timerLabel);
 
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 // Run the input handle
                 //TODO: this repetitive action can be set in a different function game().tick()?
                 // Determine the time difference
-                long elapsedTime = System.nanoTime() - startNanoTime;
+                long elapsedTime = System.nanoTime() - startNanoTime[0];
                 // Calculate the seconds value;
-                TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
+                seconds[0] = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
+                String str = String.valueOf(3-seconds[0]);
 
                 if (!delayStart[0]) {
                     if (HandleIO.isPaused() == false) {
@@ -108,8 +115,13 @@ public class MainGame extends Application {
                         HandleIO.keyPressed();
                     }
                 } else {
-                    if (TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS) > 3) {
+                    // Render the countdown timer
+                    timerLabel.setText(str);
+                    if (TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS) > 2) {
+                        // Game has started
                         delayStart[0] = false;
+                        // Reset the start time
+                        startNanoTime[0] = System.nanoTime();
                     }
                 }
             }
