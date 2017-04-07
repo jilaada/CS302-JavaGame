@@ -86,7 +86,6 @@ public class MainGame extends Application {
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 // Run the input handle
-                //TODO: this repetitive action can be set in a different function game().tick()?
                 // Determine the time difference
                 long elapsedTime = System.nanoTime() - startNanoTime[0];
                 pauseSeconds[0] = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
@@ -115,6 +114,10 @@ public class MainGame extends Application {
                         //Declaring
                         String str = String.valueOf(gameTime[0] -seconds[0]);
                         timerLabel.setText(str);
+                        if (gameTime[0] - seconds[0] == 0) {
+                            // TODO: something that will end the game
+                            // Transfer to a different screen
+                        }
                     } else {
                         HandleIO.resetPaddle();
                         HandleIO.keyPressed();
