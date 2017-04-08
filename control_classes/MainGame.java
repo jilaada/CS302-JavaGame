@@ -19,6 +19,8 @@ import java.util.concurrent.TimeUnit;
 
 public class MainGame extends Application {
 
+    private AnimationTimer timer;
+
     @Override
     public void start(Stage theStage)
     {
@@ -87,7 +89,7 @@ public class MainGame extends Application {
         final long[] gameTime = {120};
         root.getChildren().add(timerLabel);
 
-        new AnimationTimer() {
+        timer = new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 // Run the input handle
                 // Determine the time difference
@@ -130,7 +132,8 @@ public class MainGame extends Application {
                         // Set the countdown to display 0
                         timerLabel.setText("Game Over");
                         // Display game over dialog
-                        theStage.setScene(endScene);
+                        timer.stop();
+                        //theStage.setScene(endScene);
 
                     } else {
                         HandleIO.resetPaddle();
@@ -158,8 +161,12 @@ public class MainGame extends Application {
                     }
                 }
             }
-        }.start();
+        };
+
+        timer.start();
 
         theStage.show();
+
+        System.out.print("I am here");
     }
 }
