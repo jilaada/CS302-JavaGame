@@ -14,6 +14,9 @@ public class gameObject {
         this.modelTemp = modelTemp;
     }
 
+    public gameObject(modelSuperClass modelTemp) {
+        this.modelTemp = modelTemp;
+    }
 
     public modelSuperClass getObj() {
         return modelTemp;

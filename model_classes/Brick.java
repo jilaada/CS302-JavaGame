@@ -1,17 +1,25 @@
 package model_classes;
 
+import javafx.scene.shape.Shape;
+
 public class Brick extends modelSuperClass{
 
 	private double length;
 	private double height;
 	private double area;
 	private Point position;
+	private Shape sprite;
+	private boolean isRemoved;
+	private static int nextID = 0;
+	private final int myID;
 	
 	public Brick(double length, double height, Point position) {
 		this.length = length;
 		this.height = height;
 		this.area = length*height;
 		this.position = position;
+		this.isRemoved = false;
+		this.myID = nextID++;
 	}
 	
 	public void setLength(double length) {
@@ -51,4 +59,23 @@ public class Brick extends modelSuperClass{
 	@Override
 	public Point getCurrentPos() { return this.getPoint();}
 
+	public Shape getSprite() {
+		return sprite;
+	}
+
+	public void addSprite(Shape sprite) {
+		this.sprite = sprite;
+	}
+
+	public boolean isRemoved() {
+		return isRemoved;
+	}
+
+	public void setRemoved(boolean removed) {
+		isRemoved = removed;
+	}
+
+	public int getID() {
+		return myID;
+	}
 }

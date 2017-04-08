@@ -11,10 +11,13 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model_classes.Ball;
 import model_classes.CollisionStruct;
+import model_classes.Player;
 import model_classes.gameObject;
 import view_classes.RenderView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class MainGame extends Application {
@@ -45,7 +48,10 @@ public class MainGame extends Application {
 
         // Set up rendering of objects
         RenderView render = new RenderView(SetUpGame.getPlayer1(), SetUpGame.getPlayer2(), SetUpGame.getPlayer3(), SetUpGame.getPlayer4(), SetUpGame.getBall());
-        render.SetUpRender();
+
+        //gameObject[] gameArray;
+        ArrayList<gameObject> gameArray = new ArrayList();
+        render.SetUpRender(root, gameArray);
 
         // IO handle declaration
         //TODO: determine the number of players from a previous scene of inputs
@@ -70,8 +76,7 @@ public class MainGame extends Application {
         gameObject paddleObj3 = new gameObject(render.getP3Render(), SetUpGame.getPlayer3().getPlayerPaddle());
         gameObject paddleObj4 = new gameObject(render.getP4Render(), SetUpGame.getPlayer4().getPlayerPaddle());
 
-        //gameObject[] gameArray;
-        ArrayList<gameObject> gameArray = new ArrayList();
+        //Add paddles to gameArray
         gameArray.add(paddleObj1);
         gameArray.add(paddleObj2);
         gameArray.add(paddleObj3);
@@ -110,14 +115,17 @@ public class MainGame extends Application {
 
                         ((Ball) ballObj.getObj()).setMoved(false);
 
+                        //Loop through every object in gameObject array and check for collisions and player deaths
                         for (int pos = 0; pos < gameArray.size(); pos++) {
                             gameObject temp = gameArray.get(pos);
                             if (!((Ball) ballObj.getObj()).hasMoved()) {
                                 CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp, root, gameArray, pos);
                                 ControlUnit.moveBall(SetUpGame.getBall(), move);
+                                ControlUnit.playerDeaths(temp, root, gameArray, pos);
                             }
                         }
 
+                        //If the ball did not collide with any objects earlier, move it within bounds of screen
                         if (!((Ball) ballObj.getObj()).hasMoved()) {
                             ControlUnit.moveInBounds(SetUpGame.getBall(), collisionDetection);
                         }

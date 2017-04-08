@@ -99,8 +99,6 @@ public class Collision {
         boolean[] wallArray = {wallLeft, wallRight, wallTop, wallBottom};
 
 
-
-
         //Find index of closest point
         int index = 0;
         double arrayMin = checkingMin[0];
@@ -145,12 +143,19 @@ public class Collision {
             }
         }
 
-
+        //Check to see if object is a brick, and if it is, remove it from the gameArray and view
         if((finalPoint != null) && (shape.getObj() instanceof Brick)) {
             root.getChildren().remove(shape.getShape());
-            //gameArray.remove(shape.getObj());
+            ((Brick)shape.getObj()).setRemoved(true);
             gameArray.remove(pos);
         }
+
+        //Check to see if object is a player, and if it is, remove it from the gameArray
+        if((finalPoint != null) &&(shape.getObj() instanceof Player)){
+            ((Player) shape.getObj()).setAlive(false);
+            gameArray.remove(pos);
+        }
+
 
         //Prepare output
         double[] newValues = {newX, newY};

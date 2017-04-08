@@ -16,6 +16,8 @@ public class GameSetUp {
     // This class will set up the game objects and bring to render the view
     // This class will store all the game objects to be parsed during the game
     private Player player1, player2, player3, player4;
+    //Player ArrayList
+    private ArrayList<Player> players;
     //private String name1, name2, name3, name4;
     private int numPlayers;
     private Ball ball;
@@ -28,11 +30,30 @@ public class GameSetUp {
         Point p2 = new Point(886, 37);
         Point p3 = new Point(87, 684);
         Point p4 = new Point(886, 684);
-        player1 = new Player("Test1", p1);
-        player2 = new Player("Test2", p2);
-        player3 = new Player("Test3", p3);
-        player4 = new Player("Test4", p4);
+        player1 = new Player("Test1", p1, 50, 50);
+        player2 = new Player("Test2", p2, 50, 50);
+        player3 = new Player("Test3", p3, 50, 50);
+        player4 = new Player("Test4", p4, 50, 50);
         numPlayers = 4;
+        players = new ArrayList<Player>();
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+        players.add(player4);
+
+
+//        gameArray.addAll(this.wallSet1);
+//        gameArray.addAll(this.wallSet2);
+//        gameArray.addAll(this.wallSet3);
+//        gameArray.addAll(this.wallSet4);
+
+//        this.gamePlayers.add(new gameObject(player1));
+//        this.gamePlayers.add(new gameObject(player2));
+//        this.gamePlayers.add(new gameObject(player3));
+//        this.gamePlayers.add(new gameObject(player4));
+//        gameArray.addAll(gamePlayers);
+
+
     }
 
     public void SetUpPlayers() {
@@ -121,6 +142,7 @@ public class GameSetUp {
                     Rectangle w1 = new Rectangle(i,j,25,25);
                     Point p1 = new Point(i, j);
                     Brick b1 = new Brick(25, 25, p1);
+                    b1.addSprite(w1);
                     count = c.nextInt(3);
                     switch (count) {
                         case 0 :    w1.setFill(new ImagePattern(imgp11));
@@ -147,6 +169,7 @@ public class GameSetUp {
                 if (!((i > 777) && (j < 124))) {
                     Rectangle w2 = new Rectangle(i,j,25,25);
                     Brick b2 = new Brick(25, 25, new Point(i, j));
+                    b2.addSprite(w2);
                     count = c.nextInt(3);
                     switch (count) {
                         case 0 :    w2.setFill(new ImagePattern(imgp21));
@@ -171,6 +194,7 @@ public class GameSetUp {
                 if (!((i < 225) && (j > 618))) {
                     Rectangle w3 = new Rectangle(i,j,25,25);
                     Brick b3 = new Brick(25, 25, new Point(i, j));
+                    b3.addSprite(w3);
                     count = c.nextInt(3);
                     switch (count) {
                         case 0 :    w3.setFill(new ImagePattern(imgp31));
@@ -195,6 +219,7 @@ public class GameSetUp {
                 if (!((i > 777) && (j > 618))) {
                     Rectangle w4 = new Rectangle(i,j,25,25);
                     Brick b4 = new Brick(25, 25, new Point(i, j));
+                    b4.addSprite(w4);
                     count = c.nextInt(3);
                     switch (count) {
                         case 0 :    w4.setFill(new ImagePattern(imgp41));
@@ -257,4 +282,17 @@ public class GameSetUp {
     public Player getPlayer4() {
         return this.player4;
     }
+
+    public int getNumPlayers() {
+        return numPlayers;
+    }
+
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return this.players;
+    }
+
 }
