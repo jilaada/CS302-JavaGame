@@ -22,16 +22,18 @@ public class IOHandle {
     private boolean movePaddle3left;
     private boolean movePaddle4right;
     private boolean movePaddle4left;
+    private boolean escGame;
+    private boolean timeOut;
     private boolean pauseGame;
     private Scene currentScene;
+    private int numPlayers;
     private final Set<String> KeysPressed = new HashSet<String>();
 
 
     EventHandler<KeyEvent> startEvent = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
-
-
+            //System.out.print(event.getCode().toString());
             if (!KeysPressed.contains(event.getCode().toString())) {
                 KeysPressed.add(event.getCode().toString());
             }
@@ -47,7 +49,8 @@ public class IOHandle {
     };
 
     // Declare the constructor
-    public IOHandle(Scene mainScene) {
+    public IOHandle(Scene mainScene, int numPlayers) {
+        this.numPlayers = numPlayers;
         this.currentScene = mainScene;
     }
 
@@ -60,35 +63,83 @@ public class IOHandle {
 
     public void HandleMovement(Set<String> pressed) {
         for (String e : pressed) {
-            if (e == "A") {
-                movePaddle1left = true;
-                movePaddle1right = false;
-            } else if (e == "S") {
-                movePaddle1left = false;
-                movePaddle1right = true;
-            } else if (e == "F") {
-                movePaddle2left = true;
-                movePaddle2right = false;
-            } else if (e == "G") {
-                movePaddle2left = false;
-                movePaddle2right = true;
-            } else if (e == "J") {
-                movePaddle3left = true;
-                movePaddle3right = false;
-            } else if (e == "K") {
-                movePaddle3left = false;
-                movePaddle3right = true;
-            } else if (e == "LEFT") {
-                movePaddle4left = true;
-                movePaddle4right = false;
-            } else if (e == "RIGHT") {
-                movePaddle4left = false;
-                movePaddle4right = true;
-            } else if (e == "P") {
-                pauseGame = !pauseGame;
-
+            // Determine the number of players in a game and check for the corresponding key pressed else ignore
+            if (numPlayers == 1) {
+                if (e == "A") {
+                    movePaddle1left = true;
+                    movePaddle1right = false;
+                } else if (e == "S") {
+                    movePaddle1left = false;
+                    movePaddle1right = true;
+                }
+            } else if (numPlayers == 2) {
+                if (e == "A") {
+                    movePaddle1left = true;
+                    movePaddle1right = false;
+                } else if (e == "S") {
+                    movePaddle1left = false;
+                    movePaddle1right = true;
+                } else if (e == "F") {
+                    movePaddle2left = true;
+                    movePaddle2right = false;
+                } else if (e == "G") {
+                    movePaddle2left = false;
+                    movePaddle2right = true;
+                }
+            } else if (numPlayers == 3) {
+                if (e == "A") {
+                    movePaddle1left = true;
+                    movePaddle1right = false;
+                } else if (e == "S") {
+                    movePaddle1left = false;
+                    movePaddle1right = true;
+                } else if (e == "F") {
+                    movePaddle2left = true;
+                    movePaddle2right = false;
+                } else if (e == "G") {
+                    movePaddle2left = false;
+                    movePaddle2right = true;
+                } else if (e == "J") {
+                    movePaddle3left = true;
+                    movePaddle3right = false;
+                } else if (e == "K") {
+                    movePaddle3left = false;
+                    movePaddle3right = true;
+                }
+            } else {
+                if (e == "A") {
+                    movePaddle1left = true;
+                    movePaddle1right = false;
+                } else if (e == "S") {
+                    movePaddle1left = false;
+                    movePaddle1right = true;
+                } else if (e == "F") {
+                    movePaddle2left = true;
+                    movePaddle2right = false;
+                } else if (e == "G") {
+                    movePaddle2left = false;
+                    movePaddle2right = true;
+                } else if (e == "J") {
+                    movePaddle3left = true;
+                    movePaddle3right = false;
+                } else if (e == "K") {
+                    movePaddle3left = false;
+                    movePaddle3right = true;
+                } else if (e == "LEFT") {
+                    movePaddle4left = true;
+                    movePaddle4right = false;
+                } else if (e == "RIGHT") {
+                    movePaddle4left = false;
+                    movePaddle4right = true;
+                }
             }
-
+            if (e == "P") {
+                pauseGame = !pauseGame;
+            } else if (e == "ESCAPE") {
+                escGame = true;
+            } else if (e == "PAGE_DOWN") {
+                timeOut = true;
+            }
         }
     }
 
@@ -129,8 +180,42 @@ public class IOHandle {
         return this.movePaddle4left;
     }
 
+    public void setMovedRightP2() {
+        movePaddle2right = !movePaddle2right;
+    }
+
+    public void setMovedLeftP2() {
+        movePaddle2left = !movePaddle2left;
+    }
+
+    // Declare getters and setters
+    public void setMovedRightP3() {
+        movePaddle3right = !movePaddle3right;
+    }
+
+    public void setMovedLeftP3() {
+        movePaddle3left = !movePaddle3left;
+    }
+
+    // Declare getters and setters
+    public void setMovedRightP4() {
+        movePaddle4right = !movePaddle4right;
+    }
+
+    public void setMovedLeftP4() {
+        movePaddle4left = !movePaddle4left;
+    }
+
     public boolean isPaused() {
         return this.pauseGame;
+    }
+
+    public boolean isEscGame() {
+        return this.escGame;
+    }
+
+    public boolean hasTimeOut() {
+        return this.timeOut;
     }
 
     public void resetPaddle() {
