@@ -1,6 +1,7 @@
 package model_classes;
 
 import java.lang.Math;
+import java.util.Random;
 
 public class Ball extends modelSuperClass{
 
@@ -17,8 +18,9 @@ public class Ball extends modelSuperClass{
 	public Ball(double speed, double rad) {
 		this.ballSpeed = speed;
 		this.ballRad = rad;
-		this.previousPos = new Point(299,299);
-		this.currentPos = new Point(300, 300);
+		Random c = new Random();
+		this.previousPos = new Point(c.nextInt(324) + 350,c.nextInt(268) + 250);
+		this.currentPos = new Point(512, 384);
 		this.moved = false;
 	}
 
