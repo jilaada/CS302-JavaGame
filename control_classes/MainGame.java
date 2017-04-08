@@ -55,7 +55,7 @@ public class MainGame extends Application {
 
         // IO handle declaration
         //TODO: determine the number of players from a previous scene of inputs
-        IOHandle HandleIO = new IOHandle(scene, 1);
+        IOHandle HandleIO = new IOHandle(scene, 4);
 
         // Render the paddles and balls
         root.getChildren().add(render.getBallRender());
