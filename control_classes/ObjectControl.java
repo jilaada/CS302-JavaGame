@@ -1,12 +1,14 @@
 package control_classes;
 
+import javafx.scene.Group;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import model_classes.Ball;
-import model_classes.CollisionStruct;
-import model_classes.Paddle;
-import model_classes.Point;
+import javafx.scene.paint.Paint;
+import model_classes.*;
 import view_classes.RenderView;
+
+import java.util.ArrayList;
 
 public class ObjectControl {
 	
@@ -463,6 +465,48 @@ public class ObjectControl {
 				render.getP4Render().setHeight(SetUpGame.getPlayer4().getPlayerPaddle().getLength());
 				render.getP4Render().setWidth(SetUpGame.getPlayer4().getPlayerPaddle().getHeight());
 				render.getP4Render().setFill(new ImagePattern(imgP4Vert));
+			}
+		}
+	}
+
+
+	//public void playerDeaths(ArrayList<Player> players) {
+	public void playerDeaths(gameObject obj, Group root, ArrayList<gameObject> gameArray, int pos) {
+		if(obj.getObj() instanceof Player) {
+			if(!((Player) obj.getObj()).isAlive()) {
+
+				//Get player walls and bricks
+				Wall wall = ((Player) obj.getObj()).getPlayerWall();
+				ArrayList<Brick> brickList = wall.getBricks();
+
+				//Loop through Brick array and then remove each brick
+				for(Brick temp:brickList) {
+					if(!temp.isRemoved()) {
+						root.getChildren().remove(temp.getSprite());
+						temp.setRemoved(true);
+						this.removeBrick(gameArray,temp);
+					}
+				}
+
+				//Change Player sprite colour
+				obj.getShape().setFill(Color.WHITE);
+
+
+
+			}
+		}
+	}
+
+	//This is an additional class that essentially removes a brick from a gameObject array
+	private void removeBrick (ArrayList<gameObject> gameArray, Brick temp) {
+		for(int i = 0; i < gameArray.size(); i++) {
+			//Check to see if object is of Brick type
+			if(gameArray.get(i).getObj() instanceof Brick) {
+				Brick currentBrick = (Brick) gameArray.get(i).getObj();
+				if(currentBrick.getID() == temp.getID()) {
+					gameArray.remove(i);
+					return;
+				}
 			}
 		}
 	}

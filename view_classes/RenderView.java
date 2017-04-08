@@ -1,5 +1,6 @@
 package view_classes;
 
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -7,6 +8,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import model_classes.Ball;
 import model_classes.Player;
+import model_classes.gameObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jilada on 5/04/17.
@@ -20,6 +24,7 @@ public class RenderView {
     private Ball ball;
     private Circle c1;
     private Rectangle p1, p2, p3, p4, pl1, pl2, pl3, pl4;
+    private ArrayList<gameObject> gamePlayers;
 
 
     public RenderView(Player player1, Player player2, Player player3, Player player4, Ball ball) {
@@ -30,7 +35,7 @@ public class RenderView {
         this.player4 = player4;
     }
 
-    public void SetUpRender() {
+    public void SetUpRender(Group root, ArrayList<gameObject> gameArray) {
         Image imgP1Hori = new Image("/images/paddleH1.png");
         Image imgP2Hori = new Image("/images/paddleH2.png");
         Image imgP3Hori = new Image("/images/paddleH3.png");
@@ -52,14 +57,25 @@ public class RenderView {
         p4.setFill(new ImagePattern(imgP4Hori));
 
         // Render the player's sprite
-        pl1 = new Rectangle((double)player1.getXPos(), (double)player1.getYPos(), 50, 50);
-        pl2 = new Rectangle((double)player2.getXPos(), (double)player2.getYPos(), 50, 50);
-        pl3 = new Rectangle((double)player3.getXPos(), (double)player3.getYPos(), 50, 50);
-        pl4 = new Rectangle((double)player4.getXPos(), (double)player4.getYPos(), 50, 50);
-        pl1.setFill(Color.DODGERBLUE);
-        pl2.setFill(Color.CORAL);
-        pl3.setFill(Color.GREENYELLOW);
-        pl4.setFill(Color.GHOSTWHITE);
+        this.pl1 = new Rectangle((double)player1.getXPos(), (double)player1.getYPos(), (double)player1.getLength(), (double)player1.getHeight());
+        this.pl2 = new Rectangle((double)player2.getXPos(), (double)player2.getYPos(), (double)player2.getLength(), (double)player1.getHeight());
+        this.pl3 = new Rectangle((double)player3.getXPos(), (double)player3.getYPos(), (double)player3.getLength(), (double)player1.getHeight());
+        this.pl4 = new Rectangle((double)player4.getXPos(), (double)player4.getYPos(), (double)player4.getLength(), (double)player1.getHeight());
+        this.pl1.setFill(Color.DODGERBLUE);
+        this.pl2.setFill(Color.CORAL);
+        this.pl3.setFill(Color.GREENYELLOW);
+        this.pl4.setFill(Color.GHOSTWHITE);
+
+        this.gamePlayers = new ArrayList<gameObject>();
+        gamePlayers.add(new gameObject(pl1, this.player1));
+        gamePlayers.add(new gameObject(pl2, this.player2));
+        gamePlayers.add(new gameObject(pl3, this.player3));
+        gamePlayers.add(new gameObject(pl4, this.player4));
+
+        gameArray.addAll(gamePlayers);
+        //for(int i = 0; i < gamePlayers.size(); i++) {
+        //    root.getChildren().add(gamePlayers.get(i).getShape());
+        //}
 
     }
 

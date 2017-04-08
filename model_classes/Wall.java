@@ -24,7 +24,7 @@ public class Wall {
 		this.brickList.add(brick);
 	}
 	
-	public ArrayList<Brick> getBricks(Brick brick) {
+	public ArrayList<Brick> getBricks() {
 		return this.brickList;
 	}
 	
