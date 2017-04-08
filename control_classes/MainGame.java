@@ -48,7 +48,8 @@ public class MainGame extends Application {
         render.SetUpRender();
 
         // IO handle declaration
-        IOHandle HandleIO = new IOHandle(scene);
+        //TODO: determine the number of players from a previous scene of inputs
+        IOHandle HandleIO = new IOHandle(scene, 1);
 
         // Render the paddles and balls
         root.getChildren().add(render.getBallRender());
