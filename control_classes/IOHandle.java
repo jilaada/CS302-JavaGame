@@ -218,6 +218,10 @@ public class IOHandle {
         return this.timeOut;
     }
 
+    public int getNumPlayers() {
+        return this.numPlayers;
+    }
+
     public void resetPaddle() {
         this.movePaddle1left = false;
         this.movePaddle1right = false;

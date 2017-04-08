@@ -50,6 +50,7 @@ public class MainGame extends Application {
         // IO handle declaration
         //TODO: determine the number of players from a previous scene of inputs
         IOHandle HandleIO = new IOHandle(scene, 1);
+        AI aiHandle = new AI(HandleIO, SetUpGame);
 
         // Render the paddles and balls
         root.getChildren().add(render.getBallRender());
@@ -102,6 +103,8 @@ public class MainGame extends Application {
                     if (!HandleIO.isPaused() && !HandleIO.hasTimeOut()) {
                         seconds[0] = pauseSeconds[0];
                         HandleIO.keyPressed();
+                        // Move the AI paddles
+                        aiHandle.moveAI();
                         ControlUnit.moveAllPaddles(render, HandleIO, SetUpGame);
                         HandleIO.resetPaddle();
 
