@@ -19,7 +19,9 @@ public class Ball extends modelSuperClass{
 		this.ballSpeed = speed;
 		this.ballRad = rad;
 		Random c = new Random();
-		this.previousPos = new Point(c.nextInt(324) + 350,c.nextInt(268) + 250);
+		int x = c.nextInt(324) + 350;
+		int y = c.nextInt(268) + 250;
+		this.previousPos = new Point(x, y);
 		this.currentPos = new Point(512, 384);
 		this.moved = false;
 	}

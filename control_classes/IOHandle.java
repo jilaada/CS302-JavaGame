@@ -22,6 +22,8 @@ public class IOHandle {
     private boolean movePaddle3left;
     private boolean movePaddle4right;
     private boolean movePaddle4left;
+    private boolean escGame;
+    private boolean timeOut;
     private boolean pauseGame;
     private Scene currentScene;
     private final Set<String> KeysPressed = new HashSet<String>();
@@ -30,8 +32,7 @@ public class IOHandle {
     EventHandler<KeyEvent> startEvent = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
-
-
+            //System.out.print(event.getCode().toString());
             if (!KeysPressed.contains(event.getCode().toString())) {
                 KeysPressed.add(event.getCode().toString());
             }
@@ -88,6 +89,14 @@ public class IOHandle {
                 pauseGame = !pauseGame;
 
             }
+            if (e == "ESCAPE") {
+                escGame = true;
+                System.out.print(escGame);
+            }
+            if (e == "PAGE_DOWN") {
+                timeOut = true;
+                System.out.print(timeOut);
+            }
 
         }
     }
@@ -131,6 +140,14 @@ public class IOHandle {
 
     public boolean isPaused() {
         return this.pauseGame;
+    }
+
+    public boolean isEscGame() {
+        return this.escGame;
+    }
+
+    public boolean hasTimeOut() {
+        return this.timeOut;
     }
 
     public void resetPaddle() {

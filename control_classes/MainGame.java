@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model_classes.Ball;
 import model_classes.CollisionStruct;
@@ -22,7 +23,10 @@ public class MainGame extends Application {
     public void start(Stage theStage)
     {
         Group root = new Group();
+        Group end = new Group();
+
         Scene scene = new Scene(root, 1024, 768, Color.BLACK);
+        Scene endScene = new Scene(end, 1024, 768, Color.SNOW);
         theStage.setScene( scene );
         theStage.setTitle("Game window");
 
@@ -92,7 +96,7 @@ public class MainGame extends Application {
                 // Calculate the seconds value;
 
                 if (!delayStart[0]) {
-                    if (HandleIO.isPaused() == false) {
+                    if (!HandleIO.isPaused() && !HandleIO.hasTimeOut()) {
                         seconds[0] = pauseSeconds[0];
                         HandleIO.keyPressed();
                         ControlUnit.moveAllPaddles(render, HandleIO, SetUpGame);
@@ -114,12 +118,20 @@ public class MainGame extends Application {
                         render.tickRender();
 
                         //Declaring
-                        String str = String.valueOf(gameTime[0] -seconds[0]);
+                        String str = String.valueOf(gameTime[0] - seconds[0]);
+                        timerLabel.setTextAlignment(TextAlignment.CENTER);
                         timerLabel.setText(str);
                         if (gameTime[0] - seconds[0] == 0) {
                             // TODO: something that will end the game
                             // Transfer to a different screen
                         }
+                    } else if (HandleIO.hasTimeOut() || gameTime[0] - seconds[0] == -1) {
+                        // Display some message
+                        // Set the countdown to display 0
+                        timerLabel.setText("Game Over");
+                        // Display game over dialog
+                        theStage.setScene(endScene);
+
                     } else {
                         HandleIO.resetPaddle();
                         HandleIO.keyPressed();
@@ -132,11 +144,13 @@ public class MainGame extends Application {
                 } else {
                     seconds[0] = pauseSeconds[0];
                     // Render the countdown timer
-                    String str = String.valueOf(3-seconds[0]);
+                    String str = String.valueOf(3 - seconds[0]);
                     timerLabel.setText(str);
                     if (TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS) > 3) {
                         // Game has started
                         delayStart[0] = false;
+                        // Set the timer to a constant
+                        timerLabel.setText("0");
                         // Reset the start time
                         startNanoTime[0] = System.nanoTime();
                         // Set text to go when the paddles are ready to move
