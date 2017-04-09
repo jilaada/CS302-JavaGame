@@ -490,9 +490,6 @@ public class ObjectControl {
 
 				//Change Player sprite colour
 				obj.getShape().setFill(Color.WHITE);
-
-
-
 			}
 		}
 	}

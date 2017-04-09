@@ -33,7 +33,6 @@ public class MainGame extends Application {
         Group end = new Group();
 
         Scene scene = new Scene(root, 1024, 768, Color.BLACK);
-        Scene endScene = new Scene(end, 1024, 768, Color.SNOW);
         //theStage.setScene( scene );
         theStage.setTitle("Game window");
 
@@ -64,6 +63,7 @@ public class MainGame extends Application {
         int[] sceneSwitch = {0}; //0 - Intro, 1 - Game, 2- End
         Scene introScene = addIntroScene(theStage, scene, sceneSwitch);
         theStage.setScene( introScene );
+        Scene endScene = addEndScene(theStage, introScene, sceneSwitch, "You lost");
 
 
         // Render the paddles and balls
@@ -195,6 +195,10 @@ public class MainGame extends Application {
                     }
                 } else if(sceneSwitch[0] == 0) {
                     //
+
+                } else if(sceneSwitch[0] == 2) {
+                    //
+
                 }
                //System.out.println(sceneSwitch[0]);
             }
@@ -277,7 +281,6 @@ public class MainGame extends Application {
         {
             @Override
             public void handle(MouseEvent t) {
-                rect1.setFill(Color.WHITE);
                 primaryStage.setScene(gameScene);
                 switchScene[0] = 1;
             }
@@ -287,7 +290,6 @@ public class MainGame extends Application {
         {
             @Override
             public void handle(MouseEvent t) {
-                rect1.setFill(Color.WHITE);
                 primaryStage.setScene(gameScene);
                 switchScene[0] = 1;
             }
@@ -297,7 +299,7 @@ public class MainGame extends Application {
         {
             @Override
             public void handle(MouseEvent t) {
-                rect2.setFill(Color.WHITE);
+                //TODO: Add implementation
             }
         });
 
@@ -305,7 +307,7 @@ public class MainGame extends Application {
         {
             @Override
             public void handle(MouseEvent t) {
-                rect2.setFill(Color.WHITE);
+                //TODO: Add implementation
             }
         });
 
@@ -313,7 +315,7 @@ public class MainGame extends Application {
         {
             @Override
             public void handle(MouseEvent t) {
-                rect3.setFill(Color.WHITE);
+                //TODO: Add implementation
             }
         });
 
@@ -321,10 +323,80 @@ public class MainGame extends Application {
         {
             @Override
             public void handle(MouseEvent t) {
-                rect3.setFill(Color.WHITE);
+                //TODO: Add implementation
             }
         });
 
         return scene;
     }
+
+
+    private Scene addEndScene(Stage primaryStage, Scene inp, int[] switchScene, String text) {
+        Group root = new Group();
+        //Group end = new Group();
+
+        Scene scene = new Scene(root, 1024, 768, Color.BLACK);
+        Scene introScene = inp;
+
+        //Declare width, height and coordinates of rectangles
+        int width = 1024, height = 768;
+        int widthRect = 700, heightRect = 100;
+        int xRect = (width/2) - (widthRect/2);
+        int yRect = 50;
+
+        Color c2 = Color.web("0x2ECC71");
+
+        Rectangle rect2 = new Rectangle(xRect,(2 * yRect) + heightRect,widthRect,heightRect);
+        rect2.setFill(c2);
+
+        //Round rectangle corners
+        rect2.setArcWidth(20);
+        rect2.setArcHeight(20);
+
+        //Declare Text
+        Label text1 = new Label(text);
+        Label text2 = new Label("Do you want to play again?");
+
+        //Declare fonts, heights and widths of text
+        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+        text1.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        text2.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        text1.setTextFill(Color.WHITE);
+        text2.setTextFill(Color.WHITE);
+
+        double widthText1 = fontLoader.computeStringWidth(text1.getText(), text1.getFont());
+        double widthText2 = fontLoader.computeStringWidth(text2.getText(), text2.getFont());
+
+        //Declare coordinates for text
+        text1.setLayoutX((width/2) - (widthText1/2));
+        text1.setLayoutY(yRect + (heightRect/5));
+        text2.setLayoutX((width/2) - (widthText2/2));
+        text2.setLayoutY((2*yRect) + heightRect + (heightRect/5));
+
+        root.getChildren().addAll(rect2, text1, text2);
+
+        rect2.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                primaryStage.setScene(introScene);
+                switchScene[0] = 0;
+            }
+        });
+
+        text2.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                primaryStage.setScene(introScene);
+                switchScene[0] = 0;
+            }
+        });
+
+        return scene;
+    }
+
+
+
+
 }
