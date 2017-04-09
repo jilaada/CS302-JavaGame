@@ -97,24 +97,6 @@ public class AI {
         // Toggle direction of paddle movement
         Point prevPoint = gameFace.getBall().getPreviousPos();
         Point curPoint = gameFace.getBall().getPreviousPos();
-        Boolean moveDown, moveRight;
-
-        // Check the direction of the ball movement
-        if (curPoint.getX() - prevPoint.getX() > 0) {
-            // Ball is moving right
-            moveRight = true;
-        } else {
-            // Ball is moving left
-            moveRight = false;
-        }
-
-        if (curPoint.getY() - prevPoint.getY() > 0) {
-            // Ball is moving down relative to the screen
-            moveDown = true;
-        } else {
-            // Ball is moving up relative to the screen
-            moveDown = false;
-        }
 
         if (counter == 1) {
             //Check the number of player and where to move it
@@ -142,7 +124,111 @@ public class AI {
                         moveP4Right = true;
                     }
                 } else {
-                    moveAI();
+                    if (moveP4Right) {
+                        // Check if at the end, keep moving right other move left
+                        if (gameFace.getPlayer4().getPlayerPaddle().getCurrentPos().getX() == gameFace.getPlayer4().getPlayerPaddle().getPaddleEnd().getX()) {
+                            handle.setMovedLeftP4();
+                            moveP4Right = false;
+                        } else {
+                            handle.setMovedRightP4();
+                        }
+                    } else {
+                        if (gameFace.getPlayer4().getPlayerPaddle().getCurrentPos().getY() == gameFace.getPlayer4().getPlayerPaddle().getPaddleStart().getY()) {
+                            handle.setMovedRightP4();
+                            moveP4Right = true;
+                        } else {
+                            handle.setMovedLeftP4();
+                        }
+                    }
+                }
+
+                if (numPlayers < 3) {
+                    // At least two AI players
+                    if (curPoint.getX() < gameFace.getPlayer3().getPlayerPaddle().getPaddleBounds().getX()) {
+                        // Ball is in sight of paddle
+                        if (gameFace.getPlayer3().getPlayerPaddle().getCurrentPos().getX() < curPoint.getX()) {
+                            // Move paddle to the right
+                            handle.setMovedRightP3();
+                            moveP3Right = true;
+                        } else if (gameFace.getPlayer3().getPlayerPaddle().getCurrentPos().getX() > curPoint.getX()) {
+                            // Move paddle to the left
+                            handle.setMovedLeftP3();
+                            moveP3Right = false;
+                        }
+                    } else if (curPoint.getY() > gameFace.getPlayer3().getPlayerPaddle().getPaddleBounds().getY()) {
+                        // Ball is in sight of paddle
+                        if (gameFace.getPlayer3().getPlayerPaddle().getCurrentPos().getY() < curPoint.getY()) {
+                            // Move paddle to the right
+                            handle.setMovedRightP3();
+                            moveP3Right = true;
+                        } else if (gameFace.getPlayer3().getPlayerPaddle().getCurrentPos().getY() > curPoint.getY()) {
+                            // Move paddle to the left
+                            handle.setMovedLeftP3();
+                            moveP3Right = false;
+                        }
+                    } else {
+                        // Move ambiguously
+                        if (moveP3Right) {
+                            // Check if at the end, keep moving right other move left
+                            if (gameFace.getPlayer3().getPlayerPaddle().getCurrentPos().getY() == gameFace.getPlayer3().getPlayerPaddle().getPaddleEnd().getY()) {
+                                handle.setMovedLeftP3();
+                                moveP3Right = false;
+                            } else {
+                                handle.setMovedRightP3();
+                            }
+                        } else {
+                            if (gameFace.getPlayer3().getPlayerPaddle().getCurrentPos().getX() == gameFace.getPlayer3().getPlayerPaddle().getPaddleStart().getX()) {
+                                handle.setMovedRightP3();
+                                moveP3Right = true;
+                            } else {
+                                handle.setMovedLeftP3();
+                            }
+                        }
+                    }
+
+                    if (numPlayers < 2) {
+                        if (curPoint.getX() > gameFace.getPlayer2().getPlayerPaddle().getPaddleBounds().getX()) {
+                            // Ball is within horizontal detection
+                            if (gameFace.getPlayer2().getPlayerPaddle().getCurrentPos().getX() < curPoint.getX()) {
+                                // Move to the right
+                                handle.setMovedRightP2();
+                                moveP2Right = true;
+                            } else if (gameFace.getPlayer2().getPlayerPaddle().getCurrentPos().getX() > curPoint.getX()) {
+                                // Move to the left
+                                handle.setMovedLeftP2();
+                                moveP2Right = false;
+                            }
+                        } else if (curPoint.getY() < gameFace.getPlayer2().getPlayerPaddle().getPaddleBounds().getY()) {
+                            // Ball is within vertical detection
+                            if (gameFace.getPlayer2().getPlayerPaddle().getCurrentPos().getY() < curPoint.getY()) {
+                                // Move to the right
+                                handle.setMovedRightP2();
+                                moveP2Right = true;
+                            } else if (gameFace.getPlayer2().getPlayerPaddle().getCurrentPos().getY() > curPoint.getY()) {
+                                // Move to the left
+                                handle.setMovedLeftP2();
+                                moveP2Right = false;
+                            }
+                        } else {
+                            // Move ambiguously
+                            if (moveP2Right) {
+                                // Check if at the end, keep moving right other move left
+                                if (gameFace.getPlayer2().getPlayerPaddle().getCurrentPos().getX() == gameFace.getPlayer2().getPlayerPaddle().getPaddleEnd().getX()) {
+                                    handle.setMovedLeftP2();
+                                    moveP2Right = false;
+                                } else {
+                                    handle.setMovedRightP2();
+                                }
+                            } else {
+                                if (gameFace.getPlayer2().getPlayerPaddle().getCurrentPos().getY() == gameFace.getPlayer2().getPlayerPaddle().getPaddleStart().getY()) {
+                                    handle.setMovedRightP2();
+                                    moveP2Right = true;
+                                } else {
+                                    handle.setMovedLeftP2();
+                                }
+                            }
+                        }
+                    }
                 }
             }
             counter = 0;
