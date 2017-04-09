@@ -1,5 +1,7 @@
 package control_classes;
 
+import model_classes.Point;
+
 /**
  * Created by Jilada on 26/03/17.
  */
@@ -88,5 +90,14 @@ public class AI {
         } else {
             counter++;
         }
+    }
+
+    public void moveAIAdvanced() {
+        // Determine the balls location
+        // Toggle direction of paddle movement
+        Point prevPoint = gameFace.getBall().getPreviousPos();
+        Point curPoint = gameFace.getBall().getPreviousPos();
+
+        
     }
 }
