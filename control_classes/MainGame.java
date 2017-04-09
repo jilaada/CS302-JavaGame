@@ -64,7 +64,7 @@ public class MainGame extends Application {
 
         //Try and add other scene
         int[] sceneSwitch = {0}; //0 - Intro, 1 - Game, 2- End
-        Scene introScene = addSceneStuff(theStage, scene, sceneSwitch);
+        Scene introScene = addIntroScene(theStage, scene, sceneSwitch);
         theStage.setScene( introScene );
 
 
@@ -206,7 +206,7 @@ public class MainGame extends Application {
     }
 
 
-    private Scene addSceneStuff(Stage primaryStage, Scene inp, int[] switchScene) {
+    private Scene addIntroScene(Stage primaryStage, Scene inp, int[] switchScene) {
         Group root = new Group();
         //Group end = new Group();
 
