@@ -99,95 +99,101 @@ public class MainGame extends Application {
         final boolean[] delayStart = {true};
         final long[] seconds = new long[1];
         final long[] pauseSeconds = new long[1];
-        final long[] startNanoTime = {System.nanoTime()};
+        //final long[] startNanoTime = {System.nanoTime()};
+        long[] startNanoTime = new long[1];
         Text timerLabel = new Text(512, 20, "3");
         timerLabel.setFont(new Font(16));
         timerLabel.setFill(Color.WHITE);
         final long[] gameTime = {120};
         root.getChildren().add(timerLabel);
+        boolean[] timeStarted = {false};
 
         timer = new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 // Run the input handle
                 if(sceneSwitch[0] == 1) {
+                    if(timeStarted[0] == false) {
+                        startNanoTime[0] = System.nanoTime();
+                        timeStarted[0] = true;
+                    } else {
+                        // Determine the time difference
+                        long elapsedTime = System.nanoTime() - startNanoTime[0];
+                        pauseSeconds[0] = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
+                        // Calculate the seconds value;
 
-                    // Determine the time difference
-                    long elapsedTime = System.nanoTime() - startNanoTime[0];
-                    pauseSeconds[0] = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
-                    // Calculate the seconds value;
+                        if (!delayStart[0]) {
+                            if (!HandleIO.isPaused() && !HandleIO.hasTimeOut()) {
+                                seconds[0] = pauseSeconds[0];
+                                HandleIO.keyPressed();
+                                // Move the AI paddles
+                                aiHandle.moveAI();
+                                ControlUnit.moveAllPaddles(render, HandleIO, SetUpGame);
+                                HandleIO.resetPaddle();
 
-                    if (!delayStart[0]) {
-                        if (!HandleIO.isPaused() && !HandleIO.hasTimeOut()) {
-                            seconds[0] = pauseSeconds[0];
-                            HandleIO.keyPressed();
-                            // Move the AI paddles
-                            aiHandle.moveAI();
-                            ControlUnit.moveAllPaddles(render, HandleIO, SetUpGame);
-                            HandleIO.resetPaddle();
+                                ((Ball) ballObj.getObj()).setMoved(false);
 
-                            ((Ball) ballObj.getObj()).setMoved(false);
+                                //Loop through every object in gameObject array and check for collisions and player deaths
+                                for (int pos = 0; pos < gameArray.size(); pos++) {
+                                    gameObject temp = gameArray.get(pos);
+                                    if (!((Ball) ballObj.getObj()).hasMoved()) {
+                                        CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp, root, gameArray, pos);
+                                        ControlUnit.moveBall(SetUpGame.getBall(), move);
+                                        ControlUnit.playerDeaths(temp, root, gameArray, pos);
+                                    }
+                                }
 
-                            //Loop through every object in gameObject array and check for collisions and player deaths
-                            for (int pos = 0; pos < gameArray.size(); pos++) {
-                                gameObject temp = gameArray.get(pos);
+                                //If the ball did not collide with any objects earlier, move it within bounds of screen
                                 if (!((Ball) ballObj.getObj()).hasMoved()) {
-                                    CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp, root, gameArray, pos);
-                                    ControlUnit.moveBall(SetUpGame.getBall(), move);
-                                    ControlUnit.playerDeaths(temp, root, gameArray, pos);
+                                    ControlUnit.moveInBounds(SetUpGame.getBall(), collisionDetection);
+                                }
+                                render.tickRender();
+
+                                //Declaring
+                                String str = String.valueOf(gameTime[0] - seconds[0]);
+                                timerLabel.setTextAlignment(TextAlignment.CENTER);
+                                timerLabel.setText(str);
+                                if (gameTime[0] - seconds[0] == 0) {
+                                    // TODO: something that will end the game
+                                    // Transfer to a different screen
+                                }
+                            } else if (HandleIO.hasTimeOut() || gameTime[0] - seconds[0] == -1) {
+                                // Display some message
+                                // Set the countdown to display 0
+                                timerLabel.setText("Game Over");
+                                // Display game over dialog
+                                timer.stop();
+                                theStage.setScene(endScene);
+
+                            } else {
+                                HandleIO.resetPaddle();
+                                HandleIO.keyPressed();
+                                // Don't update seconds, instead store a current time
+                                if (!HandleIO.isPaused()) {
+                                    // Change the to the new game time so the game seconds pause doesn't register as elapsed time
+                                    gameTime[0] = gameTime[0] - (pauseSeconds[0] - seconds[0]);
                                 }
                             }
-
-                            //If the ball did not collide with any objects earlier, move it within bounds of screen
-                            if (!((Ball) ballObj.getObj()).hasMoved()) {
-                                ControlUnit.moveInBounds(SetUpGame.getBall(), collisionDetection);
-                            }
-                            render.tickRender();
-
-                            //Declaring
-                            String str = String.valueOf(gameTime[0] - seconds[0]);
-                            timerLabel.setTextAlignment(TextAlignment.CENTER);
-                            timerLabel.setText(str);
-                            if (gameTime[0] - seconds[0] == 0) {
-                                // TODO: something that will end the game
-                                // Transfer to a different screen
-                            }
-                        } else if (HandleIO.hasTimeOut() || gameTime[0] - seconds[0] == -1) {
-                            // Display some message
-                            // Set the countdown to display 0
-                            timerLabel.setText("Game Over");
-                            // Display game over dialog
-                            timer.stop();
-                            theStage.setScene(endScene);
-
                         } else {
-                            HandleIO.resetPaddle();
-                            HandleIO.keyPressed();
-                            // Don't update seconds, instead store a current time
-                            if (!HandleIO.isPaused()) {
-                                // Change the to the new game time so the game seconds pause doesn't register as elapsed time
-                                gameTime[0] = gameTime[0] - (pauseSeconds[0] - seconds[0]);
+                            seconds[0] = pauseSeconds[0];
+                            // Render the countdown timer
+                            String str = String.valueOf(3 - seconds[0]);
+                            timerLabel.setText(str);
+                            if (TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS) > 3) {
+                                // Game has started
+                                delayStart[0] = false;
+                                // Set the timer to a constant
+                                timerLabel.setText("0");
+                                // Reset the start time
+                                startNanoTime[0] = System.nanoTime();
+                                // Set text to go when the paddles are ready to move
+                                //timerLabel.setText("GO!");
                             }
-                        }
-                    } else {
-                        seconds[0] = pauseSeconds[0];
-                        // Render the countdown timer
-                        String str = String.valueOf(3 - seconds[0]);
-                        timerLabel.setText(str);
-                        if (TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS) > 3) {
-                            // Game has started
-                            delayStart[0] = false;
-                            // Set the timer to a constant
-                            timerLabel.setText("0");
-                            // Reset the start time
-                            startNanoTime[0] = System.nanoTime();
-                            // Set text to go when the paddles are ready to move
-                            //timerLabel.setText("GO!");
                         }
                     }
                 } else if(sceneSwitch[0] == 0) {
                     //
                 }
-               // System.out.println(sceneSwitch[0]);
+               //System.out.println(sceneSwitch[0]);
             }
         };
 
