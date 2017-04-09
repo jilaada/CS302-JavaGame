@@ -97,7 +97,57 @@ public class AI {
         // Toggle direction of paddle movement
         Point prevPoint = gameFace.getBall().getPreviousPos();
         Point curPoint = gameFace.getBall().getPreviousPos();
+        Boolean moveDown, moveRight;
 
-        
+        // Check the direction of the ball movement
+        if (curPoint.getX() - prevPoint.getX() > 0) {
+            // Ball is moving right
+            moveRight = true;
+        } else {
+            // Ball is moving left
+            moveRight = false;
+        }
+
+        if (curPoint.getY() - prevPoint.getY() > 0) {
+            // Ball is moving down relative to the screen
+            moveDown = true;
+        } else {
+            // Ball is moving up relative to the screen
+            moveDown = false;
+        }
+
+        if (counter == 1) {
+            //Check the number of player and where to move it
+            if (numPlayers < 4) {
+                // At least one AI player
+                if (curPoint.getX() > gameFace.getPlayer4().getPlayerPaddle().getPaddleBounds().getX()) {
+                    // Ball is in the line of sight of the paddle
+                    if (gameFace.getPlayer4().getPlayerPaddle().getCurrentPos().getX() < curPoint.getX()) {
+                        // Need to move the paddle right
+                        handle.setMovedRightP4();
+                        moveP4Right = true;
+                    } else if (gameFace.getPlayer4().getPlayerPaddle().getCurrentPos().getX() > curPoint.getX()) {
+                        // Move the paddle left
+                        handle.setMovedLeftP4();
+                        moveP4Right = false;
+                    }
+                } else if (curPoint.getY() > gameFace.getPlayer4().getPlayerPaddle().getPaddleBounds().getY()) {
+                    if (gameFace.getPlayer4().getPlayerPaddle().getCurrentPos().getY() < curPoint.getY()) {
+                        // Move the paddle left
+                        handle.setMovedLeftP4();
+                        moveP4Right = false;
+                    } else if (curPoint.getY() < gameFace.getPlayer4().getPlayerPaddle().getPaddleBounds().getY()) {
+                        // Move the paddle right
+                        handle.setMovedRightP4();
+                        moveP4Right = true;
+                    }
+                } else {
+                    moveAI();
+                }
+            }
+            counter = 0;
+        } else {
+            counter++;
+        }
     }
 }

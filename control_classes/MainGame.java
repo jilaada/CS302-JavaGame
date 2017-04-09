@@ -56,7 +56,7 @@ public class MainGame extends Application {
 
         // IO handle declaration
         //TODO: determine the number of players from a previous scene of inputs
-        IOHandle HandleIO = new IOHandle(scene, 1);
+        IOHandle HandleIO = new IOHandle(scene, 3);
         AI aiHandle = new AI(HandleIO, SetUpGame);
 
         //Try and add other scene
@@ -127,7 +127,7 @@ public class MainGame extends Application {
                                 seconds[0] = pauseSeconds[0];
                                 HandleIO.keyPressed();
                                 // Move the AI paddles
-                                aiHandle.moveAI();
+                                aiHandle.moveAIAdvanced();
                                 ControlUnit.moveAllPaddles(render, HandleIO, SetUpGame);
                                 HandleIO.resetPaddle();
 
