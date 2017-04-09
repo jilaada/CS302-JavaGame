@@ -237,20 +237,6 @@ public class GameSetUp {
 
     }
 
-    /*private String GetName(int playerNumber) {
-        if (playerNumber == 1) {
-            return name1;
-        } else if (playerNumber == 2) {
-            return name2;
-        } else if (playerNumber == 3) {
-            return name3;
-        } else if (playerNumber == 4) {
-            return name4;
-        } else {
-            return null;
-        }
-    }*/
-
     // Return method for ball
     public Ball getBall() {
         return this.ball;

@@ -1,8 +1,3 @@
-////////////////////////////////////////////////////////////////////////
-////////////////// Collision Temp - after bug fix(2.0) /////////////////
-////////////////////////////////////////////////////////////////////////
-
-
 package control_classes;
 
 import javafx.scene.Group;
@@ -17,7 +12,7 @@ import java.util.ArrayList;
 public class Collision {
     Collision(){}
 
-    public CollisionStruct checkCollisions(gameObject ball, gameObject shape, Group root, ArrayList<gameObject> gameArray, int pos) {
+    public CollisionStruct checkCollisions(gameObject ball, gameObject shape, Group root, ArrayList<gameObject> gameArray, int pos, GameSounds sounds) {
 
         double xMin;
         double xMax;
@@ -148,12 +143,19 @@ public class Collision {
             root.getChildren().remove(shape.getShape());
             ((Brick)shape.getObj()).setRemoved(true);
             gameArray.remove(pos);
+            sounds.playBrickSE();
         }
 
         //Check to see if object is a player, and if it is, remove it from the gameArray
         if((finalPoint != null) &&(shape.getObj() instanceof Player)){
             ((Player) shape.getObj()).setAlive(false);
             gameArray.remove(pos);
+            //sounds.playPaddleSE();
+        }
+
+        //Check to see if object is a paddle, and if it is, play audio
+        if((finalPoint != null) &&(shape.getObj() instanceof Paddle)){
+            sounds.playPaddleSE();
         }
 
 

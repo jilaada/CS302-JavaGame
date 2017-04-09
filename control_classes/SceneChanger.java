@@ -26,11 +26,10 @@ public class SceneChanger {
     }
 
     public Scene addIntroScene(Stage primaryStage, Scene inp, int[] switchScene) {
-        Group root = new Group();
-        //Group end = new Group();
 
+        //Initalise Scene and group structure
+        Group root = new Group();
         Scene scene = new Scene(root, 1024, 768, Color.BLACK);
-        //Scene endScene = new Scene(end, 1024, 768, Color.SNOW);
         Scene gameScene = inp;
 
         //Declare width, height and coordinates of rectangles
@@ -39,17 +38,16 @@ public class SceneChanger {
         int xRect = (width/2) - (widthRect/2);
         int yRect = 50;
 
-
+        //Declare colours
         Color c1 = Color.web("0x2962FF");
         Color c2 = Color.web("0x00B5FF");
         Color c3 = Color.web("0x4FC3F7");
 
+        //Initialise rectangle buttons
         Rectangle rect1 = new Rectangle(xRect,yRect,widthRect,heightRect);
         rect1.setFill(c1);
-
         Rectangle rect2 = new Rectangle(xRect,(2 * yRect) + heightRect,widthRect,heightRect);
         rect2.setFill(c2);
-
         Rectangle rect3 = new Rectangle(xRect,(3 * yRect) + (2 * heightRect),widthRect,heightRect);
         rect3.setFill(c3);
 
@@ -87,14 +85,17 @@ public class SceneChanger {
         text3.setLayoutX((width/2) - (widthText3/2));
         text3.setLayoutY((3*yRect) + (2*heightRect) + (heightRect/5));
 
+        //Add shapes and text to scene and then show it
         root.getChildren().addAll(rect1, rect2, rect3, text1, text2, text3);
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        //Add listeners to shapes and text
         rect1.setOnMouseClicked(new EventHandler<MouseEvent>()
         {
             @Override
             public void handle(MouseEvent t) {
+                //Change to to game scene
                 primaryStage.setScene(gameScene);
                 switchScene[0] = 1;
             }
@@ -104,6 +105,7 @@ public class SceneChanger {
         {
             @Override
             public void handle(MouseEvent t) {
+                //Change to to game scene
                 primaryStage.setScene(gameScene);
                 switchScene[0] = 1;
             }
@@ -146,9 +148,9 @@ public class SceneChanger {
 
 
     public Scene addEndScene(Stage primaryStage, Scene inp, int[] switchScene, String text) {
-        Group root = new Group();
-        //Group end = new Group();
 
+        //Initalise Scene and group structure
+        Group root = new Group();
         Scene scene = new Scene(root, 1024, 768, Color.BLACK);
         Scene introScene = inp;
 
@@ -158,8 +160,10 @@ public class SceneChanger {
         int xRect = (width/2) - (widthRect/2);
         int yRect = 50;
 
+        //Declare colours
         Color c2 = Color.web("0x2ECC71");
 
+        //Initialise rectangle buttons
         Rectangle rect2 = new Rectangle(xRect,(2 * yRect) + heightRect,widthRect,heightRect);
         rect2.setFill(c2);
 
@@ -178,6 +182,7 @@ public class SceneChanger {
         text1.setTextFill(Color.WHITE);
         text2.setTextFill(Color.WHITE);
 
+        //Get width of text
         double widthText1 = fontLoader.computeStringWidth(text1.getText(), text1.getFont());
         double widthText2 = fontLoader.computeStringWidth(text2.getText(), text2.getFont());
 
@@ -187,12 +192,15 @@ public class SceneChanger {
         text2.setLayoutX((width/2) - (widthText2/2));
         text2.setLayoutY((2*yRect) + heightRect + (heightRect/5));
 
+        //Add shapes and text to scene
         root.getChildren().addAll(rect2, text1, text2);
 
+        //Add event listeners to rectangles
         rect2.setOnMouseClicked(new EventHandler<MouseEvent>()
         {
             @Override
             public void handle(MouseEvent t) {
+                //Change to introScene
                 primaryStage.setScene(introScene);
                 switchScene[0] = 0;
             }
@@ -202,6 +210,7 @@ public class SceneChanger {
         {
             @Override
             public void handle(MouseEvent t) {
+                //Change to introScene
                 primaryStage.setScene(introScene);
                 switchScene[0] = 0;
             }
