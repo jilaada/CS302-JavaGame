@@ -18,7 +18,7 @@ public class GameSounds {
     public GameSounds() {
 
         //Get path to audio
-        String brickSE = "/sounds/BrickSE.mp3";
+        String brickSE = "/sounds/BrickSE.wav";
         String paddleSE = "/sounds/PaddleSE.mp3";
         String playerSE = "/sounds/PlayerDeathSE.wav";
 
