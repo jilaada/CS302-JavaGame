@@ -1,9 +1,11 @@
 package control_classes;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.net.URISyntaxException;
 
 /**
  * Created by niles on 09/04/2017.
@@ -11,20 +13,32 @@ import java.io.File;
 public class GameSounds {
     MediaPlayer brickPlayer;
     MediaPlayer paddlePlayer;
+    MediaPlayer deathPlayer;
 
     public GameSounds() {
 
         //Get path to audio
-        String brickSE = "sounds/BrickSE.mp3";
-        String paddleSE = "sounds/PaddleSE.mp3";
+        String brickSE = "/sounds/BrickSE.mp3";
+        String paddleSE = "/sounds/PaddleSE.mp3";
+        String playerSE = "/sounds/PlayerDeathSE.wav";
 
         //Get media fom path
-        Media brickSound = new Media(new File(brickSE).toURI().toString());
-        Media paddleSound = new Media(new File(paddleSE).toURI().toString());
+        Media brickSound;
+        Media paddleSound;
+        Media playerSound;
 
-        //Declare media player with audio
-        this.brickPlayer = new MediaPlayer(brickSound);
-        this.paddlePlayer = new MediaPlayer(paddleSound);
+        try {
+            brickSound = new Media(getClass().getResource(brickSE).toURI().toString());
+            paddleSound = new Media(getClass().getResource(paddleSE).toURI().toString());
+            playerSound = new Media(getClass().getResource(playerSE).toURI().toString());
+
+            //Declare media player with audio
+            this.brickPlayer = new MediaPlayer(brickSound);
+            this.paddlePlayer = new MediaPlayer(paddleSound);
+            this.deathPlayer = new MediaPlayer(playerSound);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void playBrickSE() {
@@ -52,7 +66,22 @@ public class GameSounds {
                     paddlePlayer.play();
                 }
             }
-                    .start();
+            .start();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void playDeathSE() {
+        //Play audio in thread
+        try{
+            new Thread() {
+                public void run() {
+                    deathPlayer.stop();
+                    deathPlayer.play();
+                }
+            }
+            .start();
         } catch(Exception ex) {
             ex.printStackTrace();
         }
