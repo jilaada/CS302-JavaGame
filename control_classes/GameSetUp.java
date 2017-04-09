@@ -41,19 +41,6 @@ public class GameSetUp {
         players.add(player3);
         players.add(player4);
 
-
-//        gameArray.addAll(this.wallSet1);
-//        gameArray.addAll(this.wallSet2);
-//        gameArray.addAll(this.wallSet3);
-//        gameArray.addAll(this.wallSet4);
-
-//        this.gamePlayers.add(new gameObject(player1));
-//        this.gamePlayers.add(new gameObject(player2));
-//        this.gamePlayers.add(new gameObject(player3));
-//        this.gamePlayers.add(new gameObject(player4));
-//        gameArray.addAll(gamePlayers);
-
-
     }
 
     public void SetUpPlayers() {
@@ -294,5 +281,6 @@ public class GameSetUp {
     public ArrayList<Player> getPlayers() {
         return this.players;
     }
+
 
 }

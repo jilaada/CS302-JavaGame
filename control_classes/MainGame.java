@@ -19,6 +19,7 @@ import model_classes.gameObject;
 import view_classes.RenderView;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class MainGame extends Application {
@@ -40,6 +41,8 @@ public class MainGame extends Application {
 
         // Set up a new game
         GameSetUp SetUpGame = new GameSetUp();
+        GameStatus status = new GameStatus(SetUpGame.getPlayers());
+
 
         // Add Players via GameSetUp
         //SetUpGame.SetUpPlayers();
@@ -60,9 +63,10 @@ public class MainGame extends Application {
 
         //Try and add other scene
         int[] sceneSwitch = {0}; //0 - Intro, 1 - Game, 2- End
-        Scene introScene = addIntroScene(theStage, scene, sceneSwitch);
+        SceneChanger sceneChanger = new SceneChanger();
+        Scene introScene = sceneChanger.addIntroScene(theStage, scene, sceneSwitch);
         theStage.setScene( introScene );
-        Scene endScene = addEndScene(theStage, introScene, sceneSwitch, "You lost");
+        Scene endScene = sceneChanger.addEndScene(theStage, introScene, sceneSwitch, "You lose");
 
 
         // Render the paddles and balls
@@ -119,7 +123,7 @@ public class MainGame extends Application {
                         // Calculate the seconds value;
 
                         if (!delayStart[0]) {
-                            if (!HandleIO.isPaused() && !HandleIO.hasTimeOut()) {
+                            if (!HandleIO.isPaused() && !(HandleIO.hasTimeOut() || gameTime[0] - seconds[0] == -1 || status.onePlayerAlive())) {
                                 seconds[0] = pauseSeconds[0];
                                 HandleIO.keyPressed();
                                 // Move the AI paddles
@@ -153,12 +157,23 @@ public class MainGame extends Application {
                                     // TODO: something that will end the game
                                     // Transfer to a different screen
                                 }
-                            } else if (HandleIO.hasTimeOut() || gameTime[0] - seconds[0] == -1) {
+                            } else if (HandleIO.hasTimeOut() || gameTime[0] - seconds[0] == -1 || status.onePlayerAlive()) {
                                 // Display some message
                                 // Set the countdown to display 0
+
+                                if(status.onePlayerAlive()) {
+                                    sceneChanger.updateEndText("Player " + status.winningPlayer() + " won");
+                                } else if (gameTime[0] - seconds[0] == -1){
+                                    sceneChanger.updateEndText("Time up");
+                                } else {
+                                    sceneChanger.updateEndText("Game Over");
+                                }
                                 timerLabel.setText("Game Over");
                                 // Display game over dialog
                                 timer.stop();
+
+
+                                //sceneChanger.updateEndText("testing");
                                 theStage.setScene(endScene);
 
                             } else {
@@ -192,7 +207,7 @@ public class MainGame extends Application {
 
                 } else if(sceneSwitch[0] == 2) {
                     //
-
+                    //System.out.println(endScene.getRoot().getChildren());
                 }
                //System.out.println(sceneSwitch[0]);
             }
@@ -205,190 +220,6 @@ public class MainGame extends Application {
     }
 
 
-    private Scene addIntroScene(Stage primaryStage, Scene inp, int[] switchScene) {
-        Group root = new Group();
-        //Group end = new Group();
-
-        Scene scene = new Scene(root, 1024, 768, Color.BLACK);
-        //Scene endScene = new Scene(end, 1024, 768, Color.SNOW);
-        Scene gameScene = inp;
-
-        //Declare width, height and coordinates of rectangles
-        int width = 1024, height = 768;
-        int widthRect = 700, heightRect = 100;
-        int xRect = (width/2) - (widthRect/2);
-        int yRect = 50;
-
-
-        Color c1 = Color.web("0x2962FF");
-        Color c2 = Color.web("0x00B5FF");
-        Color c3 = Color.web("0x4FC3F7");
-
-        Rectangle rect1 = new Rectangle(xRect,yRect,widthRect,heightRect);
-        rect1.setFill(c1);
-
-        Rectangle rect2 = new Rectangle(xRect,(2 * yRect) + heightRect,widthRect,heightRect);
-        rect2.setFill(c2);
-
-        Rectangle rect3 = new Rectangle(xRect,(3 * yRect) + (2 * heightRect),widthRect,heightRect);
-        rect3.setFill(c3);
-
-        //Round rectangle corners
-        rect1.setArcWidth(20);
-        rect1.setArcHeight(20);
-        rect2.setArcWidth(20);
-        rect2.setArcHeight(20);
-        rect3.setArcWidth(20);
-        rect3.setArcHeight(20);
-
-        //Declare Text
-        Label text1 = new Label("Play!");
-        Label text2 = new Label("Options");
-        Label text3 = new Label("About");
-
-        //Decalre fonts, heights and widths of text
-        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
-        text1.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
-        text2.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
-        text3.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
-        text1.setTextFill(Color.WHITE);
-        text2.setTextFill(Color.WHITE);
-        text3.setTextFill(Color.WHITE);
-
-        double widthText1 = fontLoader.computeStringWidth(text1.getText(), text1.getFont());
-        double widthText2 = fontLoader.computeStringWidth(text2.getText(), text2.getFont());
-        double widthText3 = fontLoader.computeStringWidth(text3.getText(), text3.getFont());
-
-        //Declare coordinates for text
-        text1.setLayoutX((width/2) - (widthText1/2));
-        text1.setLayoutY(yRect + (heightRect/5));
-        text2.setLayoutX((width/2) - (widthText2/2));
-        text2.setLayoutY((2*yRect) + heightRect + (heightRect/5));
-        text3.setLayoutX((width/2) - (widthText3/2));
-        text3.setLayoutY((3*yRect) + (2*heightRect) + (heightRect/5));
-
-        root.getChildren().addAll(rect1, rect2, rect3, text1, text2, text3);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        rect1.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent t) {
-                primaryStage.setScene(gameScene);
-                switchScene[0] = 1;
-            }
-        });
-
-        text1.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent t) {
-                primaryStage.setScene(gameScene);
-                switchScene[0] = 1;
-            }
-        });
-
-        rect2.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent t) {
-                //TODO: Add implementation
-            }
-        });
-
-        text2.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent t) {
-                //TODO: Add implementation
-            }
-        });
-
-        rect3.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent t) {
-                //TODO: Add implementation
-            }
-        });
-
-        text3.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent t) {
-                //TODO: Add implementation
-            }
-        });
-
-        return scene;
-    }
-
-
-    private Scene addEndScene(Stage primaryStage, Scene inp, int[] switchScene, String text) {
-        Group root = new Group();
-        //Group end = new Group();
-
-        Scene scene = new Scene(root, 1024, 768, Color.BLACK);
-        Scene introScene = inp;
-
-        //Declare width, height and coordinates of rectangles
-        int width = 1024, height = 768;
-        int widthRect = 700, heightRect = 100;
-        int xRect = (width/2) - (widthRect/2);
-        int yRect = 50;
-
-        Color c2 = Color.web("0x2ECC71");
-
-        Rectangle rect2 = new Rectangle(xRect,(2 * yRect) + heightRect,widthRect,heightRect);
-        rect2.setFill(c2);
-
-        //Round rectangle corners
-        rect2.setArcWidth(20);
-        rect2.setArcHeight(20);
-
-        //Declare Text
-        Label text1 = new Label(text);
-        Label text2 = new Label("Do you want to play again?");
-
-        //Declare fonts, heights and widths of text
-        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
-        text1.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
-        text2.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
-        text1.setTextFill(Color.WHITE);
-        text2.setTextFill(Color.WHITE);
-
-        double widthText1 = fontLoader.computeStringWidth(text1.getText(), text1.getFont());
-        double widthText2 = fontLoader.computeStringWidth(text2.getText(), text2.getFont());
-
-        //Declare coordinates for text
-        text1.setLayoutX((width/2) - (widthText1/2));
-        text1.setLayoutY(yRect + (heightRect/5));
-        text2.setLayoutX((width/2) - (widthText2/2));
-        text2.setLayoutY((2*yRect) + heightRect + (heightRect/5));
-
-        root.getChildren().addAll(rect2, text1, text2);
-
-        rect2.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent t) {
-                primaryStage.setScene(introScene);
-                switchScene[0] = 0;
-            }
-        });
-
-        text2.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent t) {
-                primaryStage.setScene(introScene);
-                switchScene[0] = 0;
-            }
-        });
-
-        return scene;
-    }
 
 
 
