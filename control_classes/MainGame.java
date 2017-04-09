@@ -5,6 +5,7 @@ import com.sun.javafx.tk.Toolkit;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -102,9 +103,12 @@ public class MainGame extends Application {
         final long[] pauseSeconds = new long[1];
         //final long[] startNanoTime = {System.nanoTime()};
         long[] startNanoTime = new long[1];
-        Text timerLabel = new Text(512, 20, "3");
+        Text timerLabel = new Text(512, 20,"3");
         timerLabel.setFont(new Font(16));
         timerLabel.setFill(Color.WHITE);
+        timerLabel.setTextAlignment(TextAlignment.CENTER);
+        timerLabel.setTextOrigin(VPos.CENTER);
+        timerLabel.setX(512 - Math.round(timerLabel.getLayoutBounds().getWidth()/2));
         final long[] gameTime = {120};
         root.getChildren().add(timerLabel);
         boolean[] timeStarted = {false};
@@ -123,11 +127,12 @@ public class MainGame extends Application {
                         // Calculate the seconds value;
 
                         if (!delayStart[0]) {
-                            if (!HandleIO.isPaused() && !(HandleIO.hasTimeOut() || gameTime[0] - seconds[0] == -1 || status.onePlayerAlive())) {
+                            if (!HandleIO.isPaused() && !(HandleIO.hasTimeOut() || gameTime[0] - seconds[0] < 0 || status.onePlayerAlive())) {
+
                                 seconds[0] = pauseSeconds[0];
                                 HandleIO.keyPressed();
                                 // Move the AI paddles
-                                aiHandle.moveAI();
+                                aiHandle.moveAIAdvanced();
                                 ControlUnit.moveAllPaddles(render, HandleIO, SetUpGame);
                                 HandleIO.resetPaddle();
 
@@ -151,24 +156,25 @@ public class MainGame extends Application {
 
                                 //Declaring
                                 String str = String.valueOf(gameTime[0] - seconds[0]);
-                                timerLabel.setTextAlignment(TextAlignment.CENTER);
                                 timerLabel.setText(str);
+                                timerLabel.setX(512 - Math.round(timerLabel.getLayoutBounds().getWidth()/2));
                                 if (gameTime[0] - seconds[0] == 0) {
                                     // TODO: something that will end the game
                                     // Transfer to a different screen
                                 }
-                            } else if (HandleIO.hasTimeOut() || gameTime[0] - seconds[0] == -1 || status.onePlayerAlive()) {
+                            } else if (HandleIO.hasTimeOut() || gameTime[0] - seconds[0] < 0 || status.onePlayerAlive()) {
                                 // Display some message
                                 // Set the countdown to display 0
 
                                 if(status.onePlayerAlive()) {
                                     sceneChanger.updateEndText("Player " + status.winningPlayer() + " won");
-                                } else if (gameTime[0] - seconds[0] == -1){
+                                } else if (gameTime[0] - seconds[0] < 0){
                                     sceneChanger.updateEndText("Time up");
                                 } else {
                                     sceneChanger.updateEndText("Game Over");
                                 }
                                 timerLabel.setText("Game Over");
+                                timerLabel.setX(512 - Math.round(timerLabel.getLayoutBounds().getWidth()/2));
                                 // Display game over dialog
                                 timer.stop();
 
@@ -195,6 +201,7 @@ public class MainGame extends Application {
                                 delayStart[0] = false;
                                 // Set the timer to a constant
                                 timerLabel.setText("0");
+                                timerLabel.setX(512 - Math.round(timerLabel.getLayoutBounds().getWidth()/2));
                                 // Reset the start time
                                 startNanoTime[0] = System.nanoTime();
                                 // Set text to go when the paddles are ready to move
