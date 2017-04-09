@@ -31,16 +31,14 @@ public class MainGame extends Application {
     public void start(Stage theStage)
     {
         Group root = new Group();
-        Group end = new Group();
 
         Scene scene = new Scene(root, 1024, 768, Color.BLACK);
-        //theStage.setScene( scene );
         theStage.setTitle("Game window");
 
         // Set up object control
         ObjectControl ControlUnit = new ObjectControl();
 
-        // Set up a new game
+        // Set up a new game and initialise game status
         GameSetUp SetUpGame = new GameSetUp();
         GameStatus status = new GameStatus(SetUpGame.getPlayers());
 
@@ -97,6 +95,9 @@ public class MainGame extends Application {
         // Testing rectangle wall
         SetUpGame.SetUpWall(root, gameArray);
 
+        //Initialise game sound effect class
+        GameSounds sounds = new GameSounds();
+
         //Set up delay boolean
         final boolean[] delayStart = {true};
         final long[] seconds = new long[1];
@@ -142,7 +143,7 @@ public class MainGame extends Application {
                                 for (int pos = 0; pos < gameArray.size(); pos++) {
                                     gameObject temp = gameArray.get(pos);
                                     if (!((Ball) ballObj.getObj()).hasMoved()) {
-                                        CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp, root, gameArray, pos);
+                                        CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp, root, gameArray, pos, sounds);
                                         ControlUnit.moveBall(SetUpGame.getBall(), move);
                                         ControlUnit.playerDeaths(temp, root, gameArray, pos);
                                     }
