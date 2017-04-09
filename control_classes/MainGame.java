@@ -15,13 +15,10 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 import model_classes.Ball;
 import model_classes.CollisionStruct;
-import model_classes.Player;
 import model_classes.gameObject;
 import view_classes.RenderView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class MainGame extends Application {
@@ -204,8 +201,6 @@ public class MainGame extends Application {
         timer.start();
 
         theStage.show();
-
-        System.out.print("I am here");
 
     }
 
