@@ -147,7 +147,7 @@ public class SceneChanger {
     }
 
 
-    public Scene addEndScene(Stage primaryStage, Scene inp, int[] switchScene, String text) {
+    public Scene addEndScene(Stage primaryStage, Scene inp, int[] switchScene, String text, boolean[] entered) {
 
         //Initalise Scene and group structure
         Group root = new Group();
@@ -173,7 +173,7 @@ public class SceneChanger {
 
         //Declare Text
         Label text1 = new Label(text);
-        Label text2 = new Label("Do you want to play again?");
+        Label text2 = new Label("Main Menu");
 
         //Declare fonts, heights and widths of text
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
@@ -195,6 +195,7 @@ public class SceneChanger {
         //Add shapes and text to scene
         root.getChildren().addAll(rect2, text1, text2);
 
+
         //Add event listeners to rectangles
         rect2.setOnMouseClicked(new EventHandler<MouseEvent>()
         {
@@ -203,6 +204,11 @@ public class SceneChanger {
                 //Change to introScene
                 primaryStage.setScene(introScene);
                 switchScene[0] = 0;
+                entered[0] = false;
+
+                MainGame newGame = new MainGame();
+                newGame.start(primaryStage);
+
             }
         });
 
@@ -213,6 +219,10 @@ public class SceneChanger {
                 //Change to introScene
                 primaryStage.setScene(introScene);
                 switchScene[0] = 0;
+                entered[0] = false;
+
+                MainGame newGame = new MainGame();
+                newGame.start(primaryStage);
             }
         });
 

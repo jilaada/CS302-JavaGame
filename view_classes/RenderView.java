@@ -23,7 +23,7 @@ public class RenderView {
     private Player player4;
     private Ball ball;
     private Circle c1;
-    private Rectangle p1, p2, p3, p4, pl1, pl2, pl3, pl4;
+    private Rectangle p1, p2, p3, p4, pl1, pl2, pl3, pl4, back;
     private ArrayList<gameObject> gamePlayers;
 
 
@@ -44,6 +44,11 @@ public class RenderView {
         Image imgP2 = new Image("/images/player2Sprite.png");
         Image imgP3 = new Image("/images/player3Sprite.png");
         Image imgP4 = new Image("/images/player4Sprite.png");
+        Image backImage = new Image("/images/pipesFloor6.png");
+
+        back = new Rectangle(0,0,1024,768);
+        this.back.setFill(new ImagePattern(backImage));
+
         c1 = new Circle(ball.getCurrentPos().getX(), ball.getCurrentPos().getY(), ball.getBallRadius(), Color.RED);
         this.c1.setFill(Color.RED);
 
@@ -90,6 +95,10 @@ public class RenderView {
         p2.relocate((double)player2.getPlayerPaddle().getCurrentPos().getX(), (double)player2.getPlayerPaddle().getCurrentPos().getY());
         p3.relocate((double)player3.getPlayerPaddle().getCurrentPos().getX(), (double)player3.getPlayerPaddle().getCurrentPos().getY());
         p4.relocate((double)player4.getPlayerPaddle().getCurrentPos().getX(), (double)player4.getPlayerPaddle().getCurrentPos().getY());
+    }
+
+    public Rectangle getBackRender() {
+        return back;
     }
 
     public Circle getBallRender() {

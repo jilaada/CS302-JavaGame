@@ -25,6 +25,8 @@ import java.util.concurrent.TimeUnit;
 
 public class MainGame extends Application {
 
+    public MainGame() {}
+
     private AnimationTimer timer;
 
     @Override
@@ -62,13 +64,15 @@ public class MainGame extends Application {
 
         //Try and add other scene
         int[] sceneSwitch = {0}; //0 - Intro, 1 - Game, 2- End
+        boolean[] entered = {true};
         SceneChanger sceneChanger = new SceneChanger();
         Scene introScene = sceneChanger.addIntroScene(theStage, scene, sceneSwitch);
         theStage.setScene( introScene );
-        Scene endScene = sceneChanger.addEndScene(theStage, introScene, sceneSwitch, "You lose");
+        Scene endScene = sceneChanger.addEndScene(theStage, introScene, sceneSwitch, "You lose", entered);
 
 
         // Render the paddles and balls
+        root.getChildren().add(render.getBackRender());
         root.getChildren().add(render.getBallRender());
         root.getChildren().add(render.getP1Render());
         root.getChildren().add(render.getP2Render());
@@ -116,12 +120,19 @@ public class MainGame extends Application {
 
         timer = new AnimationTimer() {
             public void handle(long currentNanoTime) {
+                //if(sceneSwitch[0] == 1) {System.out.println("LOOP");}
+
                 // Run the input handle
                 if(sceneSwitch[0] == 1) {
                     if(timeStarted[0] == false) {
                         startNanoTime[0] = System.nanoTime();
                         timeStarted[0] = true;
                     } else {
+                        if(entered[0] == false) {
+                            status.resetGame(SetUpGame.getPlayers(), collisionDetection.getDisposable(), gameArray, root);
+                            entered[0] = true; 
+                        }
+
                         // Determine the time difference
                         long elapsedTime = System.nanoTime() - startNanoTime[0];
                         pauseSeconds[0] = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
@@ -176,13 +187,15 @@ public class MainGame extends Application {
                                 }
                                 timerLabel.setText("Game Over");
                                 timerLabel.setX(512 - Math.round(timerLabel.getLayoutBounds().getWidth()/2));
+
+                                sceneSwitch[0] = 2;
+
                                 // Display game over dialog
                                 timer.stop();
 
 
                                 //sceneChanger.updateEndText("testing");
                                 theStage.setScene(endScene);
-
                             } else {
                                 HandleIO.resetPaddle();
                                 HandleIO.keyPressed();
@@ -214,10 +227,9 @@ public class MainGame extends Application {
                     //
 
                 } else if(sceneSwitch[0] == 2) {
-                    //
+                    //entered[0] = false;
                     //System.out.println(endScene.getRoot().getChildren());
                 }
-               //System.out.println(sceneSwitch[0]);
             }
         };
 

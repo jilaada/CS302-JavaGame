@@ -1,6 +1,9 @@
 package control_classes;
 
+import javafx.scene.Group;
+import model_classes.Brick;
 import model_classes.Player;
+import model_classes.gameObject;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.util.ArrayList;
@@ -49,6 +52,30 @@ public class GameStatus {
 
         //Return the number of the winning player
         return this.players.get(index).getPlayerPaddle().getPaddleToken();
+    }
+
+    public void resetGame(ArrayList<Player> players, ArrayList<gameObject> bin, ArrayList<gameObject> gameArray, Group root) {
+
+        //Reset player alive status
+        for(int i = 0; i < players.size(); i++) {
+            players.get(i).setAlive(true);
+        }
+
+        //Restore bin gameObjects and bricks
+        for(int i = 0; i < bin.size(); i++) {
+            gameObject temp = bin.get(i);
+
+            if(temp.getObj() instanceof Brick) {
+                Brick tempBrick = ((Brick) temp.getObj());
+                tempBrick.setRemoved(false);
+                root.getChildren().add(temp.getShape());
+            }
+
+            gameArray.add(temp);
+            bin.remove(i);
+        }
+        System.out.println("hi");
+
     }
 
 }
