@@ -40,8 +40,10 @@ public class RenderView {
         Image imgP2Hori = new Image("/images/paddleH2.png");
         Image imgP3Hori = new Image("/images/paddleH3.png");
         Image imgP4Hori = new Image("/images/paddleH4.png");
-        Image imgP1 = new Image("/images/dna.png");
-        Image imgP2 = new Image("/images/dna2.png");
+        Image imgP1 = new Image("/images/player1Sprite.png");
+        Image imgP2 = new Image("/images/player2Sprite.png");
+        Image imgP3 = new Image("/images/player3Sprite.png");
+        Image imgP4 = new Image("/images/player4Sprite.png");
         c1 = new Circle(ball.getCurrentPos().getX(), ball.getCurrentPos().getY(), ball.getBallRadius(), Color.RED);
         this.c1.setFill(Color.RED);
 
@@ -65,8 +67,8 @@ public class RenderView {
         this.pl4 = new Rectangle((double)player4.getXPos(), (double)player4.getYPos(), (double)player4.getLength(), (double)player1.getHeight());
         this.pl1.setFill(new ImagePattern(imgP1));
         this.pl2.setFill(new ImagePattern(imgP2));
-        this.pl3.setFill(Color.GREENYELLOW);
-        this.pl4.setFill(Color.GHOSTWHITE);
+        this.pl3.setFill(new ImagePattern(imgP3));
+        this.pl4.setFill(new ImagePattern(imgP4));
 
         this.gamePlayers = new ArrayList<gameObject>();
         gamePlayers.add(new gameObject(pl1, this.player1));
