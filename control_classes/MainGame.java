@@ -1,18 +1,14 @@
 package control_classes;
 
-import com.sun.javafx.tk.FontLoader;
-import com.sun.javafx.tk.Toolkit;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model_classes.Ball;
 import model_classes.CollisionStruct;
@@ -20,7 +16,6 @@ import model_classes.gameObject;
 import view_classes.RenderView;
 
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class MainGame extends Application {
@@ -213,6 +208,9 @@ public class MainGame extends Application {
                             } else {
                                 HandleIO.resetPaddle();
                                 HandleIO.keyPressed();
+                                timerLabel.setText("GAME PAUSED");
+                                timerLabel.setX(512 - Math.round(timerLabel.getLayoutBounds().getWidth()/2));
+                                // Display some text with paused
                                 // Don't update seconds, instead store a current time
                                 if (!HandleIO.isPaused()) {
                                     // Change the to the new game time so the game seconds pause doesn't register as elapsed time
