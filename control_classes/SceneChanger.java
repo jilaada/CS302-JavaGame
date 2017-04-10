@@ -147,7 +147,7 @@ public class SceneChanger {
     }
 
 
-    public Scene addEndScene(Stage primaryStage, Scene inp, int[] switchScene, String text, boolean[] entered) {
+    public Scene addEndScene(Stage primaryStage, Scene inp, int[] switchScene, String text) {
 
         //Initalise Scene and group structure
         Group root = new Group();
@@ -204,7 +204,6 @@ public class SceneChanger {
                 //Change to introScene
                 primaryStage.setScene(introScene);
                 switchScene[0] = 0;
-                entered[0] = false;
 
                 MainGame newGame = new MainGame();
                 newGame.start(primaryStage);
@@ -219,7 +218,6 @@ public class SceneChanger {
                 //Change to introScene
                 primaryStage.setScene(introScene);
                 switchScene[0] = 0;
-                entered[0] = false;
 
                 MainGame newGame = new MainGame();
                 newGame.start(primaryStage);

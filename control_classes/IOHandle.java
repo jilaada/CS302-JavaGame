@@ -138,6 +138,7 @@ public class IOHandle {
             } else if (e == "ESCAPE") {
                 escGame = true;
             } else if (e == "PAGE_DOWN") {
+                System.out.println("ITS GOING TRUUUUUUUUUE");
                 timeOut = true;
             }
         }
@@ -210,9 +211,15 @@ public class IOHandle {
         return this.pauseGame;
     }
 
-    public boolean isEscGame() {
-        return this.escGame;
-    }
+    public boolean isEscGame() { return this.escGame; }
+
+    public void setEscGame(boolean in) { this.escGame = in; }
+
+    public void resetHandler() {
+        this.escGame = false;
+        this.timeOut = false;
+        this.pauseGame = false;
+}
 
     public boolean hasTimeOut() {
         return this.timeOut;

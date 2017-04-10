@@ -54,27 +54,36 @@ public class GameStatus {
         return this.players.get(index).getPlayerPaddle().getPaddleToken();
     }
 
-    public void resetGame(ArrayList<Player> players, ArrayList<gameObject> bin, ArrayList<gameObject> gameArray, Group root) {
+    public void resetGame(ArrayList<Player> players, ArrayList<gameObject> bin, ArrayList<gameObject> gameArray, Group root, IOHandle io, boolean[] time, boolean[] delay) {
 
         //Reset player alive status
         for(int i = 0; i < players.size(); i++) {
             players.get(i).setAlive(true);
         }
 
+
+        System.out.println("here");
         //Restore bin gameObjects and bricks
         for(int i = 0; i < bin.size(); i++) {
             gameObject temp = bin.get(i);
-
             if(temp.getObj() instanceof Brick) {
                 Brick tempBrick = ((Brick) temp.getObj());
                 tempBrick.setRemoved(false);
                 root.getChildren().add(temp.getShape());
+                System.out.println(i);
             }
 
             gameArray.add(temp);
             bin.remove(i);
         }
-        System.out.println("hi");
+
+        //Fix esc and timeout
+        io.resetHandler();
+
+        //Reset time
+        time[0] = false;
+        delay[0] = true;
+
 
     }
 

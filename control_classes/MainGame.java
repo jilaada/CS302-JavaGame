@@ -68,7 +68,7 @@ public class MainGame extends Application {
         SceneChanger sceneChanger = new SceneChanger();
         Scene introScene = sceneChanger.addIntroScene(theStage, scene, sceneSwitch);
         theStage.setScene( introScene );
-        Scene endScene = sceneChanger.addEndScene(theStage, introScene, sceneSwitch, "You lose", entered);
+        Scene endScene = sceneChanger.addEndScene(theStage, introScene, sceneSwitch, "You lose");
 
 
         // Render the paddles and balls
@@ -120,23 +120,34 @@ public class MainGame extends Application {
 
         timer = new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                //if(sceneSwitch[0] == 1) {System.out.println("LOOP");}
+                if (HandleIO.isEscGame()) {
+                    HandleIO.setEscGame(false);
+                    System.out.println("here");
+                    MainGame newGame = new MainGame();
+                    newGame.start(theStage);
+                }
+
+                //System.out.println(seconds[0]);
 
                 // Run the input handle
                 if(sceneSwitch[0] == 1) {
+                    if(entered[0] == false) {
+                        status.resetGame(SetUpGame.getPlayers(), collisionDetection.getDisposable(), gameArray, root, HandleIO, timeStarted, delayStart);
+                        entered[0] = true;
+                    }
+
+
+
                     if(timeStarted[0] == false) {
                         startNanoTime[0] = System.nanoTime();
                         timeStarted[0] = true;
                     } else {
-                        if(entered[0] == false) {
-                            status.resetGame(SetUpGame.getPlayers(), collisionDetection.getDisposable(), gameArray, root);
-                            entered[0] = true; 
-                        }
-
-                        // Determine the time difference
+                                                // Determine the time difference
                         long elapsedTime = System.nanoTime() - startNanoTime[0];
                         pauseSeconds[0] = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
                         // Calculate the seconds value;
+                        System.out.println(elapsedTime);
+
 
                         if (!delayStart[0]) {
                             if (!HandleIO.isPaused() && !(HandleIO.hasTimeOut() || gameTime[0] - seconds[0] < 0 || status.onePlayerAlive())) {
@@ -190,8 +201,11 @@ public class MainGame extends Application {
 
                                 sceneSwitch[0] = 2;
 
-                                // Display game over dialog
-                                timer.stop();
+                                System.out.println("INSIDE GAME OVER:");
+                                System.out.println(HandleIO.hasTimeOut());
+                                System.out.println(gameTime[0] - seconds[0] < 0);
+                                System.out.println(status.onePlayerAlive());
+                                System.out.println("End:");
 
 
                                 //sceneChanger.updateEndText("testing");
@@ -204,6 +218,7 @@ public class MainGame extends Application {
                                     // Change the to the new game time so the game seconds pause doesn't register as elapsed time
                                     gameTime[0] = gameTime[0] - (pauseSeconds[0] - seconds[0]);
                                 }
+
                             }
                         } else {
                             seconds[0] = pauseSeconds[0];
@@ -227,7 +242,7 @@ public class MainGame extends Application {
                     //
 
                 } else if(sceneSwitch[0] == 2) {
-                    //entered[0] = false;
+                    entered[0] = false;
                     //System.out.println(endScene.getRoot().getChildren());
                 }
             }
