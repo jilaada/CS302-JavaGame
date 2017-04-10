@@ -6,8 +6,10 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -42,14 +44,18 @@ public class SceneChanger {
         Color c1 = Color.web("0x2962FF");
         Color c2 = Color.web("0x00B5FF");
         Color c3 = Color.web("0x4FC3F7");
+        Image imgbutton1 = new Image("/images/GreenButton.png");
+        Image imgbutton2 = new Image("/images/BlueButton.png");
+        Image imgbutton3 = new Image("/images/WarmGreyButton.png");
+        Image imgbutton4 = new Image("/images/GreenBlueButton.png");
 
         //Initialise rectangle buttons
         Rectangle rect1 = new Rectangle(xRect,yRect,widthRect,heightRect);
-        rect1.setFill(c1);
+        rect1.setFill(new ImagePattern(imgbutton2));
         Rectangle rect2 = new Rectangle(xRect,(2 * yRect) + heightRect,widthRect,heightRect);
-        rect2.setFill(c2);
+        rect2.setFill(new ImagePattern(imgbutton4));
         Rectangle rect3 = new Rectangle(xRect,(3 * yRect) + (2 * heightRect),widthRect,heightRect);
-        rect3.setFill(c3);
+        rect3.setFill(new ImagePattern(imgbutton1));
 
         //Round rectangle corners
         rect1.setArcWidth(20);
