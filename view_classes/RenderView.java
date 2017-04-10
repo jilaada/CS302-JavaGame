@@ -40,6 +40,10 @@ public class RenderView {
         Image imgP2Hori = new Image("/images/paddleH2.png");
         Image imgP3Hori = new Image("/images/paddleH3.png");
         Image imgP4Hori = new Image("/images/paddleH4.png");
+        Image imgP1 = new Image("/images/player1Sprite.png");
+        Image imgP2 = new Image("/images/player2Sprite.png");
+        Image imgP3 = new Image("/images/player3Sprite.png");
+        Image imgP4 = new Image("/images/player4Sprite.png");
         Image backImage = new Image("/images/pipesFloor6.png");
 
         back = new Rectangle(0,0,1024,768);
@@ -66,10 +70,10 @@ public class RenderView {
         this.pl2 = new Rectangle((double)player2.getXPos(), (double)player2.getYPos(), (double)player2.getLength(), (double)player1.getHeight());
         this.pl3 = new Rectangle((double)player3.getXPos(), (double)player3.getYPos(), (double)player3.getLength(), (double)player1.getHeight());
         this.pl4 = new Rectangle((double)player4.getXPos(), (double)player4.getYPos(), (double)player4.getLength(), (double)player1.getHeight());
-        this.pl1.setFill(Color.DODGERBLUE);
-        this.pl2.setFill(Color.CORAL);
-        this.pl3.setFill(Color.GREENYELLOW);
-        this.pl4.setFill(Color.GHOSTWHITE);
+        this.pl1.setFill(new ImagePattern(imgP1));
+        this.pl2.setFill(new ImagePattern(imgP2));
+        this.pl3.setFill(new ImagePattern(imgP3));
+        this.pl4.setFill(new ImagePattern(imgP4));
 
         this.gamePlayers = new ArrayList<gameObject>();
         gamePlayers.add(new gameObject(pl1, this.player1));

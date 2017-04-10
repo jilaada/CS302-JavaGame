@@ -2,9 +2,7 @@ package control_classes;
 
 import javafx.scene.Group;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import model_classes.*;
 import view_classes.RenderView;
 
@@ -477,6 +475,7 @@ public class ObjectControl {
 
 				//Get player walls and bricks
 				Wall wall = ((Player) obj.getObj()).getPlayerWall();
+				int token = ((Player) obj.getObj()).getPlayerPaddle().getPaddleToken();
 				ArrayList<Brick> brickList = wall.getBricks();
 
 				//Loop through Brick array and then remove each brick
@@ -488,8 +487,27 @@ public class ObjectControl {
 					}
 				}
 
+				Image imgDeadPlayer;
+
+				switch (token) {
+					case 1:
+						imgDeadPlayer = new Image("/images/player1SpriteDead.png");
+						break;
+					case 2:
+						imgDeadPlayer = new Image("/images/player2SpriteDead.png");
+						break;
+					case 3:
+						imgDeadPlayer = new Image("/images/player3SpriteDead.png");
+						break;
+					case 4:
+						imgDeadPlayer = new Image("/images/player4SpriteDead.png");
+						break;
+					default:
+						imgDeadPlayer = new Image("/images/player1SpriteDead.png");
+						break;
+				}
 				//Change Player sprite colour
-				obj.getShape().setFill(Color.WHITE);
+				obj.getShape().setFill(new ImagePattern(imgDeadPlayer));
 			}
 		}
 	}
