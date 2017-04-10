@@ -82,9 +82,6 @@ public class RenderView {
         gamePlayers.add(new gameObject(pl4, this.player4));
 
         gameArray.addAll(gamePlayers);
-        //for(int i = 0; i < gamePlayers.size(); i++) {
-        //    root.getChildren().add(gamePlayers.get(i).getShape());
-        //}
 
     }
 
