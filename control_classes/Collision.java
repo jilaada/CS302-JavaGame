@@ -10,6 +10,9 @@ import java.util.ArrayList;
  * Created by niles on 24/03/2017.
  */
 public class Collision {
+
+    private ArrayList<gameObject> disposable = new ArrayList<gameObject>();
+
     Collision(){}
 
     public CollisionStruct checkCollisions(gameObject ball, gameObject shape, Group root, ArrayList<gameObject> gameArray, int pos, GameSounds sounds) {
@@ -142,6 +145,7 @@ public class Collision {
         if((finalPoint != null) && (shape.getObj() instanceof Brick)) {
             root.getChildren().remove(shape.getShape());
             ((Brick)shape.getObj()).setRemoved(true);
+            this.disposable.add(gameArray.get(pos));
             gameArray.remove(pos);
             sounds.playBrickSE();
         }
@@ -149,6 +153,7 @@ public class Collision {
         //Check to see if object is a player, and if it is, remove it from the gameArray
         if((finalPoint != null) &&(shape.getObj() instanceof Player)){
             ((Player) shape.getObj()).setAlive(false);
+            this.disposable.add(gameArray.get(pos));
             gameArray.remove(pos);
             sounds.playDeathSE();
         }
@@ -212,5 +217,9 @@ public class Collision {
 
         Point newValues = new Point((int)newX, (int)newY);
         return newValues;
+    }
+
+    public ArrayList<gameObject> getDisposable() {
+        return this.disposable;
     }
 }
