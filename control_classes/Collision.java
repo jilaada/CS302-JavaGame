@@ -150,7 +150,7 @@ public class Collision {
         if((finalPoint != null) &&(shape.getObj() instanceof Player)){
             ((Player) shape.getObj()).setAlive(false);
             gameArray.remove(pos);
-            //sounds.playPaddleSE();
+            sounds.playDeathSE();
         }
 
         //Check to see if object is a paddle, and if it is, play audio
