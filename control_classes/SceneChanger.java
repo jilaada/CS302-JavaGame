@@ -726,6 +726,13 @@ public class SceneChanger {
         timer = new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 // Run the input handle
+                if(sceneSwitch != gameScreen.END) {
+                    sounds.playBackgroundSE(true);
+                    //sounds.playBackgroundSE(sceneSwitch);
+                } else  {
+                    sounds.playBackgroundSE(false);
+                }
+
                 if (sceneSwitch == gameScreen.GAME) {
 
 
@@ -738,9 +745,10 @@ public class SceneChanger {
 
                     if (HandleIO.isEscGame()) {
                         HandleIO.setEscGame(false);
+                        //sounds.playBackgroundSE(false);
+                        sceneSwitch = gameScreen.END;
                         MainGame newGame = new MainGame();
                         newGame.start(theStage);
-                        sceneSwitch = gameScreen.END;
                     }
 
 
