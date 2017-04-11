@@ -95,9 +95,9 @@ public class SceneChanger {
         rect3.setArcHeight(20);
 
         //Declare Text
-        Label text1 = new Label("Play!");
-        Label text2 = new Label("Controls");
-        Label text3 = new Label("About");
+        Label text1 = new Label("Play!  [Press 1]");
+        Label text2 = new Label("Controls  [Press 2]");
+        Label text3 = new Label("About   [Press 3]");
 
         //Declare fonts, heights and widths of text
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
@@ -133,7 +133,7 @@ public class SceneChanger {
                 primaryStage.setScene(pSelectScene);
             } else if(key.getCode()== KeyCode.DIGIT2) {
                 sceneSwitch = gameScreen.CONTROLS;
-               // primaryStage.setScene(pSelsectScene);
+                primaryStage.setScene(pControlScene);
             }
         });
 
@@ -230,11 +230,12 @@ public class SceneChanger {
         Scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.A) {
                 demoHandle.setMovedLeftP1();
+                System.out.println("Inside shit");
             } else if (key.getCode() == KeyCode.S) {
                 demoHandle.setMovedRightP1();
             }
             demoControl.moveAllPaddles(demoRender, demoHandle, SetUpControlDisplay);
-            HandleIO.resetPaddle();
+            demoHandle.resetPaddle();
         });
 
         return Scene;
@@ -281,10 +282,10 @@ public class SceneChanger {
 
         //Declare Text
         Label text1 = new Label("Number of players:");
-        Label text2 = new Label("1 Player");
-        Label text3 = new Label("2 Player");
-        Label text4 = new Label("3 Player");
-        Label text5 = new Label("4 Player");
+        Label text2 = new Label("1 Player   [1]");
+        Label text3 = new Label("2 Player   [2]");
+        Label text4 = new Label("3 Player   [3]");
+        Label text5 = new Label("4 Player   [4]");
 
         //Decalre fonts, heights and widths of text
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
@@ -325,6 +326,28 @@ public class SceneChanger {
         int[] noOfPlayers = {-1};
 
         //Add listeners to shapes and text
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if(key.getCode()== KeyCode.DIGIT1) {
+                handlePlayerSelect(rect1, text1, noOfPlayers, 1);
+            } else if(key.getCode()== KeyCode.DIGIT2) {
+                handlePlayerSelect(rect1, text1, noOfPlayers, 2);
+            } else if(key.getCode()== KeyCode.DIGIT3) {
+                handlePlayerSelect(rect1, text1, noOfPlayers, 3);
+            } else if(key.getCode()== KeyCode.DIGIT4) {
+                handlePlayerSelect(rect1, text1, noOfPlayers, 4);
+            } else if(key.getCode()== KeyCode.ENTER) {
+                if(noOfPlayers[0] != -1) {
+                    sceneSwitch = gameScreen.GAME;
+                    primaryStage.setScene(gameScene);
+                    timer.start();
+                    checking = true;
+                    playerNO = noOfPlayers[0];
+
+                }
+            }
+        });
+
+
         rect1.setOnMouseClicked(new EventHandler<MouseEvent>()
         {
             @Override
@@ -424,80 +447,18 @@ public class SceneChanger {
         return scene;
     }
 
-
-    public Scene addControlsScene(Stage primaryStage, Scene introScene) {
-        Group root = new Group();
-        Scene scene = new Scene(root, 1024, 768, Color.BLACK);
-
-        //Declare width, height and coordinates of rectangles
-        int width = 1024, height = 768;
-        int widthRect = 700, heightRect = 100;
-        int xRect = (width/2) - (widthRect/2);
-        int yRect = 50;
-
-        //Declare colours
-        Color c1 = Color.web("0x2962FF");
-
-        //Initialise rectangle buttons
-        Rectangle rect1 = new Rectangle(xRect,yRect,widthRect,heightRect);
-        rect1.setFill(Color.GREY);
-        //Round rectangle corners
-        rect1.setArcWidth(20);
-        rect1.setArcHeight(20);
-
-        //Declare Text
-        Label text1 = new Label("Back to Main Menu");
-
-        //Decalre fonts, heights and widths of text
-        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
-        text1.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
-        text1.setTextFill(Color.WHITE);
-
-        double widthText1 = fontLoader.computeStringWidth(text1.getText(), text1.getFont());
-
-        //Declare coordinates for text
-        text1.setLayoutX((width/2) - (widthText1/2));
-        text1.setLayoutY(yRect + (heightRect/5));
-
-        //Add shapes and text to scene and then show it
-        //root.getChildren().addAll(rect1, rect2, rect3, text1, text2, text3);
-        root.getChildren().addAll(rect1, text1);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        //Add listeners to shapes and text
-        rect1.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent t) {
-                sceneSwitch = gameScreen.INTRO;
-                primaryStage.setScene(introScene);
-            }
-        });
-
-        text1.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent t) {
-                sceneSwitch = gameScreen.INTRO;
-                primaryStage.setScene(introScene);
-
-            }
-        });
-
-        return scene;
-    }
-
-
-
-
     public void handlePlayerSelect(Rectangle rect1, Label text1, int[] noOfPlayers, int in) {
 
         Color c3 = Color.web("0x00E676");
 
         noOfPlayers[0] = in;
         rect1.setFill(c3);
-        text1.setText("Play " + noOfPlayers[0] + " player mode");
+        text1.setText("Play " + noOfPlayers[0] + " player mode [Enter]");
+
+        //Update width of text
+        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+        double widthText = fontLoader.computeStringWidth(text1.getText(), text1.getFont());
+        text1.setLayoutX((1024/2) - (widthText/2));
     }
 
     public void addGameScene (Stage theStage, SceneChanger sceneChanger, Scene scene, Scene endScene) {
