@@ -1,10 +1,7 @@
 package control_classes;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
 
-import java.io.File;
 import java.net.URISyntaxException;
 
 /**

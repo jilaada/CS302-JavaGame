@@ -9,7 +9,16 @@ import view_classes.RenderView;
 import java.util.ArrayList;
 
 public class ObjectControl {
-	
+
+	private Image imgP1Vert = new Image("/images/paddleV1.png");
+	private Image imgP1Hori = new Image("/images/paddleH1.png");
+	private Image imgP2Vert = new Image("/images/paddleV2.png");
+	private Image imgP2Hori = new Image("/images/paddleH2.png");
+	private Image imgP3Vert = new Image("/images/paddleV3.png");
+	private Image imgP3Hori = new Image("/images/paddleH3.png");
+	private Image imgP4Vert = new Image("/images/paddleV4.png");
+	private Image imgP4Hori = new Image("/images/paddleH4.png");
+
 	public ObjectControl() {
 		//Add some constructor information
 	}
@@ -346,14 +355,28 @@ public class ObjectControl {
 	}
 
 	public void moveAllPaddles(RenderView render, IOHandle HandleIO, GameSetUp SetUpGame) {
-		Image imgP1Vert = new Image("/images/paddleV1.png");
-		Image imgP1Hori = new Image("/images/paddleH1.png");
-		Image imgP2Vert = new Image("/images/paddleV2.png");
-		Image imgP2Hori = new Image("/images/paddleH2.png");
-		Image imgP3Vert = new Image("/images/paddleV3.png");
-		Image imgP3Hori = new Image("/images/paddleH3.png");
-		Image imgP4Vert = new Image("/images/paddleV4.png");
-		Image imgP4Hori = new Image("/images/paddleH4.png");
+		// Ghosts
+		Image imgGhostRight = new Image("/images/GhostPaddleRight.png");
+		Image imgGhostLeft = new Image("/images/GhostPaddleLeft.png");
+		Image imgGhostUp = new Image("/images/GhostPaddleUp.png");
+		Image imgGhostDown = new Image("/images/GhostPaddleDown.png");
+
+		if (!SetUpGame.getPlayer1().isAlive()) {
+			this.imgP1Hori = imgGhostDown;
+			this.imgP1Vert = imgGhostRight;
+		}
+		if (!SetUpGame.getPlayer2().isAlive()) {
+			this.imgP2Hori = imgGhostDown;
+			this.imgP2Vert = imgGhostLeft;
+		}
+		if (!SetUpGame.getPlayer3().isAlive()) {
+			this.imgP3Hori = imgGhostUp;
+			this.imgP3Vert = imgGhostRight;
+		}
+		if (!SetUpGame.getPlayer4().isAlive()) {
+			this.imgP4Hori = imgGhostUp;
+			this.imgP4Vert = imgGhostLeft;
+		}
 
 		if (HandleIO.hasMovedLeftP1()) {
 			if (movePaddle(SetUpGame.getPlayer1().getPlayerPaddle(), 0)) {
@@ -368,7 +391,8 @@ public class ObjectControl {
 				render.getP1Render().setWidth(SetUpGame.getPlayer1().getPlayerPaddle().getHeight());
 				render.getP1Render().setFill(new ImagePattern(imgP1Vert));
 			}
-		} else if (HandleIO.hasMovedRightP1()) {
+		}
+		if (HandleIO.hasMovedRightP1()) {
 			if (movePaddle(SetUpGame.getPlayer1().getPlayerPaddle(), 1)) {
 				// Is not horizontal
 				SetUpGame.getPlayer1().getPlayerPaddle().setRotated(false);
@@ -383,6 +407,7 @@ public class ObjectControl {
 			}
 		}
 
+
 		if (HandleIO.hasMovedLeftP2()) {
 			if (movePaddle(SetUpGame.getPlayer2().getPlayerPaddle(), 0)) {
 				// Is not horizontal
@@ -396,7 +421,8 @@ public class ObjectControl {
 				render.getP2Render().setWidth(SetUpGame.getPlayer2().getPlayerPaddle().getHeight());
 				render.getP2Render().setFill(new ImagePattern(imgP2Vert));
 			}
-		} else if (HandleIO.hasMovedRightP2()) {
+		}
+		if (HandleIO.hasMovedRightP2()) {
 			if (movePaddle(SetUpGame.getPlayer2().getPlayerPaddle(), 1)) {
 				// Is not horizontal
 				SetUpGame.getPlayer2().getPlayerPaddle().setRotated(false);
@@ -411,6 +437,7 @@ public class ObjectControl {
 			}
 		}
 
+
 		if (HandleIO.hasMovedLeftP3()) {
 			if (movePaddle(SetUpGame.getPlayer3().getPlayerPaddle(), 0)) {
 				// Is not horizontal
@@ -424,7 +451,8 @@ public class ObjectControl {
 				render.getP3Render().setWidth(SetUpGame.getPlayer3().getPlayerPaddle().getHeight());
 				render.getP3Render().setFill(new ImagePattern(imgP3Vert));
 			}
-		} else if (HandleIO.hasMovedRightP3()) {
+		}
+		if (HandleIO.hasMovedRightP3()) {
 			if (movePaddle(SetUpGame.getPlayer3().getPlayerPaddle(), 1)) {
 				// Is not horizontal
 				SetUpGame.getPlayer3().getPlayerPaddle().setRotated(false);
@@ -438,6 +466,8 @@ public class ObjectControl {
 				render.getP3Render().setFill(new ImagePattern(imgP3Vert));
 			}
 		}
+
+
 		if (HandleIO.hasMovedLeftP4()) {
 			if (movePaddle(SetUpGame.getPlayer4().getPlayerPaddle(), 0)) {
 				// Is not horizontal
@@ -451,7 +481,8 @@ public class ObjectControl {
 				render.getP4Render().setWidth(SetUpGame.getPlayer4().getPlayerPaddle().getHeight());
 				render.getP4Render().setFill(new ImagePattern(imgP4Vert));
 			}
-		} else if (HandleIO.hasMovedRightP4()) {
+		}
+		if (HandleIO.hasMovedRightP4()) {
 			if (movePaddle(SetUpGame.getPlayer4().getPlayerPaddle(), 1)) {
 				// Is not horizontal
 				SetUpGame.getPlayer4().getPlayerPaddle().setRotated(false);
