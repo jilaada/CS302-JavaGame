@@ -39,6 +39,7 @@ public class SceneChanger {
 
     private AnimationTimer timer;
     private gameScreen sceneSwitch;
+    private Scene IntroScene;
 
     private IOHandle HandleIO;
     private AI aiHandle;
@@ -194,6 +195,7 @@ public class SceneChanger {
             }
         });
 
+        this.IntroScene = scene;
         return scene;
     }
 
@@ -213,6 +215,7 @@ public class SceneChanger {
         ArrayList<gameObject> gameArray = new ArrayList();
         demoRender.SetUpRender(root, gameArray);
 
+        // Adding these objects to the root
         root.getChildren().add(demoRender.getBackRender());
         root.getChildren().add(demoRender.getBallRender());
         root.getChildren().add(demoRender.getP1Render());
@@ -243,12 +246,24 @@ public class SceneChanger {
         Rectangle rec4 = new Rectangle(699, 568, 300, 150);
         rec4.setFill(new ImagePattern(imgRec4));
         root.getChildren().add(rec4);
+        Image imgBackButton = new Image("/images/ButtonBrightOrange.png");
+        Rectangle backButton = new Rectangle(362, 618, 300, 50);
+        backButton.setFill(new ImagePattern(imgBackButton));
+        root.getChildren().add(backButton);
+
         // Set the positions of the text
         //Declare Text
         Text text1 = new Text("PRESS A TO MOVE LEFT\nPRESS S TO MOVE RIGHT");
         Text text2 = new Text("PRESS F TO MOVE LEFT\nPRESS G TO MOVE RIGHT");
         Text text3 = new Text("PRESS J TO MOVE LEFT\nPRESS K TO MOVE RIGHT");
         Text text4 = new Text("PRESS <- TO MOVE LEFT\nPRESS -> TO MOVE RIGHT");
+        Text titleText = new Text("INSTRUCTIONS");
+        Text infoText = new Text("The aim of the game is to be the last mutant standing!\n" +
+                "Move your paddle to defend your base against the ball.\n" +
+                "When your mutant is dead, the game isn't over for you! You can decide who wins!\n\n" +
+                "PRESS P TO PAUSE THE GAME\n" +
+                "PRESS ESC TO LEAVE THE GAME\n" +
+                "PRESS PAGE DOWN TO SKIP TO THE END\n");
 
         //Declare fonts, heights and widths of text
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
@@ -256,10 +271,14 @@ public class SceneChanger {
         text2.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 20));
         text3.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 20));
         text4.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 20));
+        titleText.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 30));
+        infoText.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 20));
         text1.setFill(Color.WHITE);
         text2.setFill(Color.WHITE);
         text3.setFill(Color.WHITE);
         text4.setFill(Color.WHITE);
+        titleText.setFill(Color.WHITE);
+        infoText.setFill(Color.WHITE);
         text1.setTextAlignment(TextAlignment.CENTER);
         text1.setTextOrigin(VPos.CENTER);
         text2.setTextAlignment(TextAlignment.CENTER);
@@ -268,21 +287,42 @@ public class SceneChanger {
         text3.setTextOrigin(VPos.CENTER);
         text4.setTextAlignment(TextAlignment.CENTER);
         text4.setTextOrigin(VPos.CENTER);
+        titleText.setTextAlignment(TextAlignment.CENTER);
+        titleText.setTextOrigin(VPos.CENTER);
+        infoText.setTextAlignment(TextAlignment.CENTER);
+        infoText.setTextOrigin(VPos.CENTER);
 
         text1.setLayoutX((350/2) - text1.getLayoutBounds().getWidth()/2);
         text1.setLayoutY(250/2);
         text2.setLayoutX((1024 - 350) + ((350/2) - (text2.getLayoutBounds().getWidth()/2)));
         text2.setLayoutY(250/2);
-        text3.setLayoutX((350/2) - text1.getLayoutBounds().getWidth()/2);
+        text3.setLayoutX((350/2) - text3.getLayoutBounds().getWidth()/2);
         text3.setLayoutY((768 - 250) + (250/2));
-        text4.setLayoutX((1024 - 350) + ((350/2) - (text2.getLayoutBounds().getWidth()/2)));
+        text4.setLayoutX((1024 - 350) + ((350/2) - (text4.getLayoutBounds().getWidth()/2)));
         text4.setLayoutY((768 - 250) + (250/2));
+        titleText.setLayoutX((1024/2) - (titleText.getLayoutBounds().getWidth()/2));
+        titleText.setLayoutY(250/2);
+        infoText.setLayoutX((1024/2) - (infoText.getLayoutBounds().getWidth()/2));
+        infoText.setLayoutY(768/2 + 15);
 
         root.getChildren().add(text1);
         root.getChildren().add(text2);
         root.getChildren().add(text3);
         root.getChildren().add(text4);
+        root.getChildren().add(titleText);
+        root.getChildren().add(infoText);
 
+        // Set up the button to go back
+        Text backButtonClick = new Text("BACK TO MAIN MENU");
+        backButtonClick.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 20));
+        backButtonClick.setFill(Color.WHITE);
+        backButtonClick.setTextAlignment(TextAlignment.CENTER);
+        backButtonClick.setTextOrigin(VPos.CENTER);
+        backButtonClick.setLayoutX((1024/2) - backButtonClick.getLayoutBounds().getWidth()/2);
+        backButtonClick.setLayoutY((768 - 250) + (250/2));
+        root.getChildren().add(backButtonClick);
+
+        // Event handlers for keys
         Scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.A) {
                 demoHandle.setMovedLeftP1();
@@ -313,6 +353,27 @@ public class SceneChanger {
             demoRender.tickRender();
         });
 
+        backButton.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                //Change to to game scene
+                    sceneSwitch = gameScreen.INTRO;
+                    primaryStage.setScene(IntroScene);
+            }
+        });
+
+        backButtonClick.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                //Change to to game scene
+                sceneSwitch = gameScreen.INTRO;
+                primaryStage.setScene(IntroScene);
+            }
+        });
+
+        // Add event handlers for events on click
         return Scene;
     }
 
