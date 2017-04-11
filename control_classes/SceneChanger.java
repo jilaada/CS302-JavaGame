@@ -34,7 +34,7 @@ public class SceneChanger {
 
 
     public enum gameScreen {
-        INTRO, CONTROLS, PLAYERSEL, GAME, END
+        INTRO, CONTROLS, PLAYERSEL, ABOUT, GAME, END
     }
 
     private AnimationTimer timer;
@@ -58,7 +58,7 @@ public class SceneChanger {
     }
 
     //public Scene addIntroScene(Stage primaryStage, Scene inp, int[] switchScene) {
-    public Scene addIntroScene(Stage primaryStage, Scene pSelectScene, Scene pControlScene) {
+    public Scene addIntroScene(Stage primaryStage, Scene pSelectScene, Scene pControlScene, Scene pAboutScene) {
 
         //Initalise Scene and group structure
         Group root = new Group();
@@ -129,12 +129,15 @@ public class SceneChanger {
 
 
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            if(key.getCode()== KeyCode.DIGIT1) {
+            if (key.getCode()== KeyCode.DIGIT1) {
                 sceneSwitch = gameScreen.PLAYERSEL;
                 primaryStage.setScene(pSelectScene);
-            } else if(key.getCode()== KeyCode.DIGIT2) {
+            } else if (key.getCode()== KeyCode.DIGIT2) {
                 sceneSwitch = gameScreen.CONTROLS;
                 primaryStage.setScene(pControlScene);
+            } else if (key.getCode()== KeyCode.DIGIT3) {
+                sceneSwitch = gameScreen.ABOUT;
+                primaryStage.setScene(pAboutScene);
             }
         });
 
@@ -184,6 +187,8 @@ public class SceneChanger {
             @Override
             public void handle(MouseEvent t) {
                 //TODO: Add implementation
+                sceneSwitch = gameScreen.ABOUT;
+                primaryStage.setScene(pAboutScene);
             }
         });
 
@@ -192,6 +197,8 @@ public class SceneChanger {
             @Override
             public void handle(MouseEvent t) {
                 //TODO: Add implementation
+                sceneSwitch = gameScreen.ABOUT;
+                primaryStage.setScene(pAboutScene);
             }
         });
 
@@ -377,7 +384,6 @@ public class SceneChanger {
                 primaryStage.setScene(IntroScene);
             }
         });
-
         // Add event handlers for events on click
         return Scene;
     }
@@ -586,6 +592,39 @@ public class SceneChanger {
         });
 
         return scene;
+    }
+
+    public Scene addAboutScene(Stage primaryStage, Scene gameScene) {
+        Group root = new Group();
+        Scene Scene = new Scene(root, 1024, 768, Color.BLACK);
+
+        // Add the developer title box
+        Image imgRec1 = new Image("/images/ButtonRed.png");
+        Rectangle rec1 = new Rectangle(162, 50, 700, 100);
+        rec1.setFill(new ImagePattern(imgRec1));
+        root.getChildren().add(rec1);
+
+        // Add text of the title
+        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+        Text titleText = new Text("ABOUT");
+        titleText.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        titleText.setFill(Color.WHITE);
+        titleText.setTextAlignment(TextAlignment.CENTER);
+        titleText.setTextOrigin(VPos.CENTER);
+        titleText.setLayoutX((1024/2) - (titleText.getLayoutBounds().getWidth()/2));
+        titleText.setLayoutY(95);
+        root.getChildren().add(titleText);
+
+        // Add the text for the developer information
+
+        Scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if (key.getCode() == KeyCode.B) {
+                sceneSwitch = gameScreen.INTRO;
+                primaryStage.setScene(IntroScene);
+            }
+        });
+
+        return Scene;
     }
 
     public void handlePlayerSelect(Rectangle rect1, Label text1, int[] noOfPlayers, int in) {
