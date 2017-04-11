@@ -25,14 +25,16 @@ public class RenderView {
     private Circle c1;
     private Rectangle p1, p2, p3, p4, pl1, pl2, pl3, pl4, back;
     private ArrayList<gameObject> gamePlayers;
+    private Boolean backgroundImage;
 
 
-    public RenderView(Player player1, Player player2, Player player3, Player player4, Ball ball) {
+    public RenderView(Player player1, Player player2, Player player3, Player player4, Ball ball, Boolean backgroundImage) {
         this.ball = ball;
         this.player1 = player1;
         this.player2 = player2;
         this.player3 = player3;
         this.player4 = player4;
+        this.backgroundImage = backgroundImage;
     }
 
     public void SetUpRender(Group root, ArrayList<gameObject> gameArray) {
@@ -47,10 +49,15 @@ public class RenderView {
         Image backImage = new Image("/images/pipesFloor7.jpg");
 
         back = new Rectangle(0,0,1024,768);
-        this.back.setFill(new ImagePattern(backImage));
-
         c1 = new Circle(ball.getCurrentPos().getX(), ball.getCurrentPos().getY(), ball.getBallRadius(), Color.RED);
-        this.c1.setFill(Color.RED);
+
+        if (backgroundImage) {
+            this.back.setFill(new ImagePattern(backImage));
+            this.c1.setFill(Color.RED);
+        } else {
+            this.back.setFill(Color.BLACK);
+            this.c1.setFill(Color.BLACK);
+        }
 
         // Added a rectangle to be painted on the scene
         p1 = new Rectangle(player1.getPlayerPaddle().getCurrentPos().getX(), player1.getPlayerPaddle().getCurrentPos().getY(), player1.getPlayerPaddle().getLength(), player1.getPlayerPaddle().getHeight());

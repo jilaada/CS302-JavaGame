@@ -1,22 +1,10 @@
 package control_classes;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import model_classes.Ball;
-import model_classes.CollisionStruct;
-import model_classes.gameObject;
-import view_classes.RenderView;
-
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class MainGame extends Application {
 
@@ -34,7 +22,8 @@ public class MainGame extends Application {
 
 
         Scene pSelectScene = sceneChanger.addPlayersSelectScene(theStage,gameScene);
-        Scene introScene = sceneChanger.addIntroScene(theStage, pSelectScene);
+        Scene pControlScene = sceneChanger.addControlDisplayScene(theStage,gameScene);
+        Scene introScene = sceneChanger.addIntroScene(theStage, pSelectScene, pControlScene);
 
 
         Scene endScene = sceneChanger.addEndScene(theStage, introScene);

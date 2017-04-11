@@ -9,6 +9,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -55,7 +57,7 @@ public class SceneChanger {
     }
 
     //public Scene addIntroScene(Stage primaryStage, Scene inp, int[] switchScene) {
-    public Scene addIntroScene(Stage primaryStage, Scene pSelectScene) {
+    public Scene addIntroScene(Stage primaryStage, Scene pSelectScene, Scene pControlScene) {
 
         //Initalise Scene and group structure
         Group root = new Group();
@@ -97,7 +99,7 @@ public class SceneChanger {
         Label text2 = new Label("Controls");
         Label text3 = new Label("About");
 
-        //Decalre fonts, heights and widths of text
+        //Declare fonts, heights and widths of text
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
         text1.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
         text2.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
@@ -151,6 +153,8 @@ public class SceneChanger {
             @Override
             public void handle(MouseEvent t) {
                 //TODO: Add implementation
+                sceneSwitch = gameScreen.CONTROLS;
+                primaryStage.setScene(pControlScene);
             }
         });
 
@@ -159,6 +163,8 @@ public class SceneChanger {
             @Override
             public void handle(MouseEvent t) {
                 //TODO: Add implementation
+                sceneSwitch = gameScreen.CONTROLS;
+                primaryStage.setScene(pControlScene);
             }
         });
 
@@ -181,6 +187,48 @@ public class SceneChanger {
         return scene;
     }
 
+    public Scene addControlDisplayScene(Stage primaryStage, Scene gameScene) {
+        Group root = new Group();
+        Scene Scene = new Scene(root, 1024, 768, Color.BLACK);
+
+        // Declare the objects, paddles to be added to the scene
+        // Use the old code?
+        GameSetUp SetUpControlDisplay = new GameSetUp();
+        SetUpControlDisplay.SetUpBall(10, 5);
+        SetUpControlDisplay.SetUpPaddles(15, 80, 15);
+        ObjectControl demoControl = new ObjectControl();
+
+        RenderView demoRender = new RenderView(SetUpControlDisplay.getPlayer1(), SetUpControlDisplay.getPlayer2(), SetUpControlDisplay.getPlayer3(), SetUpControlDisplay.getPlayer4(), SetUpControlDisplay.getBall(), false);
+
+        ArrayList<gameObject> gameArray = new ArrayList();
+        demoRender.SetUpRender(root, gameArray);
+
+        root.getChildren().add(demoRender.getBackRender());
+        root.getChildren().add(demoRender.getBallRender());
+        root.getChildren().add(demoRender.getP1Render());
+        root.getChildren().add(demoRender.getP2Render());
+        root.getChildren().add(demoRender.getP3Render());
+        root.getChildren().add(demoRender.getP4Render());
+        root.getChildren().add(demoRender.getPl1Render());
+        root.getChildren().add(demoRender.getPl2Render());
+        root.getChildren().add(demoRender.getPl3Render());
+        root.getChildren().add(demoRender.getPl4Render());
+
+        IOHandle demoHandle = new IOHandle(Scene, 4);
+
+
+        Scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if (key.getCode() == KeyCode.A) {
+                demoHandle.setMovedLeftP1();
+            } else if (key.getCode() == KeyCode.S) {
+                demoHandle.setMovedRightP1();
+            }
+            demoControl.moveAllPaddles(demoRender, demoHandle, SetUpControlDisplay);
+            HandleIO.resetPaddle();
+        });
+
+        return Scene;
+    }
 
     public Scene addPlayersSelectScene(Stage primaryStage, Scene gameScene) {
         Group root = new Group();
@@ -395,7 +443,7 @@ public class SceneChanger {
         SetUpGame.SetUpPaddles(15, 80, 20);
 
         // Set up rendering of objects
-        RenderView render = new RenderView(SetUpGame.getPlayer1(), SetUpGame.getPlayer2(), SetUpGame.getPlayer3(), SetUpGame.getPlayer4(), SetUpGame.getBall());
+        RenderView render = new RenderView(SetUpGame.getPlayer1(), SetUpGame.getPlayer2(), SetUpGame.getPlayer3(), SetUpGame.getPlayer4(), SetUpGame.getBall(), true);
 
         //gameObject[] gameArray;
         ArrayList<gameObject> gameArray = new ArrayList();

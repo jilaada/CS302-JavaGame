@@ -163,6 +163,14 @@ public class IOHandle {
         return this.movePaddle4left;
     }
 
+    public void setMovedRightP1() {
+        movePaddle1right = !movePaddle1right;
+    }
+
+    public void setMovedLeftP1() {
+        movePaddle1left = !movePaddle1left;
+    }
+
     public void setMovedRightP2() {
         movePaddle2right = !movePaddle2right;
     }
