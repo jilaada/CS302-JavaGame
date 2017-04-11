@@ -36,9 +36,13 @@ public class SceneChanger {
     }
 
     private AnimationTimer timer;
-   // private int[] sceneSwitch = new int[1];
     private gameScreen sceneSwitch;
 
+    private IOHandle HandleIO;
+    private AI aiHandle;
+    private GameSetUp SetUpGame;
+    private boolean checking;
+    private int playerNO;
 
 
 
@@ -46,6 +50,8 @@ public class SceneChanger {
         this.gameStatement = "You lost";
         //this.sceneSwitch[0] = 0;
         this.sceneSwitch = gameScreen.INTRO;
+        this.checking = false;
+        this.playerNO = -1;
     }
 
     //public Scene addIntroScene(Stage primaryStage, Scene inp, int[] switchScene) {
@@ -267,10 +273,11 @@ public class SceneChanger {
             public void handle(MouseEvent t) {
                 //Change to to game scene
                 if(noOfPlayers[0] != -1) {
-                    System.out.println("Play  player mode");
                     sceneSwitch = gameScreen.GAME;
                     primaryStage.setScene(gameScene);
                     timer.start();
+                    checking = true;
+                    playerNO = noOfPlayers[0];
 
                 }
             }
@@ -282,10 +289,11 @@ public class SceneChanger {
             public void handle(MouseEvent t) {
                 //Change to to game scene
                 if(noOfPlayers[0] != -1) {
-                    System.out.println("Play  player mode");
                     sceneSwitch = gameScreen.GAME;
                     primaryStage.setScene(gameScene);
                     timer.start();
+                    checking = true;
+                    playerNO = noOfPlayers[0];
                 }
 
             }
@@ -377,7 +385,7 @@ public class SceneChanger {
         ObjectControl ControlUnit = new ObjectControl();
 
         // Set up a new game and initialise game status
-        GameSetUp SetUpGame = new GameSetUp();
+        this.SetUpGame = new GameSetUp();
         GameStatus status = new GameStatus(SetUpGame.getPlayers());
 
 
@@ -395,8 +403,8 @@ public class SceneChanger {
 
         // IO handle declaration
         //TODO: determine the number of players from a previous scene of inputs
-        IOHandle HandleIO = new IOHandle(scene, 1);
-        AI aiHandle = new AI(HandleIO, SetUpGame);
+//        IOHandle HandleIO = new IOHandle(scene, 1);
+//        AI aiHandle = new AI(HandleIO, SetUpGame);
 
         //Try and add other scene
         // sceneSwitch[0] = 0; //0 - Intro, 1 - Game, 2- End
@@ -452,18 +460,27 @@ public class SceneChanger {
 
         timer = new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                if (HandleIO.isEscGame()) {
-                    HandleIO.setEscGame(false);
-                    System.out.println("here");
-                    MainGame newGame = new MainGame();
-                    newGame.start(theStage);
-                    sceneSwitch = gameScreen.END;
-                }
-
-                //System.out.println(seconds[0]);
-
                 // Run the input handle
                 if (sceneSwitch == gameScreen.GAME) {
+
+
+                    if(checking == true) {
+                        HandleIO = new IOHandle(scene, playerNO);
+                        aiHandle = new AI(HandleIO, SetUpGame);
+                        checking = false;
+                    }
+
+
+                    if (HandleIO.isEscGame()) {
+                        HandleIO.setEscGame(false);
+                        MainGame newGame = new MainGame();
+                        newGame.start(theStage);
+                        sceneSwitch = gameScreen.END;
+                    }
+
+
+
+
                     if (entered[0] == false) {
                         status.resetGame(SetUpGame.getPlayers(), collisionDetection.getDisposable(), gameArray, root, HandleIO, timeStarted, delayStart);
                         entered[0] = true;
