@@ -21,9 +21,10 @@ public class MainGame extends Application {
         Scene gameScene = new Scene(root, 1024, 768, Color.BLACK);
 
 
-        Scene pSelectScene = sceneChanger.addPlayersSelectScene(theStage,gameScene);
-        Scene pControlScene = sceneChanger.addControlDisplayScene(theStage,gameScene);
-        Scene introScene = sceneChanger.addIntroScene(theStage, pSelectScene, pControlScene);
+        Scene pSelectScene = sceneChanger.addPlayersSelectScene(theStage, gameScene);
+        Scene pControlScene = sceneChanger.addControlDisplayScene(theStage, gameScene);
+        Scene pAboutScene = sceneChanger.addAboutScene(theStage, gameScene);
+        Scene introScene = sceneChanger.addIntroScene(theStage, pSelectScene, pControlScene, pAboutScene);
 
 
         Scene endScene = sceneChanger.addEndScene(theStage, introScene);
