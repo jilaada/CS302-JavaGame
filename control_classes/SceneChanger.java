@@ -73,16 +73,16 @@ public class SceneChanger {
         Color c1 = Color.web("0x2962FF");
         Color c2 = Color.web("0x00B5FF");
         Color c3 = Color.web("0x4FC3F7");
-        Image imgbutton1 = new Image("/images/ButtonGreen.png");
-        Image imgbutton2 = new Image("/images/ButtonBlue.png");
-        Image imgbutton3 = new Image("/images/ButtonWarmGrey.png");
+        Image imgbutton1 = new Image("/images/ButtonBrightGreen.png");
+        Image imgbutton2 = new Image("/images/ButtonBrightBlue.png");
+        Image imgbutton3 = new Image("/images/ButtonBrightOrange.png");
         Image imgbutton4 = new Image("/images/ButtonGreenBlue.png");
 
         //Initialise rectangle buttons
         Rectangle rect1 = new Rectangle(xRect,yRect,widthRect,heightRect);
         rect1.setFill(new ImagePattern(imgbutton2));
         Rectangle rect2 = new Rectangle(xRect,(2 * yRect) + heightRect,widthRect,heightRect);
-        rect2.setFill(new ImagePattern(imgbutton4));
+        rect2.setFill(new ImagePattern(imgbutton3));
         Rectangle rect3 = new Rectangle(xRect,(3 * yRect) + (2 * heightRect),widthRect,heightRect);
         rect3.setFill(new ImagePattern(imgbutton1));
 
@@ -133,7 +133,7 @@ public class SceneChanger {
                 primaryStage.setScene(pSelectScene);
             } else if(key.getCode()== KeyCode.DIGIT2) {
                 sceneSwitch = gameScreen.CONTROLS;
-               // primaryStage.setScene(pSelsectScene);
+               // primaryStage.setScene(pSelectScene);
             }
         });
 
@@ -226,15 +226,91 @@ public class SceneChanger {
 
         IOHandle demoHandle = new IOHandle(Scene, 4);
 
+        // set up background Rectangles
+        Image imgRec1 = new Image("/images/rec1.png");
+        Rectangle rec1 = new Rectangle(25, 50, 300, 150);
+        rec1.setFill(new ImagePattern(imgRec1));
+        root.getChildren().add(rec1);
+        Image imgRec2 = new Image("/images/rec2.png");
+        Rectangle rec2 = new Rectangle(699, 50, 300, 150);
+        rec2.setFill(new ImagePattern(imgRec2));
+        root.getChildren().add(rec2);
+        Image imgRec3 = new Image("/images/rec3.png");
+        Rectangle rec3 = new Rectangle(25, 568, 300, 150);
+        rec3.setFill(new ImagePattern(imgRec3));
+        root.getChildren().add(rec3);
+        Image imgRec4 = new Image("/images/rec4.png");
+        Rectangle rec4 = new Rectangle(699, 568, 300, 150);
+        rec4.setFill(new ImagePattern(imgRec4));
+        root.getChildren().add(rec4);
+        // Set the positions of the text
+        //Declare Text
+        Text text1 = new Text("PRESS A TO MOVE LEFT\nPRESS S TO MOVE RIGHT");
+        Text text2 = new Text("PRESS F TO MOVE LEFT\nPRESS G TO MOVE RIGHT");
+        Text text3 = new Text("PRESS J TO MOVE LEFT\nPRESS K TO MOVE RIGHT");
+        Text text4 = new Text("PRESS <- TO MOVE LEFT\nPRESS -> TO MOVE RIGHT");
+
+        //Declare fonts, heights and widths of text
+        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+        text1.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 20));
+        text2.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 20));
+        text3.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 20));
+        text4.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 20));
+        text1.setFill(Color.WHITE);
+        text2.setFill(Color.WHITE);
+        text3.setFill(Color.WHITE);
+        text4.setFill(Color.WHITE);
+        text1.setTextAlignment(TextAlignment.CENTER);
+        text1.setTextOrigin(VPos.CENTER);
+        text2.setTextAlignment(TextAlignment.CENTER);
+        text2.setTextOrigin(VPos.CENTER);
+        text3.setTextAlignment(TextAlignment.CENTER);
+        text3.setTextOrigin(VPos.CENTER);
+        text4.setTextAlignment(TextAlignment.CENTER);
+        text4.setTextOrigin(VPos.CENTER);
+
+        text1.setLayoutX((350/2) - text1.getLayoutBounds().getWidth()/2);
+        text1.setLayoutY(250/2);
+        text2.setLayoutX((1024 - 350) + ((350/2) - (text2.getLayoutBounds().getWidth()/2)));
+        text2.setLayoutY(250/2);
+        text3.setLayoutX((350/2) - text1.getLayoutBounds().getWidth()/2);
+        text3.setLayoutY((768 - 250) + (250/2));
+        text4.setLayoutX((1024 - 350) + ((350/2) - (text2.getLayoutBounds().getWidth()/2)));
+        text4.setLayoutY((768 - 250) + (250/2));
+
+        root.getChildren().add(text1);
+        root.getChildren().add(text2);
+        root.getChildren().add(text3);
+        root.getChildren().add(text4);
 
         Scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.A) {
                 demoHandle.setMovedLeftP1();
-            } else if (key.getCode() == KeyCode.S) {
+            }
+            if (key.getCode() == KeyCode.S) {
                 demoHandle.setMovedRightP1();
             }
+            if (key.getCode() == KeyCode.F) {
+                demoHandle.setMovedLeftP2();
+            }
+            if (key.getCode() == KeyCode.G) {
+                demoHandle.setMovedRightP2();
+            }
+            if (key.getCode() == KeyCode.J) {
+                demoHandle.setMovedLeftP3();
+            }
+            if (key.getCode() == KeyCode.K) {
+                demoHandle.setMovedRightP3();
+            }
+            if (key.getCode() == KeyCode.LEFT) {
+                demoHandle.setMovedLeftP4();
+            }
+            if (key.getCode() == KeyCode.RIGHT) {
+                demoHandle.setMovedRightP4();
+            }
             demoControl.moveAllPaddles(demoRender, demoHandle, SetUpControlDisplay);
-            HandleIO.resetPaddle();
+            demoHandle.resetPaddle();
+            demoRender.tickRender();
         });
 
         return Scene;

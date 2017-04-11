@@ -361,6 +361,7 @@ public class ObjectControl {
 		Image imgGhostUp = new Image("/images/GhostPaddleUp.png");
 		Image imgGhostDown = new Image("/images/GhostPaddleDown.png");
 
+
 		if (!SetUpGame.getPlayer1().isAlive()) {
 			this.imgP1Hori = imgGhostDown;
 			this.imgP1Vert = imgGhostRight;

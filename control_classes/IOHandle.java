@@ -3,7 +3,6 @@ package control_classes;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,14 +14,14 @@ import java.util.Set;
  */
 public class IOHandle {
     // Declare the attributes to be set:
-    private boolean movePaddle1right;
-    private boolean movePaddle1left;
-    private boolean movePaddle2right;
-    private boolean movePaddle2left;
-    private boolean movePaddle3right;
-    private boolean movePaddle3left;
-    private boolean movePaddle4right;
-    private boolean movePaddle4left;
+    private boolean movePaddle1right = false;
+    private boolean movePaddle1left = false;
+    private boolean movePaddle2right= false;
+    private boolean movePaddle2left= false;
+    private boolean movePaddle3right= false;
+    private boolean movePaddle3left= false;
+    private boolean movePaddle4right= false;
+    private boolean movePaddle4left= false;
     private boolean escGame;
     private boolean timeOut;
     private boolean pauseGame;
