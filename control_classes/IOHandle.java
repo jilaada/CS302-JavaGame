@@ -52,6 +52,7 @@ public class IOHandle {
     public IOHandle(Scene mainScene, int numPlayers) {
         this.numPlayers = numPlayers;
         this.currentScene = mainScene;
+        System.out.println("I am constructed");
     }
 
     // Declare the scene events
@@ -82,6 +83,7 @@ public class IOHandle {
                 }
             } else if (numPlayers == 3) {
                 if (e == "A") {
+                    System.out.println("inA");
                     movePaddle1left = true;
                 } else if (e == "S") {
                     movePaddle1right = true;
