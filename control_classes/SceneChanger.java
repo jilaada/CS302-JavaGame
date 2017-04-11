@@ -260,7 +260,8 @@ public class SceneChanger {
         Text titleText = new Text("INSTRUCTIONS");
         Text infoText = new Text("The aim of the game is to be the last mutant standing!\n" +
                 "Move your paddle to defend your base against the ball.\n" +
-                "When your mutant is dead, the game isn't over for you! You can decide who wins!\n\n" +
+                "When your mutant is dead, the game isn't over for you!\n" +
+                "You can decide who wins!\n\n" +
                 "PRESS P TO PAUSE THE GAME\n" +
                 "PRESS ESC TO LEAVE THE GAME\n" +
                 "PRESS PAGE DOWN TO SKIP TO THE END\n");
@@ -313,7 +314,7 @@ public class SceneChanger {
         root.getChildren().add(infoText);
 
         // Set up the button to go back
-        Text backButtonClick = new Text("BACK TO MAIN MENU");
+        Text backButtonClick = new Text("BACK TO MAIN MENU [B]");
         backButtonClick.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 20));
         backButtonClick.setFill(Color.WHITE);
         backButtonClick.setTextAlignment(TextAlignment.CENTER);
@@ -347,6 +348,10 @@ public class SceneChanger {
             }
             if (key.getCode() == KeyCode.RIGHT) {
                 demoHandle.setMovedRightP4();
+            }
+            if (key.getCode() == KeyCode.B) {
+                sceneSwitch = gameScreen.INTRO;
+                primaryStage.setScene(IntroScene);
             }
             demoControl.moveAllPaddles(demoRender, demoHandle, SetUpControlDisplay);
             demoHandle.resetPaddle();
