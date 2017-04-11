@@ -247,7 +247,7 @@ public class SceneChanger {
         rec4.setFill(new ImagePattern(imgRec4));
         root.getChildren().add(rec4);
         Image imgBackButton = new Image("/images/ButtonBrightOrange.png");
-        Rectangle backButton = new Rectangle(362, 618, 300, 50);
+        Rectangle backButton = new Rectangle(372, 618, 280, 50);
         backButton.setFill(new ImagePattern(imgBackButton));
         root.getChildren().add(backButton);
 

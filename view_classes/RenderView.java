@@ -49,13 +49,12 @@ public class RenderView {
         Image backImage = new Image("/images/pipesFloor7.jpg");
 
         back = new Rectangle(0,0,1024,768);
+        this.back.setFill(new ImagePattern(backImage));
         c1 = new Circle(ball.getCurrentPos().getX(), ball.getCurrentPos().getY(), ball.getBallRadius(), Color.RED);
 
         if (backgroundImage) {
-            this.back.setFill(new ImagePattern(backImage));
             this.c1.setFill(Color.RED);
         } else {
-            this.back.setFill(Color.BLACK);
             this.c1.setFill(Color.BLACK);
         }
 
@@ -73,16 +72,21 @@ public class RenderView {
         p4.setFill(new ImagePattern(imgP4Hori));
 
         // Render the player's sprite
-        this.pl1 = new Rectangle((double)player1.getXPos(), (double)player1.getYPos(), (double)player1.getLength(), (double)player1.getHeight());
-        this.pl2 = new Rectangle((double)player2.getXPos(), (double)player2.getYPos(), (double)player2.getLength(), (double)player1.getHeight());
-        this.pl3 = new Rectangle((double)player3.getXPos(), (double)player3.getYPos(), (double)player3.getLength(), (double)player1.getHeight());
-        this.pl4 = new Rectangle((double)player4.getXPos(), (double)player4.getYPos(), (double)player4.getLength(), (double)player1.getHeight());
+        this.pl1 = new Rectangle((double)player1.getXPos(), (double)player1.getYPos(), player1.getLength(), player1.getHeight());
+        this.pl2 = new Rectangle((double)player2.getXPos(), (double)player2.getYPos(), player2.getLength(), player1.getHeight());
+        this.pl3 = new Rectangle((double)player3.getXPos(), (double)player3.getYPos(), player3.getLength(), player1.getHeight());
+        this.pl4 = new Rectangle((double)player4.getXPos(), (double)player4.getYPos(), player4.getLength(), player1.getHeight());
 
         if (backgroundImage) {
             this.pl1.setFill(new ImagePattern(imgP1));
             this.pl2.setFill(new ImagePattern(imgP2));
             this.pl3.setFill(new ImagePattern(imgP3));
             this.pl4.setFill(new ImagePattern(imgP4));
+        } else {
+            this.pl1.setFill(Color.TRANSPARENT);
+            this.pl2.setFill(Color.TRANSPARENT);
+            this.pl3.setFill(Color.TRANSPARENT);
+            this.pl4.setFill(Color.TRANSPARENT);
         }
 
         this.gamePlayers = new ArrayList<gameObject>();
