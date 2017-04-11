@@ -77,70 +77,50 @@ public class IOHandle {
             if (numPlayers == 1) {
                 if (e == "A") {
                     movePaddle1left = true;
-                    movePaddle1right = false;
                 } else if (e == "S") {
-                    movePaddle1left = false;
                     movePaddle1right = true;
                 }
             } else if (numPlayers == 2) {
                 if (e == "A") {
                     movePaddle1left = true;
-                    movePaddle1right = false;
                 } else if (e == "S") {
-                    movePaddle1left = false;
                     movePaddle1right = true;
                 } else if (e == "F") {
                     movePaddle2left = true;
-                    movePaddle2right = false;
                 } else if (e == "G") {
-                    movePaddle2left = false;
                     movePaddle2right = true;
                 }
             } else if (numPlayers == 3) {
                 if (e == "A") {
                     System.out.println("inA");
                     movePaddle1left = true;
-                    movePaddle1right = false;
                 } else if (e == "S") {
-                    movePaddle1left = false;
                     movePaddle1right = true;
                 } else if (e == "F") {
                     movePaddle2left = true;
-                    movePaddle2right = false;
                 } else if (e == "G") {
-                    movePaddle2left = false;
                     movePaddle2right = true;
                 } else if (e == "J") {
                     movePaddle3left = true;
-                    movePaddle3right = false;
                 } else if (e == "K") {
-                    movePaddle3left = false;
                     movePaddle3right = true;
                 }
             } else {
                 if (e == "A") {
                     movePaddle1left = true;
-                    movePaddle1right = false;
                 } else if (e == "S") {
-                    movePaddle1left = false;
                     movePaddle1right = true;
                 } else if (e == "F") {
                     movePaddle2left = true;
-                    movePaddle2right = false;
                 } else if (e == "G") {
-                    movePaddle2left = false;
                     movePaddle2right = true;
                 } else if (e == "J") {
                     movePaddle3left = true;
-                    movePaddle3right = false;
                 } else if (e == "K") {
-                    movePaddle3left = false;
                     movePaddle3right = true;
                 } else if (e == "LEFT") {
                     movePaddle4left = true;
-                    movePaddle4right = false;
                 } else if (e == "RIGHT") {
-                    movePaddle4left = false;
                     movePaddle4right = true;
                 }
             }

@@ -44,7 +44,7 @@ public class RenderView {
         Image imgP2 = new Image("/images/player2Sprite.png");
         Image imgP3 = new Image("/images/player3Sprite.png");
         Image imgP4 = new Image("/images/player4Sprite.png");
-        Image backImage = new Image("/images/pipesFloor6.png");
+        Image backImage = new Image("/images/pipesFloor7.jpg");
 
         back = new Rectangle(0,0,1024,768);
         this.back.setFill(new ImagePattern(backImage));

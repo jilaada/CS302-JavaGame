@@ -43,18 +43,6 @@ public class GameSetUp {
 
     }
 
-    public void SetUpPlayers() {
-        //TODO: Detect the number of players
-//        Player player1 = new Player("Test1");
-//        this.player1 = player1;
-//        Player player2 = new Player("Test2");
-//        this.player2 = player2;
-//        Player player3 = new Player("Test3");
-//        this.player3 = player3;
-//        Player player4 = new Player("Test4");
-//        this.player4 = player4;
-    }
-
     public void SetUpBall(int speed, int rad) {
         ball = new Ball(speed, rad);
     }
