@@ -176,7 +176,7 @@ public class SceneChanger {
     }
 
 
-    public Scene addPlayerSelectScene(Stage primaryStage, Scene gameScene) {
+    public Scene addPlayersSelectScene(Stage primaryStage, Scene gameScene) {
         Group root = new Group();
 
         Scene scene = new Scene(root, 1024, 768, Color.BLACK);

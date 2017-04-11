@@ -33,7 +33,7 @@ public class MainGame extends Application {
         Scene gameScene = new Scene(root, 1024, 768, Color.BLACK);
 
 
-        Scene pSelectScene = sceneChanger.addPlayerSelectScene(theStage,gameScene);
+        Scene pSelectScene = sceneChanger.addPlayersSelectScene(theStage,gameScene);
         Scene introScene = sceneChanger.addIntroScene(theStage, pSelectScene);
 
 
