@@ -91,7 +91,6 @@ public class IOHandle {
                 }
             } else if (numPlayers == 3) {
                 if (e == "A") {
-                    System.out.println("inA");
                     movePaddle1left = true;
                 } else if (e == "S") {
                     movePaddle1right = true;

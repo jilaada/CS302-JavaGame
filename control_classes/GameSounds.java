@@ -99,40 +99,50 @@ public class GameSounds {
 
 
     public void playBackgroundSE(boolean keepGoing) {
+    //public void playBackgroundSE(SceneChanger.gameScreen keepGoing) {
         //Play audio in thread
 
         if(this.firstLoop) {
             this.firstLoop = false;
-            try {
-                new Thread() {
-                    public void run() {
-
-                        backgroundPlayer.setOnEndOfMedia(new Runnable() {
-                            public void run() {
-                                backgroundPlayer.seek(Duration.ZERO);
-                            }
-                        });
-                        backgroundPlayer.play();
-
-                    }
-                }
-                        .start();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            this.loopSound(backgroundPlayer);
         } else {
             if(!keepGoing) {
-                try {
-                    new Thread() {
-                        public void run() {
-                            backgroundPlayer.stop();
-                        }
-                    }
-                            .start();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+               this.stopSound(backgroundPlayer);
             }
         }
     }
+
+    public void loopSound(MediaPlayer sound) {
+        try {
+            new Thread() {
+                public void run() {
+
+                    sound.setOnEndOfMedia(new Runnable() {
+                        public void run() {
+                            sound.seek(Duration.ZERO);
+                        }
+                    });
+                    sound.play();
+
+                }
+            }
+                    .start();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void stopSound(MediaPlayer sound) {
+        try {
+            new Thread() {
+                public void run() {
+                    sound.stop();
+                }
+            }
+                    .start();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }
