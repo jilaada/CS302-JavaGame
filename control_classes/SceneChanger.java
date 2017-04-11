@@ -71,10 +71,10 @@ public class SceneChanger {
         Color c1 = Color.web("0x2962FF");
         Color c2 = Color.web("0x00B5FF");
         Color c3 = Color.web("0x4FC3F7");
-        Image imgbutton1 = new Image("/images/GreenButton.png");
-        Image imgbutton2 = new Image("/images/BlueButton.png");
-        Image imgbutton3 = new Image("/images/WarmGreyButton.png");
-        Image imgbutton4 = new Image("/images/GreenBlueButton.png");
+        Image imgbutton1 = new Image("/images/ButtonGreen.png");
+        Image imgbutton2 = new Image("/images/ButtonBlue.png");
+        Image imgbutton3 = new Image("/images/ButtonWarmGrey.png");
+        Image imgbutton4 = new Image("/images/ButtonGreenBlue.png");
 
         //Initialise rectangle buttons
         Rectangle rect1 = new Rectangle(xRect,yRect,widthRect,heightRect);
