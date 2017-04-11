@@ -36,19 +36,20 @@ public class SceneChanger {
     }
 
     private AnimationTimer timer;
-    private int[] sceneSwitch = new int[1];
-   // private gameScreen sceneSwitch;
+   // private int[] sceneSwitch = new int[1];
+    private gameScreen sceneSwitch;
 
 
 
 
     public SceneChanger() {
         this.gameStatement = "You lost";
-        this.sceneSwitch[0] = 0;
+        //this.sceneSwitch[0] = 0;
+        this.sceneSwitch = gameScreen.INTRO;
     }
 
     //public Scene addIntroScene(Stage primaryStage, Scene inp, int[] switchScene) {
-    public Scene addIntroScene(Stage primaryStage, Scene gameScene) {
+    public Scene addIntroScene(Stage primaryStage, Scene pSelectScene) {
 
         //Initalise Scene and group structure
         Group root = new Group();
@@ -122,9 +123,9 @@ public class SceneChanger {
             @Override
             public void handle(MouseEvent t) {
                 //Change to to game scene
-                sceneSwitch[0] = 1;
-                primaryStage.setScene(gameScene);
-                timer.start();
+                //sceneSwitch[0] = 1;
+                sceneSwitch = gameScreen.PLAYERSEL;
+                primaryStage.setScene(pSelectScene);
             }
         });
 
@@ -133,9 +134,9 @@ public class SceneChanger {
             @Override
             public void handle(MouseEvent t) {
                 //Change to to game scene
-                sceneSwitch[0] = 1;
-                primaryStage.setScene(gameScene);
-                timer.start();
+                //sceneSwitch[0] = 1;
+                sceneSwitch = gameScreen.PLAYERSEL;
+                primaryStage.setScene(pSelectScene);
             }
         });
 
@@ -173,6 +174,200 @@ public class SceneChanger {
 
         return scene;
     }
+
+
+    public Scene addPlayerSelectScene(Stage primaryStage, Scene gameScene) {
+        Group root = new Group();
+
+        Scene scene = new Scene(root, 1024, 768, Color.BLACK);
+
+        //Declare width, height and coordinates of rectangles
+        int width = 1024, height = 768;
+        int widthRect = 700, heightRect = 100;
+        int xRect = (width/2) - (widthRect/2);
+        int yRect = 50;
+
+        //Declare colours
+        Color c1 = Color.web("0x2962FF");
+        Color c2 = Color.web("0x00B5FF");
+
+        //Initialise rectangle buttons
+        Rectangle rect1 = new Rectangle(xRect,yRect,widthRect,heightRect);
+        rect1.setFill(Color.GREY);
+        Rectangle rect2 = new Rectangle(xRect,(2 * yRect) + heightRect,widthRect,heightRect);
+        rect2.setFill(c2);
+        Rectangle rect3 = new Rectangle(xRect,(3 * yRect) + (2 * heightRect),widthRect,heightRect);
+        rect3.setFill(c2);
+        Rectangle rect4 = new Rectangle(xRect,(4 * yRect) + (3 * heightRect),widthRect,heightRect);
+        rect4.setFill(c2);
+        Rectangle rect5 = new Rectangle(xRect,(5 * yRect) + (4 * heightRect),widthRect,heightRect);
+        rect5.setFill(c2);
+
+        //Round rectangle corners
+        rect1.setArcWidth(20);
+        rect1.setArcHeight(20);
+        rect2.setArcWidth(20);
+        rect2.setArcHeight(20);
+        rect3.setArcWidth(20);
+        rect3.setArcHeight(20);
+        rect4.setArcWidth(20);
+        rect4.setArcHeight(20);
+        rect5.setArcWidth(20);
+        rect5.setArcHeight(20);
+
+        //Declare Text
+        Label text1 = new Label("Number of players:");
+        Label text2 = new Label("1 Player");
+        Label text3 = new Label("2 Player");
+        Label text4 = new Label("3 Player");
+        Label text5 = new Label("4 Player");
+
+        //Decalre fonts, heights and widths of text
+        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+        text1.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        text2.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        text3.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        text4.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        text5.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        text1.setTextFill(Color.WHITE);
+        text2.setTextFill(Color.WHITE);
+        text3.setTextFill(Color.WHITE);
+        text4.setTextFill(Color.WHITE);
+        text5.setTextFill(Color.WHITE);
+
+        double widthText1 = fontLoader.computeStringWidth(text1.getText(), text1.getFont());
+        double widthText2 = fontLoader.computeStringWidth(text2.getText(), text2.getFont());
+        double widthText3 = fontLoader.computeStringWidth(text3.getText(), text3.getFont());
+        double widthText4 = fontLoader.computeStringWidth(text4.getText(), text4.getFont());
+        double widthText5 = fontLoader.computeStringWidth(text5.getText(), text5.getFont());
+
+        //Declare coordinates for text
+        text1.setLayoutX((width/2) - (widthText1/2));
+        text1.setLayoutY(yRect + (heightRect/5));
+        text2.setLayoutX((width/2) - (widthText2/2));
+        text2.setLayoutY((2*yRect) + heightRect + (heightRect/5));
+        text3.setLayoutX((width/2) - (widthText3/2));
+        text3.setLayoutY((3*yRect) + (2*heightRect) + (heightRect/5));
+        text4.setLayoutX((width/2) - (widthText4/2));
+        text4.setLayoutY((4*yRect) + (3*heightRect) + (heightRect/5));
+        text5.setLayoutX((width/2) - (widthText5/2));
+        text5.setLayoutY((5*yRect) + (4*heightRect) + (heightRect/5));
+
+        //Add shapes and text to scene and then show it
+        root.getChildren().addAll(rect1, rect2, rect3, rect4, rect5, text1, text2, text3, text4, text5);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        int[] noOfPlayers = {-1};
+
+        //Add listeners to shapes and text
+        rect1.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                //Change to to game scene
+                if(noOfPlayers[0] != -1) {
+                    System.out.println("Play  player mode");
+                    sceneSwitch = gameScreen.GAME;
+                    primaryStage.setScene(gameScene);
+                    timer.start();
+
+                }
+            }
+        });
+
+        text1.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                //Change to to game scene
+                if(noOfPlayers[0] != -1) {
+                    System.out.println("Play  player mode");
+                    sceneSwitch = gameScreen.GAME;
+                    primaryStage.setScene(gameScene);
+                    timer.start();
+                }
+
+            }
+        });
+
+        rect2.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                handlePlayerSelect(rect1, text1, noOfPlayers, 1);
+            }
+        });
+
+        text2.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                handlePlayerSelect(rect1, text1, noOfPlayers, 1);
+            }
+        });
+
+        rect3.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                handlePlayerSelect(rect1, text1, noOfPlayers, 2);
+            }
+        });
+
+        text3.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                handlePlayerSelect(rect1, text1, noOfPlayers, 2);
+            }
+        });
+
+        rect4.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                handlePlayerSelect(rect1, text1, noOfPlayers, 3);
+            }
+        });
+
+        text4.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                handlePlayerSelect(rect1, text1, noOfPlayers, 3);
+            }
+        });
+
+        rect5.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                handlePlayerSelect(rect1, text1, noOfPlayers, 4);
+            }
+        });
+
+        text5.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                handlePlayerSelect(rect1, text1, noOfPlayers, 4);
+            }
+        });
+
+        return scene;
+    }
+
+
+    public void handlePlayerSelect(Rectangle rect1, Label text1, int[] noOfPlayers, int in) {
+
+        Color c3 = Color.web("0x00E676");
+
+        noOfPlayers[0] = in;
+        rect1.setFill(c3);
+        text1.setText("Play " + noOfPlayers[0] + " player mode");
+    }
+
 
 
     public Scene addEndScene(Stage primaryStage, Scene inp) {
@@ -344,13 +539,13 @@ public class SceneChanger {
                     System.out.println("here");
                     MainGame newGame = new MainGame();
                     newGame.start(theStage);
-                    sceneSwitch[0] = 2;
+                    sceneSwitch = gameScreen.END;
                 }
 
                 //System.out.println(seconds[0]);
 
                 // Run the input handle
-                if (sceneSwitch[0] == 1) {
+                if (sceneSwitch == gameScreen.GAME) {
                     if (entered[0] == false) {
                         status.resetGame(SetUpGame.getPlayers(), collisionDetection.getDisposable(), gameArray, root, HandleIO, timeStarted, delayStart);
                         entered[0] = true;
@@ -418,7 +613,7 @@ public class SceneChanger {
                                 timerLabel.setText("Game Over");
                                 timerLabel.setX(512 - Math.round(timerLabel.getLayoutBounds().getWidth() / 2));
 
-                                sceneSwitch[0] = 0;
+                                sceneSwitch = gameScreen.END;
 
                                 System.out.println("INSIDE GAME OVER:");
                                 System.out.println(HandleIO.hasTimeOut());
