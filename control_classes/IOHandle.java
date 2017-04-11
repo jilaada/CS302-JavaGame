@@ -3,6 +3,7 @@ package control_classes;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,10 +31,10 @@ public class IOHandle {
     private final Set<String> KeysPressed = new HashSet<String>();
 
 
+
     EventHandler<KeyEvent> startEvent = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
-            //System.out.print(event.getCode().toString());
             if (!KeysPressed.contains(event.getCode().toString())) {
                 KeysPressed.add(event.getCode().toString());
             }
@@ -52,7 +53,6 @@ public class IOHandle {
     public IOHandle(Scene mainScene, int numPlayers) {
         this.numPlayers = numPlayers;
         this.currentScene = mainScene;
-        System.out.println("I am constructed");
     }
 
     // Declare the scene events
@@ -65,6 +65,15 @@ public class IOHandle {
     public void HandleMovement(Set<String> pressed) {
         for (String e : pressed) {
             // Determine the number of players in a game and check for the corresponding key pressed else ignore
+//            if(e == "1") {
+//                this.stage.setScene(sceneB1);
+//                sceneSwitch = SceneChanger.gameScreen.PLAYERSEL;
+//            } else if(e == "2") {
+//                this.stage.setScene(sceneB2);
+//                sceneSwitch = SceneChanger.gameScreen.PLAYERSEL;
+//            }
+
+
             if (numPlayers == 1) {
                 if (e == "A") {
                     movePaddle1left = true;
@@ -120,7 +129,6 @@ public class IOHandle {
             } else if (e == "ESCAPE") {
                 escGame = true;
             } else if (e == "PAGE_DOWN") {
-                System.out.println("ITS GOING TRUUUUUUUUUE");
                 timeOut = true;
             }
         }
