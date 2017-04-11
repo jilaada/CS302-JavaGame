@@ -9,6 +9,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -54,8 +56,9 @@ public class SceneChanger {
         this.playerNO = -1;
     }
 
-    //public Scene addIntroScene(Stage primaryStage, Scene inp, int[] switchScene) {
+
     public Scene addIntroScene(Stage primaryStage, Scene pSelectScene) {
+    //public Scene addIntroScene(Stage primaryStage, Scene pSelectScene, Scene controlsScene) {
 
         //Initalise Scene and group structure
         Group root = new Group();
@@ -123,13 +126,24 @@ public class SceneChanger {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+
+
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if(key.getCode()== KeyCode.DIGIT1) {
+                sceneSwitch = gameScreen.PLAYERSEL;
+                primaryStage.setScene(pSelectScene);
+            } else if(key.getCode()== KeyCode.DIGIT2) {
+                sceneSwitch = gameScreen.CONTROLS;
+               // primaryStage.setScene(pSelsectScene);
+            }
+        });
+
         //Add listeners to shapes and text
         rect1.setOnMouseClicked(new EventHandler<MouseEvent>()
         {
             @Override
             public void handle(MouseEvent t) {
-                //Change to to game scene
-                //sceneSwitch[0] = 1;
+                //Change to to player select scene
                 sceneSwitch = gameScreen.PLAYERSEL;
                 primaryStage.setScene(pSelectScene);
             }
@@ -139,8 +153,7 @@ public class SceneChanger {
         {
             @Override
             public void handle(MouseEvent t) {
-                //Change to to game scene
-                //sceneSwitch[0] = 1;
+                //Change to to player select scene
                 sceneSwitch = gameScreen.PLAYERSEL;
                 primaryStage.setScene(pSelectScene);
             }
@@ -150,7 +163,9 @@ public class SceneChanger {
         {
             @Override
             public void handle(MouseEvent t) {
-                //TODO: Add implementation
+                //Change to to controls scene
+                sceneSwitch = gameScreen.CONTROLS;
+                //primaryStage.setScene(controlsScene);
             }
         });
 
@@ -158,7 +173,9 @@ public class SceneChanger {
         {
             @Override
             public void handle(MouseEvent t) {
-                //TODO: Add implementation
+                //Change to to controls scene
+                sceneSwitch = gameScreen.CONTROLS;
+                //primaryStage.setScene(controlsScene);
             }
         });
 
@@ -180,7 +197,6 @@ public class SceneChanger {
 
         return scene;
     }
-
 
     public Scene addPlayersSelectScene(Stage primaryStage, Scene gameScene) {
         Group root = new Group();
@@ -365,6 +381,72 @@ public class SceneChanger {
 
         return scene;
     }
+
+
+    public Scene addControlsScene(Stage primaryStage, Scene introScene) {
+        Group root = new Group();
+        Scene scene = new Scene(root, 1024, 768, Color.BLACK);
+
+        //Declare width, height and coordinates of rectangles
+        int width = 1024, height = 768;
+        int widthRect = 700, heightRect = 100;
+        int xRect = (width/2) - (widthRect/2);
+        int yRect = 50;
+
+        //Declare colours
+        Color c1 = Color.web("0x2962FF");
+
+        //Initialise rectangle buttons
+        Rectangle rect1 = new Rectangle(xRect,yRect,widthRect,heightRect);
+        rect1.setFill(Color.GREY);
+        //Round rectangle corners
+        rect1.setArcWidth(20);
+        rect1.setArcHeight(20);
+
+        //Declare Text
+        Label text1 = new Label("Back to Main Menu");
+
+        //Decalre fonts, heights and widths of text
+        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+        text1.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        text1.setTextFill(Color.WHITE);
+
+        double widthText1 = fontLoader.computeStringWidth(text1.getText(), text1.getFont());
+
+        //Declare coordinates for text
+        text1.setLayoutX((width/2) - (widthText1/2));
+        text1.setLayoutY(yRect + (heightRect/5));
+
+        //Add shapes and text to scene and then show it
+        //root.getChildren().addAll(rect1, rect2, rect3, text1, text2, text3);
+        root.getChildren().addAll(rect1, text1);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        //Add listeners to shapes and text
+        rect1.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                sceneSwitch = gameScreen.INTRO;
+                primaryStage.setScene(introScene);
+            }
+        });
+
+        text1.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                sceneSwitch = gameScreen.INTRO;
+                primaryStage.setScene(introScene);
+
+            }
+        });
+
+        return scene;
+    }
+
+
 
 
     public void handlePlayerSelect(Rectangle rect1, Label text1, int[] noOfPlayers, int in) {
