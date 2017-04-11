@@ -368,88 +368,6 @@ public class SceneChanger {
         text1.setText("Play " + noOfPlayers[0] + " player mode");
     }
 
-
-
-    public Scene addEndScene(Stage primaryStage, Scene inp) {
-
-        //Initalise Scene and group structure
-        Group root = new Group();
-        Scene scene = new Scene(root, 1024, 768, Color.BLACK);
-        Scene introScene = inp;
-
-        //Declare width, height and coordinates of rectangles
-        int width = 1024, height = 768;
-        int widthRect = 700, heightRect = 100;
-        int xRect = (width/2) - (widthRect/2);
-        int yRect = 50;
-
-        //Declare colours
-        Color c2 = Color.web("0x2ECC71");
-
-        //Initialise rectangle buttons
-        Rectangle rect2 = new Rectangle(xRect,(2 * yRect) + heightRect,widthRect,heightRect);
-        rect2.setFill(c2);
-
-        //Round rectangle corners
-        rect2.setArcWidth(20);
-        rect2.setArcHeight(20);
-
-        //Declare Text
-        Label text1 = new Label("");
-        Label text2 = new Label("Main Menu");
-
-        //Declare fonts, heights and widths of text
-        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
-        text1.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
-        text2.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
-        text1.setTextFill(Color.WHITE);
-        text2.setTextFill(Color.WHITE);
-
-        //Get width of text
-        double widthText1 = fontLoader.computeStringWidth(text1.getText(), text1.getFont());
-        double widthText2 = fontLoader.computeStringWidth(text2.getText(), text2.getFont());
-
-        //Declare coordinates for text
-        text1.setLayoutX((width/2) - (widthText1/2));
-        text1.setLayoutY(yRect + (heightRect/5));
-        text2.setLayoutX((width/2) - (widthText2/2));
-        text2.setLayoutY((2*yRect) + heightRect + (heightRect/5));
-
-        //Add shapes and text to scene
-        root.getChildren().addAll(rect2, text1, text2);
-
-
-        //Add event listeners to rectangles
-        rect2.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent t) {
-                //Change to introScene
-                primaryStage.setScene(introScene);
-
-                MainGame newGame = new MainGame();
-                newGame.start(primaryStage);
-
-            }
-        });
-
-        text2.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent t) {
-                //Change to introScene
-                primaryStage.setScene(introScene);
-
-                MainGame newGame = new MainGame();
-                newGame.start(primaryStage);
-            }
-        });
-
-        this.endSceneText = text1;
-
-        return scene;
-    }
-
     public void addGameScene (Stage theStage, SceneChanger sceneChanger, Scene scene, Scene endScene) {
 
         Group root = new Group();
@@ -481,7 +399,7 @@ public class SceneChanger {
         AI aiHandle = new AI(HandleIO, SetUpGame);
 
         //Try and add other scene
-       // sceneSwitch[0] = 0; //0 - Intro, 1 - Game, 2- End
+        // sceneSwitch[0] = 0; //0 - Intro, 1 - Game, 2- End
         boolean[] entered = {true};
 
 
@@ -657,6 +575,86 @@ public class SceneChanger {
         };
 
         timer.start();
+    }
+
+    public Scene addEndScene(Stage primaryStage, Scene inp) {
+
+        //Initalise Scene and group structure
+        Group root = new Group();
+        Scene scene = new Scene(root, 1024, 768, Color.BLACK);
+        Scene introScene = inp;
+
+        //Declare width, height and coordinates of rectangles
+        int width = 1024, height = 768;
+        int widthRect = 700, heightRect = 100;
+        int xRect = (width/2) - (widthRect/2);
+        int yRect = 50;
+
+        //Declare colours
+        Color c2 = Color.web("0x2ECC71");
+
+        //Initialise rectangle buttons
+        Rectangle rect2 = new Rectangle(xRect,(2 * yRect) + heightRect,widthRect,heightRect);
+        rect2.setFill(c2);
+
+        //Round rectangle corners
+        rect2.setArcWidth(20);
+        rect2.setArcHeight(20);
+
+        //Declare Text
+        Label text1 = new Label("");
+        Label text2 = new Label("Main Menu");
+
+        //Declare fonts, heights and widths of text
+        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+        text1.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        text2.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        text1.setTextFill(Color.WHITE);
+        text2.setTextFill(Color.WHITE);
+
+        //Get width of text
+        double widthText1 = fontLoader.computeStringWidth(text1.getText(), text1.getFont());
+        double widthText2 = fontLoader.computeStringWidth(text2.getText(), text2.getFont());
+
+        //Declare coordinates for text
+        text1.setLayoutX((width/2) - (widthText1/2));
+        text1.setLayoutY(yRect + (heightRect/5));
+        text2.setLayoutX((width/2) - (widthText2/2));
+        text2.setLayoutY((2*yRect) + heightRect + (heightRect/5));
+
+        //Add shapes and text to scene
+        root.getChildren().addAll(rect2, text1, text2);
+
+
+        //Add event listeners to rectangles
+        rect2.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                //Change to introScene
+                primaryStage.setScene(introScene);
+
+                MainGame newGame = new MainGame();
+                newGame.start(primaryStage);
+
+            }
+        });
+
+        text2.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                //Change to introScene
+                primaryStage.setScene(introScene);
+
+                MainGame newGame = new MainGame();
+                newGame.start(primaryStage);
+            }
+        });
+
+        this.endSceneText = text1;
+
+        return scene;
     }
 
     public void updateEndText(String text) {
