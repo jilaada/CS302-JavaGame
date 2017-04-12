@@ -80,12 +80,16 @@ public class SceneChanger {
         Image imgbutton4 = new Image("/images/ButtonGreenBlue.png");
 
         //Initialise rectangle buttons
-        Rectangle rect1 = new Rectangle(xRect,yRect,widthRect,heightRect);
+        Rectangle rect1 = new Rectangle(xRect, (6 * yRect),widthRect,heightRect);
         rect1.setFill(new ImagePattern(imgbutton2));
-        Rectangle rect2 = new Rectangle(xRect,(2 * yRect) + heightRect,widthRect,heightRect);
+        Rectangle rect2 = new Rectangle(xRect,(7 * yRect) + heightRect,widthRect,heightRect);
         rect2.setFill(new ImagePattern(imgbutton3));
-        Rectangle rect3 = new Rectangle(xRect,(3 * yRect) + (2 * heightRect),widthRect,heightRect);
+        Rectangle rect3 = new Rectangle(xRect,(8 * yRect) + (2 * heightRect),widthRect,heightRect);
         rect3.setFill(new ImagePattern(imgbutton1));
+
+        // Set up the title block
+        Rectangle titleBlock = new Rectangle(xRect-50,yRect,widthRect+100,heightRect*2);
+        titleBlock.setFill(Color.CORAL);
 
         //Round rectangle corners
         rect1.setArcWidth(20);
@@ -96,9 +100,9 @@ public class SceneChanger {
         rect3.setArcHeight(20);
 
         //Declare Text
-        Label text1 = new Label("Play!  [Press 1]");
-        Label text2 = new Label("Controls  [Press 2]");
-        Label text3 = new Label("About   [Press 3]");
+        Label text1 = new Label("PLAY! [1]");
+        Label text2 = new Label("INSTRUCTIONS [2]");
+        Label text3 = new Label("ABOUT [3]");
 
         //Declare fonts, heights and widths of text
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
@@ -115,14 +119,14 @@ public class SceneChanger {
 
         //Declare coordinates for text
         text1.setLayoutX((width/2) - (widthText1/2));
-        text1.setLayoutY(yRect + (heightRect/5));
+        text1.setLayoutY(6*yRect + (heightRect/5));
         text2.setLayoutX((width/2) - (widthText2/2));
-        text2.setLayoutY((2*yRect) + heightRect + (heightRect/5));
+        text2.setLayoutY((7*yRect) + heightRect + (heightRect/5));
         text3.setLayoutX((width/2) - (widthText3/2));
-        text3.setLayoutY((3*yRect) + (2*heightRect) + (heightRect/5));
+        text3.setLayoutY((8*yRect) + (2*heightRect) + (heightRect/5));
 
         //Add shapes and text to scene and then show it
-        root.getChildren().addAll(rect1, rect2, rect3, text1, text2, text3);
+        root.getChildren().addAll(rect1, rect2, rect3, text1, text2, text3, titleBlock);
         primaryStage.setScene(scene);
         primaryStage.show();
 
