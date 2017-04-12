@@ -567,7 +567,7 @@ public class ObjectControl {
 	//Add powerup to game
 	public void addPowerUp (Group root, ArrayList<gameObject> gameArray, double timer, RenderView render) {
 
-		if((118 < timer) &&  (timer < 120) && firstLoop) {
+		if((118 < timer) &&  (timer < 119) && firstLoop) {
 
 			Random rand = new Random();
 			int minX = 360, maxX = 634;
@@ -595,14 +595,19 @@ public class ObjectControl {
 	}
 
 	//Reset powerUp effect
-	public void checkAndRemovePowerUps(ArrayList<Player> players, double timer) {
+	public void checkAndRemovePowerUps(ArrayList<Player> players) {
 
+		//Loop through each player's paddle
 		for (int i = 0; i < players.size(); i++) {
 			Paddle tempPaddle = players.get(i).getPlayerPaddle();
+
+			//Check if other players are effected by the powerup
 			if(tempPaddle.hasPowerUp()) {
+				//If they do, check the powerup duration
 				if(tempPaddle.getPower().getDuration() > 0) {
 					double diff = (System.nanoTime() - tempPaddle.getPower().getTimeOfPU()) * Math.pow(10, -9);
 					tempPaddle.getPower().setDuration(  tempPaddle.getPower().getDuration() - diff );
+					tempPaddle.getPower().setTimeOfPU(System.nanoTime());
 
 				} else {
 					tempPaddle.setPowerUp(false);
@@ -610,8 +615,11 @@ public class ObjectControl {
 					tempPaddle.setPaddleSpeed(15);
 				}
 			}
-		}
 
+			//System.out.println(tempPaddle.hasPowerUp());
+
+		}
+		//System.out.println("");
 
 
 	}

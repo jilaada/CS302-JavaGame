@@ -184,6 +184,7 @@ public class Collision {
             }
 
             sounds.playBrickSE();
+            finalPoint = null;
             //NEED TO SET COLLISION TO NULL SO IT DOESNT BOUNCE
             //If null thing
         }

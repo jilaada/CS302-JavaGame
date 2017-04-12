@@ -19,10 +19,12 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 import model_classes.Ball;
 import model_classes.CollisionStruct;
+import model_classes.Player;
 import model_classes.gameObject;
 import view_classes.RenderView;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by niles on 09/04/2017.
@@ -962,6 +964,7 @@ public class SceneChanger {
                             if (!HandleIO.isPaused() && !(HandleIO.hasTimeOut() || gameTime[0] < 0 || status.onePlayerAlive())) {
 
                                 ControlUnit.addPowerUp(root, gameArray, gameTime[0], render);
+                                ControlUnit.checkAndRemovePowerUps(SetUpGame.getPlayers());
 
                                 HandleIO.keyPressed();
                                 // Move the AI paddles
