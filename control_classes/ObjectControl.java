@@ -2,14 +2,18 @@ package control_classes;
 
 import javafx.scene.Group;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import model_classes.*;
 import view_classes.RenderView;
+import java.util.Random;
 
 import java.util.ArrayList;
 
 public class ObjectControl {
 
+	private boolean firstLoop;
 	private Image imgP1Vert = new Image("/images/paddleV1.png");
 	private Image imgP1Hori = new Image("/images/paddleH1.png");
 	private Image imgP2Vert = new Image("/images/paddleV2.png");
@@ -21,6 +25,7 @@ public class ObjectControl {
 
 	public ObjectControl() {
 		//Add some constructor information
+		this.firstLoop = true;
 	}
 	
 	//Need to add:
@@ -559,6 +564,65 @@ public class ObjectControl {
 		}
 	}
 
+	//Add powerup to game
+	public void addPowerUp (Group root, ArrayList<gameObject> gameArray, double timer, RenderView render) {
+
+		if((118 < timer) &&  (timer < 119) && firstLoop) {
+
+			Random rand = new Random();
+			int minX = 360, maxX = 634;
+			int minY = 250, maxY = 478;
+			int x = rand.nextInt((maxX - minX) + 1) + minX;
+			int y = rand.nextInt((maxY - minY) + 1) + minY;
+
+			int powerUpWidth = 30;
+			int powerUpHeight= 30;
+
+			PowerUps pUp = new PowerUps(powerUpWidth, powerUpHeight, PowerUps.Power.FREEZE, 10);
+			pUp.setCurrentPos(new Point(x, y));
+
+			Rectangle pRect = render.getPU1Render();
+			pRect.setLayoutX(x);
+			pRect.setLayoutY(y);
+
+			root.getChildren().add(pRect);
+
+			gameObject newPowerUp = new gameObject(pRect, pUp);
+			gameArray.add(newPowerUp);
+
+			firstLoop = false;
+		}
+	}
+
+	//Reset powerUp effect
+	public void checkAndRemovePowerUps(ArrayList<Player> players) {
+
+		//Loop through each player's paddle
+		for (int i = 0; i < players.size(); i++) {
+			Paddle tempPaddle = players.get(i).getPlayerPaddle();
+
+			//Check if other players are effected by the powerup
+			if(tempPaddle.hasPowerUp()) {
+				//If they do, check the powerup duration
+				if(tempPaddle.getPower().getDuration() > 0) {
+					double diff = (System.nanoTime() - tempPaddle.getPower().getTimeOfPU()) * Math.pow(10, -9);
+					tempPaddle.getPower().setDuration(  tempPaddle.getPower().getDuration() - diff );
+					tempPaddle.getPower().setTimeOfPU(System.nanoTime());
+
+				} else {
+					tempPaddle.setPowerUp(false);
+					tempPaddle.setPower(null);
+					tempPaddle.setPaddleSpeed(15);
+				}
+			}
+
+			//System.out.println(tempPaddle.hasPowerUp());
+
+		}
+		//System.out.println("");
+
+
+	}
 
 
 }

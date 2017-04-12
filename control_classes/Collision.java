@@ -15,7 +15,7 @@ public class Collision {
 
     Collision(){}
 
-    public CollisionStruct checkCollisions(gameObject ball, gameObject shape, Group root, ArrayList<gameObject> gameArray, int pos, GameSounds sounds) {
+    public CollisionStruct checkCollisions(gameObject ball, gameObject shape, Group root, ArrayList<gameObject> gameArray, int pos, GameSounds sounds, ArrayList<Player> players) {
 
         double xMin;
         double xMax;
@@ -160,9 +160,34 @@ public class Collision {
 
         //Check to see if object is a paddle, and if it is, play audio
         if((finalPoint != null) &&(shape.getObj() instanceof Paddle)){
+            //Tell ball what last hit it
+            ((Ball) ball.getObj()).setLastTouch( ((Paddle) shape.getObj()).getPaddleToken());
             sounds.playPaddleSE();
         }
 
+        if((finalPoint != null) &&(shape.getObj() instanceof PowerUps)){
+            //Tell ball what last hit it
+            root.getChildren().remove(shape.getShape());
+            this.disposable.add(gameArray.get(pos));
+            gameArray.remove(pos);
+
+            for(int i = 0; i < players.size(); i++) {
+                Paddle tempPaddle = players.get(i).getPlayerPaddle();
+
+                //Make all players (except last touch) slow
+                if(tempPaddle.getPaddleToken() != ((Ball) ball.getObj()).getLastTouch()) {
+                    tempPaddle.setPowerUp(true);
+                    tempPaddle.setPower((PowerUps) shape.getObj());
+                    tempPaddle.getPower().setTimeOfPU(System.nanoTime());
+                    tempPaddle.setPaddleSpeed(5);
+                }
+            }
+
+            sounds.playBrickSE();
+            finalPoint = null;
+            //NEED TO SET COLLISION TO NULL SO IT DOESNT BOUNCE
+            //If null thing
+        }
 
         //Prepare output
         double[] newValues = {newX, newY};

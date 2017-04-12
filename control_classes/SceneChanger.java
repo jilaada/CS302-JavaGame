@@ -19,10 +19,12 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 import model_classes.Ball;
 import model_classes.CollisionStruct;
+import model_classes.Player;
 import model_classes.gameObject;
 import view_classes.RenderView;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by niles on 09/04/2017.
@@ -960,8 +962,10 @@ public class SceneChanger {
 
                         if (!delayStart[0]) {
                             if (!HandleIO.isPaused() && !(HandleIO.hasTimeOut() || gameTime[0] < 0 || status.onePlayerAlive())) {
-                                //System.out.print("Here1");
-                                //seconds[0] = pauseSeconds[0];
+
+                                ControlUnit.addPowerUp(root, gameArray, gameTime[0], render);
+                                ControlUnit.checkAndRemovePowerUps(SetUpGame.getPlayers());
+
                                 HandleIO.keyPressed();
                                 // Move the AI paddles
                                 if (advancedAI) {
@@ -979,7 +983,7 @@ public class SceneChanger {
                                 for (int pos = 0; pos < gameArray.size(); pos++) {
                                     gameObject temp = gameArray.get(pos);
                                     if (!((Ball) ballObj.getObj()).hasMoved()) {
-                                        CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp, root, gameArray, pos, sounds);
+                                        CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp, root, gameArray, pos, sounds, SetUpGame.getPlayers());
                                         ControlUnit.moveBall(SetUpGame.getBall(), move);
                                         ControlUnit.playerDeaths(temp, root, gameArray, pos);
                                     }

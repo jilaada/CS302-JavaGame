@@ -15,7 +15,9 @@ public class Paddle extends modelSuperClass{
 	private int paddleToken;
 	private double height;
 	private boolean rotated;
-	
+	private boolean hasPowerUp;
+	private PowerUps power;
+
 	/** Constructor of player paddle
 	 * The constructor will take three inputs and sets the speed, size and paddle bounds
 	 * of the object.
@@ -30,6 +32,9 @@ public class Paddle extends modelSuperClass{
 		this.paddleToken = token;
 		this.height = height;
 		this.rotated = false;
+		this.hasPowerUp = false;
+		this.power = null;
+
 
 		previousPos = new Point(0,0);
 		currentPos = new Point(0,0);
@@ -223,4 +228,23 @@ public class Paddle extends modelSuperClass{
 	public void setRotated(boolean rotated) {
 		this.rotated = rotated;
 	}
+
+	public boolean hasPowerUp() {
+		return hasPowerUp;
+	}
+
+	public void setPowerUp(boolean hasPowerUp) {
+		this.hasPowerUp = hasPowerUp;
+	}
+
+	public PowerUps getPower() {
+		return power;
+	}
+
+	public void setPower(PowerUps power) {
+		this.power = power;
+	}
+
+
+	//Get time when its not null
 }

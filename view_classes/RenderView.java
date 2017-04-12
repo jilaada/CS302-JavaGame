@@ -23,7 +23,7 @@ public class RenderView {
     private Player player4;
     private Ball ball;
     private Circle c1;
-    private Rectangle p1, p2, p3, p4, pl1, pl2, pl3, pl4, back;
+    private Rectangle p1, p2, p3, p4, pl1, pl2, pl3, pl4, back, powerUpOne;
     private ArrayList<gameObject> gamePlayers;
     private Boolean backgroundImage;
 
@@ -47,6 +47,7 @@ public class RenderView {
         Image imgP3 = new Image("/images/player3Sprite.png");
         Image imgP4 = new Image("/images/player4Sprite.png");
         Image backImage = new Image("/images/pipesFloor7.jpg");
+        Image powerU1 = new Image("/images/freezePowerUp.png");
 
         back = new Rectangle(0,0,1024,768);
         this.back.setFill(new ImagePattern(backImage));
@@ -88,6 +89,10 @@ public class RenderView {
             this.pl3.setFill(Color.TRANSPARENT);
             this.pl4.setFill(Color.TRANSPARENT);
         }
+
+        powerUpOne = new Rectangle(0, 0, 30, 30);
+        this.powerUpOne.setFill(new ImagePattern(powerU1));
+
 
         this.gamePlayers = new ArrayList<gameObject>();
         gamePlayers.add(new gameObject(pl1, this.player1));
@@ -147,4 +152,6 @@ public class RenderView {
     public Rectangle getPl4Render() {
         return pl4;
     }
+
+    public Rectangle getPU1Render() { return powerUpOne; }
 }
