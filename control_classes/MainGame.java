@@ -22,9 +22,9 @@ public class MainGame extends Application {
 
 
         Scene pSelectScene = sceneChanger.addPlayersSelectScene(theStage, gameScene);
-        Scene pControlScene = sceneChanger.addControlDisplayScene(theStage, gameScene);
+        Scene pControlScene = sceneChanger.addControlDisplayScene(theStage);
         Scene pDifficultyScene = sceneChanger.addDifficultySelectScene(theStage, pSelectScene);
-        Scene pAboutScene = sceneChanger.addAboutScene(theStage, gameScene);
+        Scene pAboutScene = sceneChanger.addAboutScene(theStage);
         Scene introScene = sceneChanger.addIntroScene(theStage, pDifficultyScene, pControlScene, pAboutScene);
 
 
