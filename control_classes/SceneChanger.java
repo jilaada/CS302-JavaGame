@@ -19,12 +19,10 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 import model_classes.Ball;
 import model_classes.CollisionStruct;
-import model_classes.Player;
 import model_classes.gameObject;
 import view_classes.RenderView;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 /**
  * Created by niles on 09/04/2017.
@@ -226,7 +224,7 @@ public class SceneChanger {
         RenderView demoRender = new RenderView(SetUpControlDisplay.getPlayer1(), SetUpControlDisplay.getPlayer2(), SetUpControlDisplay.getPlayer3(), SetUpControlDisplay.getPlayer4(), SetUpControlDisplay.getBall(), false);
 
         ArrayList<gameObject> gameArray = new ArrayList();
-        demoRender.SetUpRender(root, gameArray);
+        demoRender.setUpRender(root, gameArray);
 
         // Adding these objects to the root
         root.getChildren().add(demoRender.getBackRender());
@@ -853,7 +851,7 @@ public class SceneChanger {
 
         //gameObject[] gameArray;
         ArrayList<gameObject> gameArray = new ArrayList();
-        render.SetUpRender(root, gameArray);
+        render.setUpRender(root, gameArray);
 
         // IO handle declaration
         //TODO: determine the number of players from a previous scene of inputs
