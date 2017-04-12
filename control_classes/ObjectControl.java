@@ -2,14 +2,13 @@ package control_classes;
 
 import javafx.scene.Group;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model_classes.*;
 import view_classes.RenderView;
-import java.util.Random;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ObjectControl {
 
@@ -41,7 +40,7 @@ public class ObjectControl {
 	 * @param currentPaddle - paddle to be moved
 	 * @param direction - direction of movement; determined via keyboard inputs (1 = right, 0 = left)
 	 */
-	public boolean movePaddle(Paddle currentPaddle, int direction) {
+	private boolean movePaddle(Paddle currentPaddle, int direction) {
 		//TODO: move paddle is a function that will move the paddle according to the inputs
 		int newX, newY;
 		int paddleSpeed = (int)currentPaddle.getPaddleSpeed();
@@ -261,11 +260,11 @@ public class ObjectControl {
 		}
 	}
 	
-	//MoveBall:
+
 	/**
 	 * moveBall is a function that will move the ball when called. Direction of ball movement is dependent on the previous direction
 	 * and the angle as well as the speed of the ball
-	 * @param currentBall - the ball to be moved
+	 * @param currentBall - the ball to be moved; ball
 	 */
 	public void moveBall(Ball currentBall, CollisionStruct inp) {
 		//TODO: change so angle can be changed randomly
@@ -301,9 +300,6 @@ public class ObjectControl {
 				updatePrevY = newY - yDel;
 			}
 
-			//Account for ball stuck
-
-
 			//Update previous coordinates
 			currentBall.getPreviousPos().setX((int) updatePrevX);
 			currentBall.getPreviousPos().setY((int) updatePrevY);
@@ -317,6 +313,11 @@ public class ObjectControl {
 
 	}
 
+	/**
+	 * moveInBounds will move the bll in the boudns if it leave it
+	 * @param currentBall - the current ball in the game; Ball
+	 * @param col - the collision of the ball; Collision
+	 */
 	public void moveInBounds(Ball currentBall, Collision col) {
 			//Object collision hasn't occurred so check boundary collision
 			// Then account for it by updating current and previous ball coordinates
@@ -355,7 +356,6 @@ public class ObjectControl {
 			updatePrevX += 2;
 		}
 
-
 			//Update previous coordinates
 			currentBall.getPreviousPos().setX((int)updatePrevX);
 			currentBall.getPreviousPos().setY((int)updatePrevY);
@@ -367,6 +367,12 @@ public class ObjectControl {
 
 	}
 
+	/**
+	 * moveAllPaddles will render and control when the paddles are moved
+	 * @param render - the render view of the game; RenderView
+	 * @param HandleIO - the IOHandle of the game; IOHandle
+	 * @param SetUpGame - the GameSetUp of the game; GameSetUp
+	 */
 	public void moveAllPaddles(RenderView render, IOHandle HandleIO, GameSetUp SetUpGame) {
 		// Ghosts
 		Image imgGhostRight = new Image("/images/GhostPaddleRight.png");
@@ -374,7 +380,7 @@ public class ObjectControl {
 		Image imgGhostUp = new Image("/images/GhostPaddleUp.png");
 		Image imgGhostDown = new Image("/images/GhostPaddleDown.png");
 
-
+		// Determine if the object is alive
 		if (!SetUpGame.getPlayer1().isAlive()) {
 			this.imgP1Hori = imgGhostDown;
 			this.imgP1Vert = imgGhostRight;
@@ -512,8 +518,13 @@ public class ObjectControl {
 		}
 	}
 
-
-	//public void playerDeaths(ArrayList<Player> players) {
+	/**
+	 * playerDeaths will remove all the remaining bricks once the player warlord is destroyed
+	 * @param obj - the obejcts in the game; gameobject
+	 * @param root - the group of the game; Group
+	 * @param gameArray - the gameArray containing all objects; Arraylist
+	 * @param pos - the postion in the game; pos
+	 */
 	public void playerDeaths(gameObject obj, Group root, ArrayList<gameObject> gameArray, int pos) {
 		if(obj.getObj() instanceof Player) {
 			if(!((Player) obj.getObj()).isAlive()) {
@@ -557,7 +568,11 @@ public class ObjectControl {
 		}
 	}
 
-	//This is an additional class that essentially removes a brick from a gameObject array
+	/**
+	 * removeBrick will remove the remaining bricks from the game
+	 * @param gameArray - the game array of the object; arraylist
+	 * @param temp - the temporary brick; Brick
+	 */
 	private void removeBrick (ArrayList<gameObject> gameArray, Brick temp) {
 		for(int i = 0; i < gameArray.size(); i++) {
 			//Check to see if object is of Brick type
@@ -572,6 +587,14 @@ public class ObjectControl {
 	}
 
 	//Add powerup to game
+
+	/**
+	 * addPowerUp adds powers to the game
+	 * @param root - the group o the game; Group
+	 * @param gameArray - the game array of object; arraylist
+	 * @param timer - a timer; double
+	 * @param render - the renderview of the game; RenderView
+	 */
 	public void addPowerUp (Group root, ArrayList<gameObject> gameArray, double timer, RenderView render) {
 
 		if((118 < timer) &&  (timer < 119) && firstLoop) {
@@ -621,6 +644,11 @@ public class ObjectControl {
 	}
 
 	//Reset powerUp effect
+
+	/**
+	 * checkAndRemovePowerUps will check and remove the power ups
+	 * @param players - the players in the game
+	 */
 	public void checkAndRemovePowerUps(ArrayList<Player> players) {
 
 		//Loop through each player's paddle
@@ -669,14 +697,6 @@ public class ObjectControl {
 
 				}
 			}
-
-			//System.out.println(tempPaddle.hasPowerUp());
-
 		}
-		//System.out.println("");
-
-
 	}
-
-
 }

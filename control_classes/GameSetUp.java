@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
+ * GameSetUp is a class that creates the main game objects. It creates the players, paddles, bricks and walls as well as the ball
  * Created by Jilada on 5/04/17.
  */
 public class GameSetUp {
@@ -24,8 +25,11 @@ public class GameSetUp {
     private Paddle paddle1, paddle2, paddle3, paddle4;
     private ArrayList<gameObject> wallSet1, wallSet2, wallSet3, wallSet4;
 
+    /**
+     * Constructor for the GameSetUp class
+     */
     public GameSetUp() {
-        //TODO: Add names to the players
+        // Declaring the positionas and the players in the game
         Point p1 = new Point(87, 37);
         Point p2 = new Point(886, 37);
         Point p3 = new Point(87, 684);
@@ -40,14 +44,24 @@ public class GameSetUp {
         players.add(player2);
         players.add(player3);
         players.add(player4);
-
     }
 
-    public void SetUpBall(int speed, int rad) {
+    /**
+     * setUpBall is a function that will determine construction of the new ball
+     * @param speed - the speed of the ball; int
+     * @param rad - the radius of the ball; int
+     */
+    public void setUpBall(int speed, int rad) {
         ball = new Ball(speed, rad);
     }
 
-    public void SetUpPaddles(double speed, double size, double height) {
+    /**
+     * setUpPaddles is a method that reates the paddles in the game for each player
+     * @param speed - the speed of the paddles; double
+     * @param size - the horizontal width of the paddle; double
+     * @param height - the horizontal height of the paddle;
+     */
+    public void setUpPaddles(double speed, double size, double height) {
         // Instantiate all the paddles
         Paddle paddle1 = new Paddle(speed, size, height, 1);
         this.paddle1 = paddle1;
@@ -83,7 +97,12 @@ public class GameSetUp {
         paddle4.setCurrentPos(point4);
     }
 
-    public void SetUpWall(Group root, ArrayList<gameObject> gameArray) {
+    /**
+     * setUpWalls is a method that sets up the walls in the game
+     * @param root - the group that belongs to the scene; Group
+     * @param gameArray - an array that the bricks will be contained in;
+     */
+    public void setUpWall(Group root, ArrayList<gameObject> gameArray) {
         //Declaring the walls for each player so the bricks will go in them
         Wall player1Wall = new Wall();
         Wall player2Wall = new Wall();
@@ -108,9 +127,11 @@ public class GameSetUp {
         Image imgp42 = new Image("/images/boxWhite2.png");
         Image imgp43 = new Image("/images/boxWhite3.png");
 
+        //Introducing random parameter
         int count;
         Random c = new Random();
 
+        // For each player add the walls to the game determined by a randomised image
         for (int i = 0; i < 325; i+=25) {
             for (int j = 0; j < 225; j+=25) {
                 if (!((i < 225) && (j < 125))) {
@@ -130,7 +151,6 @@ public class GameSetUp {
                                     break;
                     }
                     // Add to game array
-                    //TODO: fix the game object bug
                     this.wallSet1.add(new gameObject(w1, b1));
                     // Add to the wall array list
                     player1Wall.addBrick(b1);
@@ -156,7 +176,7 @@ public class GameSetUp {
                         default:    w2.setFill(new ImagePattern(imgp21));
                             break;
                     }
-                    //TODO: fix the game object bug
+                    // Add to game array
                     this.wallSet2.add(new gameObject(w2, b2));
                     player2Wall.addBrick(b2);
                     root.getChildren().add(w2);
@@ -181,7 +201,7 @@ public class GameSetUp {
                         default:    w3.setFill(new ImagePattern(imgp31));
                             break;
                     }
-                    //TODO: fix the game object bug
+                    // Add to game array
                     this.wallSet3.add(new gameObject(w3, b3));
                     player3Wall.addBrick(b3);
                     root.getChildren().add(w3);
@@ -206,7 +226,7 @@ public class GameSetUp {
                         default:    w4.setFill(new ImagePattern(imgp41));
                             break;
                     }
-                    //TODO: fix the game object bug
+                    // Add to game array
                     this.wallSet4.add(new gameObject(w4, b4));
                     player4Wall.addBrick(b4);
                     root.getChildren().add(w4);
@@ -214,6 +234,7 @@ public class GameSetUp {
             }
         }
 
+        // Add the walls to the player and the gameArray
         player1.addPlayerWall(player1Wall);
         player2.addPlayerWall(player2Wall);
         player3.addPlayerWall(player3Wall);
@@ -225,36 +246,67 @@ public class GameSetUp {
 
     }
 
-    // Return method for ball
+    /**
+     * getBall will get the ball of the game
+     * @return Returns the ball in the game; Ball
+     */
     public Ball getBall() {
         return this.ball;
     }
 
-    // Return methods for players
+    /**
+     * getPlayer1 will get the player 1 of the game
+     * @return Returns player1; Player
+     */
     public Player getPlayer1() {
         return this.player1;
     }
+
+    /**
+     * getPlayer2 will get the player 2 of the game
+     * @return Returns player2; Player
+     */
     public Player getPlayer2() {
         return this.player2;
     }
+
+    /**
+     * getPlayer3 will get the player 3 of the game
+     * @return Returns player3; Player
+     */
     public Player getPlayer3() {
         return this.player3;
     }
+
+    /**
+     * getPlayer4 will get the player 4 of the game
+     * @return Returns player4; Player
+     */
     public Player getPlayer4() {
         return this.player4;
     }
 
+    /**
+     * getNumPlayers will get the number of players in the game
+     * @return Reutrns the number of players; int
+     */
     public int getNumPlayers() {
         return numPlayers;
     }
 
+    /**
+     * setNumPlayers will set the number of players
+     * @param numPlayers - the number of players in the game; int
+     */
     public void setNumPlayers(int numPlayers) {
         this.numPlayers = numPlayers;
     }
 
+    /**
+     * getPlayers will get the Arraylist containing the players in the game
+     * @return Returns the Arraylist of players in the game; Arraylist
+     */
     public ArrayList<Player> getPlayers() {
         return this.players;
     }
-
-
 }

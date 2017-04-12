@@ -9,17 +9,30 @@ import java.util.ArrayList;
 
 
 /**
+ * This class is used to determine the new position of the ball when a collision has been detected
+ * This class is an abstract class with no contructor and simply methods
  * Created by niles on 24/03/2017.
  */
 public class Collision {
 
+    // Declaring the arraylist of game objects
     private ArrayList<gameObject> disposable = new ArrayList<gameObject>();
     private ArrayList<gameObject> paddleArray;
-
     Collision(ArrayList<gameObject> paddleArray){
         this.paddleArray = paddleArray;
     }
 
+    /**
+     * checkCollisions will take in a number of parameters to determine if a collision has occured on the ball
+     * @param ball - the ball object in the game; Ball
+     * @param shape - the shape representation of the game of the game; Shape
+     * @param root - the group of shapes contained in the scene; Group
+     * @param gameArray - an Arraylist of gameObjects in the game; Arraylist
+     * @param pos -
+     * @param sounds - the sounds used in the game for when a collision does occur; GameSounds
+     * @param players - an Arraylist of the players; Arraylist
+     * @return Returns a a set of locational and positional values so that if a collision does occur it does not need to check where the ball needs to be again; CollisionStruct
+     */
     public CollisionStruct checkCollisions(gameObject ball, gameObject shape, Group root, ArrayList<gameObject> gameArray, int pos, GameSounds sounds, ArrayList<Player> players) {
 
         double xMin;
@@ -219,8 +232,6 @@ public class Collision {
 
             sounds.playBrickSE();
             finalPoint = null;
-            //NEED TO SET COLLISION TO NULL SO IT DOESNT BOUNCE
-            //If null thing
         }
 
         //Prepare output
@@ -231,6 +242,11 @@ public class Collision {
     }
 
 
+    /**
+     * getDels
+     * @param currentBall
+     * @return
+     */
     protected Point getDels(Ball currentBall) {
         //TODO: change so angle can be changed randomly
         // to the current position and previous position
@@ -278,6 +294,10 @@ public class Collision {
         return newValues;
     }
 
+    /**
+     * getDisposables gets the disposable arraylist
+     * @return Returns the disposable list; Arraylist
+     */
     public ArrayList<gameObject> getDisposable() {
         return this.disposable;
     }

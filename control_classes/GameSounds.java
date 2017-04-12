@@ -6,9 +6,11 @@ import javafx.util.Duration;
 import java.net.URISyntaxException;
 
 /**
+ * GameSounds will create new thread swhen sounds need to played so they play concurrently to the rest of the game
  * Created by niles on 09/04/2017.
  */
 public class GameSounds {
+    // Declaring the music files
     MediaPlayer brickPlayer;
     MediaPlayer paddlePlayer;
     MediaPlayer deathPlayer;
@@ -16,6 +18,9 @@ public class GameSounds {
     MediaPlayer gamePlayer;
     boolean firstLoop;
 
+    /**
+     * Constructor for the GameSounds class
+     */
     public GameSounds() {
 
         //Get path to audio
@@ -51,6 +56,9 @@ public class GameSounds {
         }
     }
 
+    /**
+     * playBrickSE will play the sounds the ball makes when it collides with a brick
+     */
     public void playBrickSE() {
 
         //Play audio in thread
@@ -67,6 +75,9 @@ public class GameSounds {
         }
     }
 
+    /**
+     * playPaddleSE will play the sound the ball makes when it collides with the paddle
+     */
     public void playPaddleSE() {
         //Play audio in thread
         try{
@@ -82,6 +93,9 @@ public class GameSounds {
         }
     }
 
+    /**
+     * playDeathSE will play the sound the ball makes when it collides with the player shape
+     */
     public void playDeathSE() {
         //Play audio in thread
         try{
@@ -98,7 +112,10 @@ public class GameSounds {
     }
 
 
-    //public void playBackgroundSE(boolean keepGoing) {
+    /**
+     * playBackgroundSE will play the background music during the game
+     * @param keepGoing - an enum value for the scene the game is currently in; Enumeration
+     */
     public void playBackgroundSE(SceneChanger.gameScreen keepGoing) {
         //Play audio in thread
 
@@ -115,6 +132,10 @@ public class GameSounds {
         }
     }
 
+    /**
+     * loopSound will loop the sound once the track finishes
+     * @param sound
+     */
     public void loopSound(MediaPlayer sound) {
         try {
             new Thread() {
@@ -135,6 +156,10 @@ public class GameSounds {
         }
     }
 
+    /**
+     * stopSound will stop the sound once it is no longer needed
+     * @param sound
+     */
     public void stopSound(MediaPlayer sound) {
         try {
             new Thread() {

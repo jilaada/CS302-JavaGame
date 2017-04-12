@@ -26,13 +26,14 @@ import view_classes.RenderView;
 import java.util.ArrayList;
 
 /**
+ * SceneChagner will change the scenes when they occur
  * Created by niles on 09/04/2017.
  */
 public class SceneChanger {
     private String gameStatement;
     private Label endSceneText;
 
-
+    // Enumeration of the game
     public enum gameScreen {
         INTRO, DIFFICULTY, CONTROLS, PLAYERSEL, ABOUT, GAME, END
     }
@@ -49,7 +50,9 @@ public class SceneChanger {
     private int playerNO;
 
 
-
+    /**
+     * Constructor for the SceneChanger
+     */
     public SceneChanger() {
         this.gameStatement = "You lost";
         //this.sceneSwitch[0] = 0;
@@ -58,7 +61,14 @@ public class SceneChanger {
         this.playerNO = -1;
     }
 
-    //public Scene addIntroScene(Stage primaryStage, Scene inp, int[] switchScene) {
+    /**
+     * addIntroScene will add the intro scenen to the game
+     * @param primaryStage - the stage of the game; stage
+     * @param pSelectScene - the select scene; Scene
+     * @param pControlScene - the control scene; scene
+     * @param pAboutScene - the about Scene; scene
+     * @return returns the itroscene object
+     */
     public Scene addIntroScene(Stage primaryStage, Scene pSelectScene, Scene pControlScene, Scene pAboutScene) {
 
         //Initalise Scene and group structure
@@ -211,15 +221,20 @@ public class SceneChanger {
         return scene;
     }
 
-    public Scene addControlDisplayScene(Stage primaryStage, Scene gameScene) {
+    /**
+     * addControlDisplayScene will add the control display scene
+     * @param primaryStage - the stage of the gamel stage
+     * @return Returns the control display scene
+     */
+    public Scene addControlDisplayScene(Stage primaryStage) {
         Group root = new Group();
         Scene Scene = new Scene(root, 1024, 768, Color.BLACK);
 
         // Declare the objects, paddles to be added to the scene
         // Use the old code?
         GameSetUp SetUpControlDisplay = new GameSetUp();
-        SetUpControlDisplay.SetUpBall(10, 5);
-        SetUpControlDisplay.SetUpPaddles(15, 80, 15);
+        SetUpControlDisplay.setUpBall(10, 5);
+        SetUpControlDisplay.setUpPaddles(15, 80, 15);
         ObjectControl demoControl = new ObjectControl();
 
         RenderView demoRender = new RenderView(SetUpControlDisplay.getPlayer1(), SetUpControlDisplay.getPlayer2(), SetUpControlDisplay.getPlayer3(), SetUpControlDisplay.getPlayer4(), SetUpControlDisplay.getBall(), false);
@@ -393,6 +408,12 @@ public class SceneChanger {
         return Scene;
     }
 
+    /**
+     * addDifficultSelectScene will allow the user to select the difficulty of the game
+     * @param primaryStage - the stage of the game; stage
+     * @param pSelectScene - the select scene(next scene); scene
+     * @return Returns the difficulty select scene
+     */
     public Scene addDifficultySelectScene(Stage primaryStage, Scene pSelectScene) {
         Group root = new Group();
         Scene Scene = new Scene(root, 1024, 768, Color.BLACK);
@@ -541,6 +562,12 @@ public class SceneChanger {
         return Scene;
     }
 
+    /**
+     * addPlayerSelectScene will allow the player to select the number of players in the game
+     * @param primaryStage - the stage of the game; stage
+     * @param gameScene - the next scene game scene; scene
+     * @return
+     */
     public Scene addPlayersSelectScene(Stage primaryStage, Scene gameScene) {
         Group root = new Group();
 
@@ -783,7 +810,12 @@ public class SceneChanger {
         return scene;
     }
 
-    public Scene addAboutScene(Stage primaryStage, Scene gameScene) {
+    /**
+     * addAboutScene will add the about scene of the game
+     * @param primaryStage - the stage of the game; stage
+     * @return Returns the about scene of the game
+     */
+    public Scene addAboutScene(Stage primaryStage) {
         Group root = new Group();
         Scene Scene = new Scene(root, 1024, 768, Color.BLACK);
 
@@ -816,6 +848,13 @@ public class SceneChanger {
         return Scene;
     }
 
+    /**
+     * handlePlayerSelect will handle the selection of the player numebrs
+     * @param rect1 - the button that was pressed; rectangle
+     * @param text1 - the text that was pressed; text
+     * @param noOfPlayers - the number of player contained in that; int
+     * @param in
+     */
     public void handlePlayerSelect(Rectangle rect1, Label text1, int[] noOfPlayers, int in) {
 
         Image imgButton2 = new Image("/images/ButtonRed.png");
@@ -829,6 +868,13 @@ public class SceneChanger {
         text1.setLayoutX((1024/2) - (widthText/2));
     }
 
+    /**
+     * addGameScene ads the main scene to the game
+     * @param theStage - the stage of the game; stage
+     * @param sceneChanger - the scene changer classl scenechanger
+     * @param scene - the scene of the game; scene
+     * @param endScene - the end scene; scene
+     */
     public void addGameScene (Stage theStage, SceneChanger sceneChanger, Scene scene, Scene endScene) {
 
         Group root = new Group();
@@ -841,8 +887,8 @@ public class SceneChanger {
 
         // Add Players via GameSetUp
         //SetUpGame.SetUpPlayers();
-        SetUpGame.SetUpBall(10, 5);
-        SetUpGame.SetUpPaddles(15, 80, 20);
+        SetUpGame.setUpBall(10, 5);
+        SetUpGame.setUpPaddles(15, 80, 20);
 
         // Set up rendering of objects
         RenderView render = new RenderView(SetUpGame.getPlayer1(), SetUpGame.getPlayer2(), SetUpGame.getPlayer3(), SetUpGame.getPlayer4(), SetUpGame.getBall(), true);
@@ -897,7 +943,7 @@ public class SceneChanger {
         gameArray.add(paddleObj4);
 
         // Testing rectangle wall
-        SetUpGame.SetUpWall(root, gameArray);
+        SetUpGame.setUpWall(root, gameArray);
 
         //Initialise game sound effect class
         GameSounds sounds = new GameSounds();
@@ -1066,6 +1112,12 @@ public class SceneChanger {
         timer.start();
     }
 
+    /**
+     * addEndScene will add the end scene to the game
+     * @param primaryStage - the stage of the game; stage
+     * @param inp
+     * @return returns the end scene of the game
+     */
     public Scene addEndScene(Stage primaryStage, Scene inp) {
 
         //Initalise Scene and group structure
@@ -1154,6 +1206,10 @@ public class SceneChanger {
         return scene;
     }
 
+    /**
+     * updateEndText will determine the text displayed at the end of the game
+     * @param text - the text that should be displayed; text
+     */
     public void updateEndText(String text) {
         endSceneText.setText(text);
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();

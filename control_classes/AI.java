@@ -3,17 +3,21 @@ package control_classes;
 import model_classes.Point;
 
 /**
+ * AI class has two methods that contain the movement specified for the level of difficult of the AI needed
  * Created by Jilada on 26/03/17.
  */
 public class AI {
-    // Will have control of multiple paddles
-    //TODO: constructor that will add the correct number of players to this control
     private IOHandle handle;
     private GameSetUp gameFace;
     private int numPlayers, counter;
     // Assumes that player one will always be a human player
     private boolean moveP2Right, moveP3Right, moveP4Right;
 
+    /**
+     * Constructor for the AI class
+     * @param handle - the IOHandle for the game; IOHandle
+     * @param gameFace - the GameSetUp for th game; GameSetUp
+     */
     public AI(IOHandle handle, GameSetUp gameFace) {
         this.handle = handle;
         this.gameFace = gameFace;
@@ -24,6 +28,10 @@ public class AI {
         this.moveP2Right = true;
     }
 
+    /**
+     * moveAI is a function that that simply moved the AI side to side
+     * The AI is not imtelligent and is used in the esay mode for the players
+     */
     public void moveAI() {
         //TODO: This function will move all the AI paddles
         // If the number of players were 3, only
@@ -86,12 +94,17 @@ public class AI {
                     }
                 }
             }
+            // Stops the AI moving too quickly (half speed)
             counter = 0;
         } else {
             counter++;
         }
     }
 
+    /**
+     * moveAIAdvanced is a function that moves all available AIs in an intelligent way to an extent
+     * If it cannot detect the ball the (goes out of the line of sight) it will simply move like the unintelligent AI
+     */
     public void moveAIAdvanced() {
         // Determine the balls location
         // Toggle direction of paddle movement
@@ -231,6 +244,7 @@ public class AI {
                     }
                 }
             }
+            // Stops the AIs from moving too quickly (half speed)
             counter = 0;
         } else {
             counter++;
