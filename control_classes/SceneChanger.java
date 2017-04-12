@@ -772,8 +772,9 @@ public class SceneChanger {
 
                         if (!delayStart[0]) {
                             if (!HandleIO.isPaused() && !(HandleIO.hasTimeOut() || gameTime[0] < 0 || status.onePlayerAlive())) {
-                                //System.out.print("Here1");
-                                //seconds[0] = pauseSeconds[0];
+
+                                ControlUnit.addPowerUp(root, gameArray, gameTime[0], render);
+
                                 HandleIO.keyPressed();
                                 // Move the AI paddles
                                 aiHandle.moveAIAdvanced();
@@ -786,7 +787,7 @@ public class SceneChanger {
                                 for (int pos = 0; pos < gameArray.size(); pos++) {
                                     gameObject temp = gameArray.get(pos);
                                     if (!((Ball) ballObj.getObj()).hasMoved()) {
-                                        CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp, root, gameArray, pos, sounds);
+                                        CollisionStruct move = collisionDetection.checkCollisions(ballObj, temp, root, gameArray, pos, sounds, SetUpGame.getPlayers());
                                         ControlUnit.moveBall(SetUpGame.getBall(), move);
                                         ControlUnit.playerDeaths(temp, root, gameArray, pos);
                                     }

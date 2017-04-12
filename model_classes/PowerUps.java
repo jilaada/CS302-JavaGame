@@ -13,12 +13,16 @@ public class PowerUps extends modelSuperClass{
     private double size;
     private double height;
     private Power power;
+    private double timeOfPU;
+    private double duration;
 
-    public PowerUps(double size, double height, Power power) {
+    public PowerUps(double size, double height, Power power, double duration) {
         this.size = size;
         this.height = height;
         this.currentPos = new Point(0,0);
         this.power = power;
+        this.timeOfPU = -1;
+        this.duration = duration;
     }
 
 
@@ -30,6 +34,9 @@ public class PowerUps extends modelSuperClass{
         }
     }
 
+    public void setCurrentPos(Point temp) {
+        this.currentPos = temp;
+    }
 
     public double getLength() {
         return size;
@@ -53,6 +60,22 @@ public class PowerUps extends modelSuperClass{
 
     public void setPower(Power power) {
         this.power = power;
+    }
+
+    public double getTimeOfPU() {
+        return timeOfPU;
+    }
+
+    public void setTimeOfPU(double timeOfPU) {
+        this.timeOfPU = timeOfPU;
+    }
+
+    public double getDuration() {
+        return duration;
+    }
+
+    public void setDuration(double duration) {
+        this.duration = duration;
     }
 
 }

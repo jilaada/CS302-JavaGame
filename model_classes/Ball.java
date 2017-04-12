@@ -8,7 +8,7 @@ public class Ball extends modelSuperClass{
 	private Point currentPos;
 	private Point previousPos;
 	private Point nextPos;
-	private Player lastTouch;
+	private int lastTouch;
 	private double ballSpeed;
 	private double ballRad;
 	private double ballArea;
@@ -24,6 +24,7 @@ public class Ball extends modelSuperClass{
 		this.previousPos = new Point(x, y);
 		this.currentPos = new Point(512, 384);
 		this.moved = false;
+		this.lastTouch = -1;
 	}
 
 	
@@ -106,5 +107,13 @@ public class Ball extends modelSuperClass{
 
 	public void setMoved(boolean moved) {
 		this.moved = moved;
+	}
+
+	public int getLastTouch() {
+		return lastTouch;
+	}
+
+	public void setLastTouch(int lastTouch) {
+		this.lastTouch = lastTouch;
 	}
 }
