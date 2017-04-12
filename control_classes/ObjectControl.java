@@ -273,32 +273,33 @@ public class ObjectControl {
 			//Since collision has occured, account for it by updating current and previous ball coordinates
 
 			if ((newX > finalPoint.getX()) && (wallLeft == true)) { //Left wall collision
-//				newX = finalPoint.getX() - (newX - finalPoint.getX());
-//				updatePrevX = newX + xDel;
-				//newX = finalPoint.getX() - ballRadius;
 				newX = finalPoint.getX();
 				updatePrevX = newX + xDel;
+
 			} else if ((newX < finalPoint.getX()) && (wallRight == true)) { //Right wall collision
-//				newX = finalPoint.getX() + (finalPoint.getX() - newX);
-//				updatePrevX = newX - xDel;
-				//newX = finalPoint.getX() + ballRadius;
 				newX = finalPoint.getX();
 				updatePrevX = newX - xDel;
 			}
 
 			if ((newY > finalPoint.getY()) && (wallTop == true)) { //Top wall collision
-//				newY = finalPoint.getY() - (newY - finalPoint.getY());
-//				updatePrevY = newY + yDel;
-				//newY = finalPoint.getY() - ballRadius;
 				newY = finalPoint.getY();
 				updatePrevY = newY + yDel;
 			} else if ((newY < finalPoint.getY()) && (wallBottom == true)) { //Bottom wall collision
-//				newY = finalPoint.getY() + (finalPoint.getY() - newY);
-//				updatePrevY = newY - yDel;
-				//newY = finalPoint.getY() + ballRadius;
 				newY = finalPoint.getY();
 				updatePrevY = newY - yDel;
 			}
+
+			//Account for ball stuck
+			if(yDel == 0) {
+				updatePrevY += 2;
+			}
+
+			if(xDel == 0) {
+				updatePrevX += 2;
+			}
+
+
+
 
 			//Update previous coordinates
 			currentBall.getPreviousPos().setX((int) updatePrevX);

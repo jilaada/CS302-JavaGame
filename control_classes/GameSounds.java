@@ -98,16 +98,19 @@ public class GameSounds {
     }
 
 
-    public void playBackgroundSE(boolean keepGoing) {
-    //public void playBackgroundSE(SceneChanger.gameScreen keepGoing) {
+    //public void playBackgroundSE(boolean keepGoing) {
+    public void playBackgroundSE(SceneChanger.gameScreen keepGoing) {
         //Play audio in thread
 
         if(this.firstLoop) {
             this.firstLoop = false;
             this.loopSound(backgroundPlayer);
         } else {
-            if(!keepGoing) {
+            if(keepGoing == SceneChanger.gameScreen.GAME) {
                this.stopSound(backgroundPlayer);
+               this.loopSound(gamePlayer);
+            } if(keepGoing == SceneChanger.gameScreen.END) {
+                this.stopSound(gamePlayer);
             }
         }
     }
