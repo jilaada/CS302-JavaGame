@@ -726,12 +726,12 @@ public class SceneChanger {
         timer = new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 // Run the input handle
-                if(sceneSwitch != gameScreen.END) {
-                    sounds.playBackgroundSE(true);
-                    //sounds.playBackgroundSE(sceneSwitch);
-                } else  {
-                    sounds.playBackgroundSE(false);
-                }
+//                if(sceneSwitch != gameScreen.END) {
+                    //sounds.playBackgroundSE(true);
+                    sounds.playBackgroundSE(sceneSwitch);
+//                } else  {
+//                    sounds.playBackgroundSE(false);
+//                }
 
                 if (sceneSwitch == gameScreen.GAME) {
 
@@ -768,7 +768,6 @@ public class SceneChanger {
                         long elapsedTime = System.nanoTime() - startNanoTime[0];
                         pauseSeconds[0] = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
                         // Calculate the seconds value;
-                        // System.out.println(elapsedTime);
 
 
                         if (!delayStart[0]) {
@@ -803,14 +802,9 @@ public class SceneChanger {
                                 String str = String.valueOf(gameTime[0] - seconds[0]);
                                 timerLabel.setText(str);
                                 timerLabel.setX(512 - Math.round(timerLabel.getLayoutBounds().getWidth() / 2));
-                                if (gameTime[0] - seconds[0] == 0) {
-                                    // TODO: something that will end the game
-                                    // Transfer to a different screen
-                                }
                             } else if (HandleIO.hasTimeOut() || gameTime[0] - seconds[0] < 0 || status.onePlayerAlive()) {
                                 // Display some message
                                 // Set the countdown to display 0
-
                                 if (status.onePlayerAlive()) {
                                     sceneChanger.updateEndText("Player " + status.winningPlayer() + " won");
                                 } else if (gameTime[0] - seconds[0] < 0) {
@@ -823,22 +817,17 @@ public class SceneChanger {
 
                                 sceneSwitch = gameScreen.END;
 
-                                System.out.println("INSIDE GAME OVER:");
-                                System.out.println(HandleIO.hasTimeOut());
-                                System.out.println(gameTime[0] - seconds[0] < 0);
-                                System.out.println(status.onePlayerAlive());
-                                System.out.println("End:");
 
-
-                                //sceneChanger.updateEndText("testing");
                                 theStage.setScene(endScene);
                             } else {
+
                                 HandleIO.resetPaddle();
                                 HandleIO.keyPressed();
                                 // Don't update seconds, instead store a current time
                                 if (!HandleIO.isPaused()) {
                                     // Change the to the new game time so the game seconds pause doesn't register as elapsed time
                                     gameTime[0] = gameTime[0] - (pauseSeconds[0] - seconds[0]);
+                                    System.out.println(gameTime[0]);
                                 }
 
                             }
@@ -893,7 +882,7 @@ public class SceneChanger {
 
         //Declare Text
         Label text1 = new Label("");
-        Label text2 = new Label("Main Menu");
+        Label text2 = new Label("Main Menu [B]");
 
         //Declare fonts, heights and widths of text
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
@@ -917,6 +906,14 @@ public class SceneChanger {
 
 
         //Add event listeners to rectangles
+
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if (key.getCode()== KeyCode.B) {
+                primaryStage.setScene(introScene);                MainGame newGame = new MainGame();
+                newGame.start(primaryStage);
+            }
+        });
+
         rect2.setOnMouseClicked(new EventHandler<MouseEvent>()
         {
             @Override
