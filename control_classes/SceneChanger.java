@@ -543,25 +543,27 @@ public class SceneChanger {
 
         //Declare width, height and coordinates of rectangles
         int width = 1024, height = 768;
-        int widthRect = 700, heightRect = 100;
+        int widthRect = 650, heightRect = 80;
         int xRect = (width/2) - (widthRect/2);
         int yRect = 50;
 
         //Declare colours
-        Color c1 = Color.web("0x2962FF");
-        Color c2 = Color.web("0x00B5FF");
+
+        Image imgButton1 = new Image("/images/ButtonWarmGrey.png");
+        Image imgButtonClick = new Image("/images/ButtonBrightBlue.png");
+
 
         //Initialise rectangle buttons
-        Rectangle rect1 = new Rectangle(xRect,yRect,widthRect,heightRect);
-        rect1.setFill(Color.GREY);
+        Rectangle rect1 = new Rectangle(xRect - 95,yRect,widthRect + 190,heightRect+20);
+        rect1.setFill(new ImagePattern(imgButton1));
         Rectangle rect2 = new Rectangle(xRect,(2 * yRect) + heightRect,widthRect,heightRect);
-        rect2.setFill(c2);
-        Rectangle rect3 = new Rectangle(xRect,(3 * yRect) + (2 * heightRect),widthRect,heightRect);
-        rect3.setFill(c2);
-        Rectangle rect4 = new Rectangle(xRect,(4 * yRect) + (3 * heightRect),widthRect,heightRect);
-        rect4.setFill(c2);
-        Rectangle rect5 = new Rectangle(xRect,(5 * yRect) + (4 * heightRect),widthRect,heightRect);
-        rect5.setFill(c2);
+        rect2.setFill(new ImagePattern(imgButtonClick));
+        Rectangle rect3 = new Rectangle(xRect,(2.5 * yRect) + (2 * heightRect),widthRect,heightRect);
+        rect3.setFill(new ImagePattern(imgButtonClick));
+        Rectangle rect4 = new Rectangle(xRect,(3 * yRect) + (3 * heightRect),widthRect,heightRect);
+        rect4.setFill(new ImagePattern(imgButtonClick));
+        Rectangle rect5 = new Rectangle(xRect,(3.5 * yRect) + (4 * heightRect),widthRect,heightRect);
+        rect5.setFill(new ImagePattern(imgButtonClick));
 
         //Round rectangle corners
         rect1.setArcWidth(20);
@@ -576,19 +578,19 @@ public class SceneChanger {
         rect5.setArcHeight(20);
 
         //Declare Text
-        Label text1 = new Label("Number of players:");
-        Label text2 = new Label("1 Player   [1]");
-        Label text3 = new Label("2 Player   [2]");
-        Label text4 = new Label("3 Player   [3]");
-        Label text5 = new Label("4 Player   [4]");
+        Label text1 = new Label("NUMBER OF PLAYERS");
+        Label text2 = new Label("ONE PLAYER   [1]");
+        Label text3 = new Label("TWO PLAYER   [2]");
+        Label text4 = new Label("THREE PLAYER [3]");
+        Label text5 = new Label("FOUR PLAYER  [4]");
 
         //Decalre fonts, heights and widths of text
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
         text1.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
-        text2.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
-        text3.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
-        text4.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
-        text5.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        text2.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 40));
+        text3.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 40));
+        text4.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 40));
+        text5.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 40));
         text1.setTextFill(Color.WHITE);
         text2.setTextFill(Color.WHITE);
         text3.setTextFill(Color.WHITE);
@@ -607,14 +609,27 @@ public class SceneChanger {
         text2.setLayoutX((width/2) - (widthText2/2));
         text2.setLayoutY((2*yRect) + heightRect + (heightRect/5));
         text3.setLayoutX((width/2) - (widthText3/2));
-        text3.setLayoutY((3*yRect) + (2*heightRect) + (heightRect/5));
+        text3.setLayoutY((2.5*yRect) + (2*heightRect) + (heightRect/5));
         text4.setLayoutX((width/2) - (widthText4/2));
-        text4.setLayoutY((4*yRect) + (3*heightRect) + (heightRect/5));
+        text4.setLayoutY((3*yRect) + (3*heightRect) + (heightRect/5));
         text5.setLayoutX((width/2) - (widthText5/2));
-        text5.setLayoutY((5*yRect) + (4*heightRect) + (heightRect/5));
+        text5.setLayoutY((3.5*yRect) + (4*heightRect) + (heightRect/5));
+
+        // Add back button
+        Image imgBackButton = new Image("/images/ButtonBrightOrange.png");
+        Rectangle backButton = new Rectangle(372, 618, 280, 50);
+        backButton.setFill(new ImagePattern(imgBackButton));
+
+        Text backButtonClick = new Text("BACK TO MAIN MENU [B]");
+        backButtonClick.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 20));
+        backButtonClick.setFill(Color.WHITE);
+        backButtonClick.setTextAlignment(TextAlignment.CENTER);
+        backButtonClick.setTextOrigin(VPos.CENTER);
+        backButtonClick.setLayoutX((1024/2) - backButtonClick.getLayoutBounds().getWidth()/2);
+        backButtonClick.setLayoutY((768 - 250) + (250/2));
 
         //Add shapes and text to scene and then show it
-        root.getChildren().addAll(rect1, rect2, rect3, rect4, rect5, text1, text2, text3, text4, text5);
+        root.getChildren().addAll(rect1, rect2, rect3, rect4, rect5, text1, text2, text3, text4, text5, backButton, backButtonClick);
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -622,15 +637,15 @@ public class SceneChanger {
 
         //Add listeners to shapes and text
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            if(key.getCode()== KeyCode.DIGIT1) {
+            if (key.getCode()== KeyCode.DIGIT1) {
                 handlePlayerSelect(rect1, text1, noOfPlayers, 1);
-            } else if(key.getCode()== KeyCode.DIGIT2) {
+            } else if (key.getCode()== KeyCode.DIGIT2) {
                 handlePlayerSelect(rect1, text1, noOfPlayers, 2);
-            } else if(key.getCode()== KeyCode.DIGIT3) {
+            } else if (key.getCode()== KeyCode.DIGIT3) {
                 handlePlayerSelect(rect1, text1, noOfPlayers, 3);
-            } else if(key.getCode()== KeyCode.DIGIT4) {
+            } else if (key.getCode()== KeyCode.DIGIT4) {
                 handlePlayerSelect(rect1, text1, noOfPlayers, 4);
-            } else if(key.getCode()== KeyCode.ENTER) {
+            } else if (key.getCode()== KeyCode.ENTER) {
                 if(noOfPlayers[0] != -1) {
                     sceneSwitch = gameScreen.GAME;
                     primaryStage.setScene(gameScene);
@@ -639,6 +654,9 @@ public class SceneChanger {
                     playerNO = noOfPlayers[0];
 
                 }
+            } else if (key.getCode() == KeyCode.B) {
+                sceneSwitch = gameScreen.INTRO;
+                primaryStage.setScene(IntroScene);
             }
         });
 
@@ -739,6 +757,24 @@ public class SceneChanger {
             }
         });
 
+        backButton.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                sceneSwitch = gameScreen.INTRO;
+                primaryStage.setScene(IntroScene);
+            }
+        });
+
+        backButtonClick.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                sceneSwitch = gameScreen.INTRO;
+                primaryStage.setScene(IntroScene);
+            }
+        });
+
         return scene;
     }
 
@@ -777,11 +813,10 @@ public class SceneChanger {
 
     public void handlePlayerSelect(Rectangle rect1, Label text1, int[] noOfPlayers, int in) {
 
-        Color c3 = Color.web("0x00E676");
-
+        Image imgButton2 = new Image("/images/ButtonRed.png");
         noOfPlayers[0] = in;
-        rect1.setFill(c3);
-        text1.setText("Play " + noOfPlayers[0] + " player mode [Enter]");
+        rect1.setFill(new ImagePattern(imgButton2));
+        text1.setText("PLAY " + noOfPlayers[0] + " PLAYER MODE [ENTER]");
 
         //Update width of text
         FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
