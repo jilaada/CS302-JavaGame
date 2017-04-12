@@ -14,6 +14,7 @@ import model_classes.gameObject;
 import java.util.ArrayList;
 
 /**
+ * This class is used for rendering the view of the gmae play objects
  * Created by Jilada on 5/04/17.
  */
 public class RenderView {
@@ -29,6 +30,15 @@ public class RenderView {
     private Boolean backgroundImage;
 
 
+    /**
+     * Constructor for RenderView
+     * @param player1 - player1; Player
+     * @param player2 - player2; Player
+     * @param player3 - player3; Player
+     * @param player4 - player4; Player
+     * @param ball - the ball; Ball
+     * @param backgroundImage - determines whether the game is instantiated for the control menu or the main game
+     */
     public RenderView(Player player1, Player player2, Player player3, Player player4, Ball ball, Boolean backgroundImage) {
         this.ball = ball;
         this.player1 = player1;
@@ -38,7 +48,12 @@ public class RenderView {
         this.backgroundImage = backgroundImage;
     }
 
-    public void SetUpRender(Group root, ArrayList<gameObject> gameArray) {
+    /**
+     * setUpRender will set up the rendering images of the game
+     * @param root - the group that belongs to the scene; Group
+     * @param gameArray - a game array of objects; Arraylist
+     */
+    public void setUpRender(Group root, ArrayList<gameObject> gameArray) {
         Image imgP1Hori = new Image("/images/paddleH1.png");
         Image imgP2Hori = new Image("/images/paddleH2.png");
         Image imgP3Hori = new Image("/images/paddleH3.png");
@@ -111,6 +126,9 @@ public class RenderView {
 
     }
 
+    /**
+     * tickRender is a function that will determine the next position of the sprites
+     */
     public void tickRender() {
         // Re-render each object
         c1.relocate((double)ball.getCurrentPos().getX(), (double)ball.getCurrentPos().getY());
@@ -120,46 +138,91 @@ public class RenderView {
         p4.relocate((double)player4.getPlayerPaddle().getCurrentPos().getX(), (double)player4.getPlayerPaddle().getCurrentPos().getY());
     }
 
+    /**
+     * Get the render of the object
+     * @return Returns the render of the shape; Shape
+     */
     public Rectangle getBackRender() {
         return back;
     }
 
+    /**
+     * Get the render of the object
+     * @return Returns the render of the shape; Shape
+     */
     public Circle getBallRender() {
         return c1;
     }
 
+    /**
+     * Get the render of the object
+     * @return Returns the render of the shape; Shape
+     */
     public Rectangle getP1Render() {
         return p1;
     }
 
+    /**
+     * Get the render of the object
+     * @return Returns the render of the shape; Shape
+     */
     public Rectangle getP2Render() {
         return p2;
     }
 
+    /**
+     * Get the render of the object
+     * @return Returns the render of the shape; Shape
+     */
     public Rectangle getP3Render() {
         return p3;
     }
 
+    /**
+     * Get the render of the object
+     * @return Returns the render of the shape; Shape
+     */
     public Rectangle getP4Render() {
         return p4;
     }
 
+    /**
+     * Get the render of the object
+     * @return Returns the render of the shape; Shape
+     */
     public Rectangle getPl1Render() {
         return pl1;
     }
 
+    /**
+     * Get the render of the object
+     * @return Returns the render of the shape; Shape
+     */
     public Rectangle getPl2Render() {
         return pl2;
     }
 
+    /**
+     * Get the render of the object
+     * @return Returns the render of the shape; Shape
+     */
     public Rectangle getPl3Render() {
         return pl3;
     }
 
+    /**
+     * Get the render of the object
+     * @return Returns the render of the shape; Shape
+     */
     public Rectangle getPl4Render() {
         return pl4;
     }
 
+
+    /**
+     * Get the render of the object
+     * @return Returns the render of the shape; Shape
+     */
     public Rectangle getPURender(PowerUps.Power power) {
         if(power == PowerUps.Power.FREEZE) {
             return powerUpFreeze;
@@ -169,4 +232,5 @@ public class RenderView {
             return powerUpInvis;
         }
     }
+
 }
