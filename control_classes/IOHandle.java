@@ -25,6 +25,7 @@ public class IOHandle {
     private boolean escGame;
     private boolean timeOut;
     private boolean pauseGame;
+    private boolean unPause;
     private Scene currentScene;
     private int numPlayers;
     private final Set<String> KeysPressed = new HashSet<String>();
@@ -124,6 +125,9 @@ public class IOHandle {
             }
             if (e == "P") {
                 pauseGame = !pauseGame;
+                if (!pauseGame) {
+                    unPause = true;
+                }
             } else if (e == "ESCAPE") {
                 escGame = true;
             } else if (e == "PAGE_DOWN") {
@@ -205,6 +209,14 @@ public class IOHandle {
 
     public boolean isPaused() {
         return this.pauseGame;
+    }
+
+    public boolean isUnPaused() {
+        return this.unPause;
+    }
+
+    public void resetUnPaused() {
+        unPause = false;
     }
 
     public boolean isEscGame() { return this.escGame; }

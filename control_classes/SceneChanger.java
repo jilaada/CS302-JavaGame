@@ -23,7 +23,6 @@ import model_classes.gameObject;
 import view_classes.RenderView;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by niles on 09/04/2017.
@@ -709,8 +708,9 @@ public class SceneChanger {
 
         //Set up delay boolean
         final boolean[] delayStart = {true};
-        final long[] seconds = new long[1];
-        final long[] pauseSeconds = new long[1];
+        long[] seconds = new long[1];
+        long[] pauseSeconds = new long[1];
+        long[] difference  = new long[1];
         //final long[] startNanoTime = {System.nanoTime()};
         long[] startNanoTime = new long[1];
         Text timerLabel = new Text(512, 20,"3");
@@ -719,9 +719,10 @@ public class SceneChanger {
         timerLabel.setTextAlignment(TextAlignment.CENTER);
         timerLabel.setTextOrigin(VPos.CENTER);
         timerLabel.setX(512 - Math.round(timerLabel.getLayoutBounds().getWidth()/2));
-        final long[] gameTime = {120};
+        double[] gameTime = {120};
         root.getChildren().add(timerLabel);
         boolean[] timeStarted = {false};
+        double[] countdown = {3};
 
         timer = new AnimationTimer() {
             public void handle(long currentNanoTime) {
@@ -752,8 +753,6 @@ public class SceneChanger {
                     }
 
 
-
-
                     if (entered[0] == false) {
                         status.resetGame(SetUpGame.getPlayers(), collisionDetection.getDisposable(), gameArray, root, HandleIO, timeStarted, delayStart);
                         entered[0] = true;
@@ -765,15 +764,16 @@ public class SceneChanger {
                         timeStarted[0] = true;
                     } else {
                         // Determine the time difference
+                        pauseSeconds[0] = System.nanoTime();
                         long elapsedTime = System.nanoTime() - startNanoTime[0];
-                        pauseSeconds[0] = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
+                        //pauseSeconds[0] = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
                         // Calculate the seconds value;
 
 
                         if (!delayStart[0]) {
-                            if (!HandleIO.isPaused() && !(HandleIO.hasTimeOut() || gameTime[0] - seconds[0] < 0 || status.onePlayerAlive())) {
-
-                                seconds[0] = pauseSeconds[0];
+                            if (!HandleIO.isPaused() && !(HandleIO.hasTimeOut() || gameTime[0] < 0 || status.onePlayerAlive())) {
+                                //System.out.print("Here1");
+                                //seconds[0] = pauseSeconds[0];
                                 HandleIO.keyPressed();
                                 // Move the AI paddles
                                 aiHandle.moveAIAdvanced();
@@ -799,15 +799,20 @@ public class SceneChanger {
                                 render.tickRender();
 
                                 //Declaring
-                                String str = String.valueOf(gameTime[0] - seconds[0]);
+                                gameTime[0] = gameTime[0] - (elapsedTime * Math.pow(10, -9));
+                                //String str = String.valueOf(gameTime[0]);
+                                String str = String.format("%.0f", gameTime[0]);
+
                                 timerLabel.setText(str);
                                 timerLabel.setX(512 - Math.round(timerLabel.getLayoutBounds().getWidth() / 2));
-                            } else if (HandleIO.hasTimeOut() || gameTime[0] - seconds[0] < 0 || status.onePlayerAlive()) {
+
+
+                            } else if (HandleIO.hasTimeOut() || gameTime[0] < 0 || status.onePlayerAlive()) {
                                 // Display some message
                                 // Set the countdown to display 0
                                 if (status.onePlayerAlive()) {
                                     sceneChanger.updateEndText("Player " + status.winningPlayer() + " won");
-                                } else if (gameTime[0] - seconds[0] < 0) {
+                                } else if (gameTime[0] < 0) {
                                     sceneChanger.updateEndText("Time up");
                                 } else {
                                     sceneChanger.updateEndText("Game Over");
@@ -823,20 +828,19 @@ public class SceneChanger {
 
                                 HandleIO.resetPaddle();
                                 HandleIO.keyPressed();
-                                // Don't update seconds, instead store a current time
-                                if (!HandleIO.isPaused()) {
-                                    // Change the to the new game time so the game seconds pause doesn't register as elapsed time
-                                    gameTime[0] = gameTime[0] - (pauseSeconds[0] - seconds[0]);
-                                    System.out.println(gameTime[0]);
-                                }
-
                             }
                         } else {
-                            seconds[0] = pauseSeconds[0];
+
+                            //seconds[0] = pauseSeconds[0];
                             // Render the countdown timer
-                            String str = String.valueOf(3 - seconds[0]);
+                            countdown[0] = countdown[0] - (elapsedTime * Math.pow(10, -9));
+
+
+                            //String str = String.valueOf(countdown[0]);
+                            String str = String.format("%.0f", (countdown[0]));
                             timerLabel.setText(str);
-                            if (TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS) > 3) {
+                            //if (TimeUnit.SECONDS.convert(pauseSeconds[0], TimeUnit.NANOSECONDS) > 3) {
+                            if (countdown[0] < 0) {
                                 // Game has started
                                 delayStart[0] = false;
                                 // Set the timer to a constant
@@ -848,6 +852,9 @@ public class SceneChanger {
                                 //timerLabel.setText("GO!");
                             }
                         }
+                        startNanoTime[0] = pauseSeconds[0];
+
+
                     }
                 }
             }
