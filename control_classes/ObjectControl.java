@@ -22,6 +22,13 @@ public class ObjectControl {
 	private Image imgP3Hori = new Image("/images/paddleH3.png");
 	private Image imgP4Vert = new Image("/images/paddleV4.png");
 	private Image imgP4Hori = new Image("/images/paddleH4.png");
+	private ArrayList<gameObject> paddleArray;
+
+	public ObjectControl(ArrayList<gameObject> paddleArray) {
+		//Add some constructor information
+		this.firstLoop = true;
+		this.paddleArray = paddleArray;
+	}
 
 	public ObjectControl() {
 		//Add some constructor information
@@ -295,15 +302,6 @@ public class ObjectControl {
 			}
 
 			//Account for ball stuck
-			if(yDel == 0) {
-				updatePrevY += 2;
-			}
-
-			if(xDel == 0) {
-				updatePrevX += 2;
-			}
-
-
 
 
 			//Update previous coordinates
@@ -348,6 +346,15 @@ public class ObjectControl {
 				newY = Math.abs(newY);
 				updatePrevY = newY - yDel;
 			}
+
+		if(yDel == 0) {
+			updatePrevY += 2;
+		}
+
+		if(xDel == 0) {
+			updatePrevX += 2;
+		}
+
 
 			//Update previous coordinates
 			currentBall.getPreviousPos().setX((int)updatePrevX);
@@ -578,12 +585,31 @@ public class ObjectControl {
 			int powerUpWidth = 30;
 			int powerUpHeight= 30;
 
-			PowerUps pUp = new PowerUps(powerUpWidth, powerUpHeight, PowerUps.Power.FREEZE, 10);
+			int randomPower = rand.nextInt( 3) + 1;
+
+			PowerUps.Power powerToAdd = PowerUps.Power.FREEZE;
+
+			switch(randomPower) {
+				case 1:
+					powerToAdd = PowerUps.Power.FREEZE;
+					break;
+				case 2:
+					powerToAdd = PowerUps.Power.SHRINK;
+					break;
+				case 3:
+					powerToAdd = PowerUps.Power.INVIS;
+					break;
+			}
+
+			PowerUps pUp = new PowerUps(powerUpWidth, powerUpHeight, powerToAdd, 10);
+
 			pUp.setCurrentPos(new Point(x, y));
 
-			Rectangle pRect = render.getPU1Render();
+			Rectangle pRect = render.getPURender(powerToAdd);
 			pRect.setLayoutX(x);
 			pRect.setLayoutY(y);
+
+			System.out.println(powerToAdd);
 
 			root.getChildren().add(pRect);
 
@@ -610,9 +636,37 @@ public class ObjectControl {
 					tempPaddle.getPower().setTimeOfPU(System.nanoTime());
 
 				} else {
+					if (tempPaddle.getPower().getPower() == PowerUps.Power.FREEZE) {
+						tempPaddle.setPaddleSpeed(15);
+					} else if (tempPaddle.getPower().getPower() == PowerUps.Power.SHRINK) {
+
+						System.out.println("End of SHRINK");
+
+						for(int a = 0; a < paddleArray.size(); a++) {
+							if(tempPaddle.getID() == ((Paddle) paddleArray.get(a).getObj()).getID()) {
+								gameObject objPaddle =  paddleArray.get(a);
+
+								if(((Paddle)objPaddle.getObj()).isRotated()) {
+									((Rectangle) paddleArray.get(a).getShape()).setHeight(80);
+									((Paddle) objPaddle.getObj()).setHeight(80);
+									System.out.println("ROT");
+								} else {
+									((Rectangle) paddleArray.get(a).getShape()).setWidth(80);
+									((Paddle) objPaddle.getObj()).setPaddleSize(80);
+									System.out.println("unROT");
+								}
+							}
+						}
+
+
+
+					} else if (tempPaddle.getPower().getPower() == PowerUps.Power.INVIS) {
+
+					}
+
 					tempPaddle.setPowerUp(false);
 					tempPaddle.setPower(null);
-					tempPaddle.setPaddleSpeed(15);
+
 				}
 			}
 

@@ -17,10 +17,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
-import model_classes.Ball;
-import model_classes.CollisionStruct;
-import model_classes.Player;
-import model_classes.gameObject;
+import model_classes.*;
 import view_classes.RenderView;
 
 import java.util.ArrayList;
@@ -835,9 +832,6 @@ public class SceneChanger {
         Group root = new Group();
         scene.setRoot(root);
 
-        // Set up object control
-        ObjectControl ControlUnit = new ObjectControl();
-
         // Set up a new game and initialise game status
         this.SetUpGame = new GameSetUp();
         GameStatus status = new GameStatus(SetUpGame.getPlayers());
@@ -877,12 +871,22 @@ public class SceneChanger {
         root.getChildren().add(render.getPl3Render());
         root.getChildren().add(render.getPl4Render());
 
-        Collision collisionDetection = new Collision();
+
         gameObject ballObj = new gameObject(render.getBallRender(), SetUpGame.getBall());
         gameObject paddleObj1 = new gameObject(render.getP1Render(), SetUpGame.getPlayer1().getPlayerPaddle());
         gameObject paddleObj2 = new gameObject(render.getP2Render(), SetUpGame.getPlayer2().getPlayerPaddle());
         gameObject paddleObj3 = new gameObject(render.getP3Render(), SetUpGame.getPlayer3().getPlayerPaddle());
         gameObject paddleObj4 = new gameObject(render.getP4Render(), SetUpGame.getPlayer4().getPlayerPaddle());
+        ArrayList<gameObject> paddleObjs = new ArrayList<gameObject>();
+        paddleObjs.add(paddleObj1);
+        paddleObjs.add(paddleObj2);
+        paddleObjs.add(paddleObj3);
+        paddleObjs.add(paddleObj4);
+
+        // Set up object control and collision detection algorithim
+        ObjectControl ControlUnit = new ObjectControl(paddleObjs);
+        Collision collisionDetection = new Collision(paddleObjs);
+
 
         //Add paddles to gameArray
         gameArray.add(paddleObj1);

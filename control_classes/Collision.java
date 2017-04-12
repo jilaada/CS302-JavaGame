@@ -1,6 +1,8 @@
 package control_classes;
 
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import model_classes.*;
 
 import java.util.ArrayList;
@@ -12,8 +14,11 @@ import java.util.ArrayList;
 public class Collision {
 
     private ArrayList<gameObject> disposable = new ArrayList<gameObject>();
+    private ArrayList<gameObject> paddleArray;
 
-    Collision(){}
+    Collision(ArrayList<gameObject> paddleArray){
+        this.paddleArray = paddleArray;
+    }
 
     public CollisionStruct checkCollisions(gameObject ball, gameObject shape, Group root, ArrayList<gameObject> gameArray, int pos, GameSounds sounds, ArrayList<Player> players) {
 
@@ -179,7 +184,36 @@ public class Collision {
                     tempPaddle.setPowerUp(true);
                     tempPaddle.setPower((PowerUps) shape.getObj());
                     tempPaddle.getPower().setTimeOfPU(System.nanoTime());
-                    tempPaddle.setPaddleSpeed(5);
+
+                    if (((PowerUps) shape.getObj()).getPower() == PowerUps.Power.FREEZE) {
+                        tempPaddle.setPaddleSpeed(5);
+                    } else if (((PowerUps) shape.getObj()).getPower() == PowerUps.Power.SHRINK) {
+
+                        //Shrink Paddle size
+                        for(int a = 0; a < paddleArray.size(); a++) {
+                            if(tempPaddle.getID() == ((Paddle) paddleArray.get(a).getObj()).getID()) {
+                                gameObject objPaddle =  paddleArray.get(a);
+
+                                if(((Paddle)objPaddle.getObj()).isRotated()) {
+                                    ((Rectangle) paddleArray.get(a).getShape()).setHeight(50);
+                                    ((Paddle) objPaddle.getObj()).setHeight(50);
+                                } else {
+                                    ((Rectangle) paddleArray.get(a).getShape()).setWidth(50);
+                                    ((Paddle) objPaddle.getObj()).setPaddleSize(50);
+                                }
+                            }
+                        }
+
+
+                    } if (((PowerUps) shape.getObj()).getPower() == PowerUps.Power.INVIS) {
+                        for(int a = 0; a < paddleArray.size(); a++) {
+                            if(tempPaddle.getID() == ((Paddle) paddleArray.get(a).getObj()).getID()) {
+                                gameObject objPaddle =  paddleArray.get(a);
+                                    ((Rectangle) paddleArray.get(a).getShape()).setFill(Color.TRANSPARENT);
+                            }
+                        }
+                    }
+
                 }
             }
 

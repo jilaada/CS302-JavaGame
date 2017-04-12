@@ -8,6 +8,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import model_classes.Ball;
 import model_classes.Player;
+import model_classes.PowerUps;
 import model_classes.gameObject;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class RenderView {
     private Player player4;
     private Ball ball;
     private Circle c1;
-    private Rectangle p1, p2, p3, p4, pl1, pl2, pl3, pl4, back, powerUpOne;
+    private Rectangle p1, p2, p3, p4, pl1, pl2, pl3, pl4, back, powerUpFreeze, powerUpShrink, powerUpInvis;
     private ArrayList<gameObject> gamePlayers;
     private Boolean backgroundImage;
 
@@ -48,6 +49,8 @@ public class RenderView {
         Image imgP4 = new Image("/images/player4Sprite.png");
         Image backImage = new Image("/images/pipesFloor7.jpg");
         Image powerU1 = new Image("/images/freezePowerUp.png");
+        Image powerU2 = new Image("/images/freezePowerUp.png");
+        Image powerU3 = new Image("/images/freezePowerUp.png");
 
         back = new Rectangle(0,0,1024,768);
         this.back.setFill(new ImagePattern(backImage));
@@ -90,8 +93,12 @@ public class RenderView {
             this.pl4.setFill(Color.TRANSPARENT);
         }
 
-        powerUpOne = new Rectangle(0, 0, 30, 30);
-        this.powerUpOne.setFill(new ImagePattern(powerU1));
+        powerUpFreeze = new Rectangle(0, 0, 30, 30);
+        powerUpShrink = new Rectangle(0, 0, 30, 30);
+        powerUpInvis= new Rectangle(0, 0, 30, 30);
+        this.powerUpFreeze.setFill(new ImagePattern(powerU1));
+        this.powerUpShrink.setFill(new ImagePattern(powerU2));
+        this.powerUpInvis.setFill(new ImagePattern(powerU3));
 
 
         this.gamePlayers = new ArrayList<gameObject>();
@@ -153,5 +160,13 @@ public class RenderView {
         return pl4;
     }
 
-    public Rectangle getPU1Render() { return powerUpOne; }
+    public Rectangle getPURender(PowerUps.Power power) {
+        if(power == PowerUps.Power.FREEZE) {
+            return powerUpFreeze;
+        } else if(power == PowerUps.Power.SHRINK) {
+            return powerUpShrink;
+        } else {
+            return powerUpInvis;
+        }
+    }
 }
