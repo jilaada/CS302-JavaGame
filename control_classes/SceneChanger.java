@@ -33,7 +33,7 @@ public class SceneChanger {
 
 
     public enum gameScreen {
-        INTRO, CONTROLS, PLAYERSEL, ABOUT, GAME, END
+        INTRO, DIFFICULTY, CONTROLS, PLAYERSEL, ABOUT, GAME, END
     }
 
     private AnimationTimer timer;
@@ -44,6 +44,7 @@ public class SceneChanger {
     private AI aiHandle;
     private GameSetUp SetUpGame;
     private boolean checking;
+    private boolean advancedAI;
     private int playerNO;
 
 
@@ -146,7 +147,7 @@ public class SceneChanger {
             @Override
             public void handle(MouseEvent t) {
                 //Change to to player select scene
-                sceneSwitch = gameScreen.PLAYERSEL;
+                sceneSwitch = gameScreen.DIFFICULTY;
                 primaryStage.setScene(pSelectScene);
             }
         });
@@ -156,7 +157,7 @@ public class SceneChanger {
             @Override
             public void handle(MouseEvent t) {
                 //Change to to player select scene
-                sceneSwitch = gameScreen.PLAYERSEL;
+                sceneSwitch = gameScreen.DIFFICULTY;
                 primaryStage.setScene(pSelectScene);
             }
         });
@@ -384,6 +385,154 @@ public class SceneChanger {
             }
         });
         // Add event handlers for events on click
+        return Scene;
+    }
+
+    public Scene addDifficultySelectScene(Stage primaryStage, Scene pSelectScene) {
+        Group root = new Group();
+        Scene Scene = new Scene(root, 1024, 768, Color.BLACK);
+        // Display the buttons
+        int width = 1024, height = 768;
+        int widthRect = 700, heightRect = 100;
+        int xRect = (width/2) - (widthRect/2);
+        int yRect = 50;
+
+        Image imgbutton1 = new Image("/images/ButtonBrightGreen.png");
+        Image imgbutton2 = new Image("/images/ButtonBrightBlue.png");
+
+        Rectangle rect1 = new Rectangle(xRect,(2 * yRect) + heightRect,widthRect,heightRect);
+        rect1.setFill(new ImagePattern(imgbutton2));
+        Rectangle rect2 = new Rectangle(xRect,(3 * yRect) + (2 * heightRect),widthRect,heightRect);
+        rect2.setFill(new ImagePattern(imgbutton1));
+
+        //Round rectangle corners
+        rect1.setArcWidth(20);
+        rect1.setArcHeight(20);
+        rect2.setArcWidth(20);
+        rect2.setArcHeight(20);
+
+        Label text1 = new Label("EASY AI [1]");
+        Label text2 = new Label("HARD AI [2]");
+        Text titleText = new Text("SELECT DIFFICULTY");
+
+        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+        text1.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        text2.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        titleText.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 50));
+        text1.setTextFill(Color.WHITE);
+        text2.setTextFill(Color.WHITE);
+        titleText.setFill(Color.WHITE);
+
+
+        double widthText1 = fontLoader.computeStringWidth(text1.getText(), text2.getFont());
+        double widthText2 = fontLoader.computeStringWidth(text2.getText(), text2.getFont());
+
+        text1.setLayoutX((width/2) - (widthText1/2));
+        text1.setLayoutY((2*yRect) + heightRect + (heightRect/5));
+        text2.setLayoutX((width/2) - (widthText2/2));
+        text2.setLayoutY((3*yRect) + (2*heightRect) + (heightRect/5));
+        titleText.setTextAlignment(TextAlignment.CENTER);
+        titleText.setTextOrigin(VPos.CENTER);
+        titleText.setLayoutX((1024/2) - (titleText.getLayoutBounds().getWidth()/2));
+        titleText.setLayoutY(250/2);
+
+        // Add back button
+        Image imgBackButton = new Image("/images/ButtonBrightOrange.png");
+        Rectangle backButton = new Rectangle(372, 618, 280, 50);
+        backButton.setFill(new ImagePattern(imgBackButton));
+
+        Text backButtonClick = new Text("BACK TO MAIN MENU [B]");
+        backButtonClick.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 20));
+        backButtonClick.setFill(Color.WHITE);
+        backButtonClick.setTextAlignment(TextAlignment.CENTER);
+        backButtonClick.setTextOrigin(VPos.CENTER);
+        backButtonClick.setLayoutX((1024/2) - backButtonClick.getLayoutBounds().getWidth()/2);
+        backButtonClick.setLayoutY((768 - 250) + (250/2));
+
+        root.getChildren().addAll(rect1, rect2, text1, text2, backButton, backButtonClick, titleText);
+
+
+        Scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+            if (key.getCode()== KeyCode.DIGIT1) {
+                sceneSwitch = gameScreen.PLAYERSEL;
+                primaryStage.setScene(pSelectScene);
+                advancedAI = false;
+            } else if (key.getCode()== KeyCode.DIGIT2) {
+                sceneSwitch = gameScreen.PLAYERSEL;
+                primaryStage.setScene(pSelectScene);
+                advancedAI = true;
+            } else if (key.getCode()== KeyCode.B) {
+                sceneSwitch = gameScreen.INTRO;
+                primaryStage.setScene(IntroScene);
+            }
+        });
+
+        //Add listeners to shapes and text
+        rect1.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                //Change to to player select scene
+                sceneSwitch = gameScreen.PLAYERSEL;
+                primaryStage.setScene(pSelectScene);
+                advancedAI = false;
+            }
+        });
+
+        text1.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                //Change to to player select scene
+                sceneSwitch = gameScreen.PLAYERSEL;
+                primaryStage.setScene(pSelectScene);
+                advancedAI = false;
+            }
+        });
+
+        rect2.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                sceneSwitch = gameScreen.PLAYERSEL;
+                primaryStage.setScene(pSelectScene);
+                advancedAI = true;
+                //Change to to controls scene
+            }
+        });
+
+        text2.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                sceneSwitch = gameScreen.PLAYERSEL;
+                primaryStage.setScene(pSelectScene);
+                advancedAI = true;
+                //Change to to controls scene
+            }
+        });
+
+        backButton.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                sceneSwitch = gameScreen.INTRO;
+                primaryStage.setScene(IntroScene);
+                //Change to to controls scene
+            }
+        });
+
+        backButtonClick.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                sceneSwitch = gameScreen.INTRO;
+                primaryStage.setScene(IntroScene);
+                //Change to to controls scene
+            }
+        });
+
+
         return Scene;
     }
 
@@ -777,7 +926,12 @@ public class SceneChanger {
                                 //seconds[0] = pauseSeconds[0];
                                 HandleIO.keyPressed();
                                 // Move the AI paddles
-                                aiHandle.moveAIAdvanced();
+                                if (advancedAI) {
+                                    aiHandle.moveAIAdvanced();
+                                } else {
+                                    aiHandle.moveAI();
+                                }
+
                                 ControlUnit.moveAllPaddles(render, HandleIO, SetUpGame);
                                 HandleIO.resetPaddle();
 
