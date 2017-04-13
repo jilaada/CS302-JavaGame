@@ -70,9 +70,10 @@ public class RenderView {
         back = new Rectangle(0,0,1024,768);
         this.back.setFill(new ImagePattern(backImage));
         c1 = new Circle(ball.getCurrentPos().getX(), ball.getCurrentPos().getY(), ball.getBallRadius(), Color.RED);
+        Image imageCircle = new Image("/images/ballImage.png");
 
         if (backgroundImage) {
-            this.c1.setFill(Color.RED);
+            this.c1.setFill(new ImagePattern(imageCircle));
         } else {
             this.c1.setFill(Color.BLACK);
         }

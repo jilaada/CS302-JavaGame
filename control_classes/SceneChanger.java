@@ -81,14 +81,12 @@ public class SceneChanger {
         int xRect = (width/2) - (widthRect/2);
         int yRect = 50;
 
-        //Declare colours
-        Color c1 = Color.web("0x2962FF");
-        Color c2 = Color.web("0x00B5FF");
-        Color c3 = Color.web("0x4FC3F7");
+        //Declare images
         Image imgbutton1 = new Image("/images/ButtonBrightGreen.png");
         Image imgbutton2 = new Image("/images/ButtonBrightBlue.png");
         Image imgbutton3 = new Image("/images/ButtonBrightOrange.png");
-        Image imgbutton4 = new Image("/images/ButtonGreenBlue.png");
+        Image titleImage = new Image("/images/LabXLogo1.png");
+        // Credits: Science graphic by <a href="http://www.flaticon.com/authors/freepik">Freepik</a> from <a href="http://www.flaticon.com/">Flaticon</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>. Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a>
 
         //Initialise rectangle buttons
         Rectangle rect1 = new Rectangle(xRect, (6 * yRect),widthRect,heightRect);
@@ -100,7 +98,7 @@ public class SceneChanger {
 
         // Set up the title block
         Rectangle titleBlock = new Rectangle(xRect-50,yRect,widthRect+100,heightRect*2);
-        titleBlock.setFill(Color.CORAL);
+        titleBlock.setFill(new ImagePattern(titleImage));
 
         //Round rectangle corners
         rect1.setArcWidth(20);
