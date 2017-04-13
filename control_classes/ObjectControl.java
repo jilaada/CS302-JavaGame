@@ -459,7 +459,7 @@ public class ObjectControl {
 			imgP4Vert = imgGhostLeft;
 		} else if (SetUpGame.getPlayer4().getPlayerPaddle().hasPowerUp()){
 			// Determine the power up and associated picture
-			switch (SetUpGame.getPlayer1().getPlayerPaddle().getPower().getPower()) {
+			switch (SetUpGame.getPlayer4().getPlayerPaddle().getPower().getPower()) {
 				case FREEZE: 	imgP4Hori = imgFreezeUp;
 								imgP4Vert = imgFreezeLeft;
 								break;

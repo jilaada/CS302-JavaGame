@@ -1,8 +1,8 @@
 ------------------------------------------------------------
--------README - COMPSYS 302 - WARLORDS GAME PROTOTYPE-------
+-------README - COMPSYS 302 - WARLORDS GAME FINAL SUB-------
 ------------------------------------------------------------
 
-This README would normally document the steps are necessary 
+This README would normally document the steps are necessary
 to get your application up and running. This game was 
 created by Group 10.
 
