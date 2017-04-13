@@ -1016,7 +1016,7 @@ public class SceneChanger {
                             if (!HandleIO.isPaused() && !(HandleIO.hasTimeOut() || gameTime[0] < 0 || status.onePlayerAlive())) {
 
                                 ControlUnit.addPowerUp(root, gameArray, gameTime[0], render);
-                                ControlUnit.checkAndRemovePowerUps(SetUpGame.getPlayers());
+                                //ControlUnit.checkAndRemovePowerUps(SetUpGame.getPlayers());
 
                                 HandleIO.keyPressed();
                                 // Move the AI paddles
@@ -1040,6 +1040,8 @@ public class SceneChanger {
                                         ControlUnit.playerDeaths(temp, root, gameArray, pos);
                                     }
                                 }
+
+                                ControlUnit.checkAndRemovePowerUps(SetUpGame.getPlayers());
 
                                 //If the ball did not collide with any objects earlier, move it within bounds of screen
                                 if (!((Ball) ballObj.getObj()).hasMoved()) {

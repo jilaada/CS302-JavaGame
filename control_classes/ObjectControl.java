@@ -628,6 +628,7 @@ public class ObjectControl {
 
 			pUp.setCurrentPos(new Point(x, y));
 
+
 			Rectangle pRect = render.getPURender(powerToAdd);
 			pRect.setLayoutX(x);
 			pRect.setLayoutY(y);
@@ -668,25 +669,13 @@ public class ObjectControl {
 						tempPaddle.setPaddleSpeed(15);
 					} else if (tempPaddle.getPower().getPower() == PowerUps.Power.SHRINK) {
 
-						System.out.println("End of SHRINK");
-
 						for(int a = 0; a < paddleArray.size(); a++) {
 							if(tempPaddle.getID() == ((Paddle) paddleArray.get(a).getObj()).getID()) {
 								gameObject objPaddle =  paddleArray.get(a);
 
-								if(((Paddle)objPaddle.getObj()).isRotated()) {
-									((Rectangle) paddleArray.get(a).getShape()).setHeight(80);
-									((Paddle) objPaddle.getObj()).setHeight(80);
-									System.out.println("ROT");
-								} else {
-									((Rectangle) paddleArray.get(a).getShape()).setWidth(80);
-									((Paddle) objPaddle.getObj()).setPaddleSize(80);
-									System.out.println("unROT");
-								}
+								((Paddle) objPaddle.getObj()).setPaddleSize(80);
 							}
 						}
-
-
 
 					} else if (tempPaddle.getPower().getPower() == PowerUps.Power.INVIS) {
 

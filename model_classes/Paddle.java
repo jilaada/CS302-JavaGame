@@ -166,13 +166,7 @@ public class Paddle extends modelSuperClass{
 	 * @param size size of the ball; double
 	 */
 	public void setPaddleSize(double size) {
-		if (size < 10) {
-			this.paddleSize = 10;
-		} else if (size > 50) {
-			this.paddleSize = 50;
-		} else {
-			this.paddleSize = size;	
-		}
+		this.paddleSize = size;
 	}
 	
 	/**

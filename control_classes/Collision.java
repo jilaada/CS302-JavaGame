@@ -207,18 +207,31 @@ public class Collision {
                             if(tempPaddle.getID() == ((Paddle) paddleArray.get(a).getObj()).getID()) {
                                 gameObject objPaddle =  paddleArray.get(a);
 
-                                if(((Paddle)objPaddle.getObj()).isRotated()) {
-                                    ((Rectangle) paddleArray.get(a).getShape()).setHeight(50);
-                                    ((Paddle) objPaddle.getObj()).setHeight(50);
-                                } else {
-                                    ((Rectangle) paddleArray.get(a).getShape()).setWidth(50);
+                                Paddle print = ((Paddle) objPaddle.getObj());
+                                System.out.println("Player:" + print.getPaddleToken());
+                                System.out.println("isRotated:" + print.isRotated());
+                                System.out.println("width:" + print.getLength());
+                                System.out.println("height:" + print.getHeight());
+
+//                                if(((Paddle)objPaddle.getObj()).isRotated()) {
+//                                    ((Rectangle) paddleArray.get(a).getShape()).setHeight(50);
+//                                    ((Paddle) objPaddle.getObj()).setHeight(50);
+//                                } else {
+//                                    ((Rectangle) paddleArray.get(a).getShape()).setWidth(50);
                                     ((Paddle) objPaddle.getObj()).setPaddleSize(50);
-                                }
+//                                }
+
+                                System.out.println("POST: isRotated:" + print.isRotated());
+                                System.out.println("POST: width:" + print.getLength());
+                                System.out.println("POST: height:" + print.getHeight());
+                                System.out.println("");
+
+
                             }
                         }
 
 
-                    } if (((PowerUps) shape.getObj()).getPower() == PowerUps.Power.INVIS) {
+                    } else if (((PowerUps) shape.getObj()).getPower() == PowerUps.Power.INVIS) {
                         for(int a = 0; a < paddleArray.size(); a++) {
                             if(tempPaddle.getID() == ((Paddle) paddleArray.get(a).getObj()).getID()) {
                                 gameObject objPaddle =  paddleArray.get(a);
@@ -243,9 +256,9 @@ public class Collision {
 
 
     /**
-     * getDels
+     * getDels essentially finds the next point the ball will travel assuiming no collisions
      * @param currentBall
-     * @return
+     * @return Point
      */
     protected Point getDels(Ball currentBall) {
         //TODO: change so angle can be changed randomly
