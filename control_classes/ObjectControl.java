@@ -402,7 +402,10 @@ public class ObjectControl {
 		Image imgFreezeLeft = new Image("/images/freezePaddleLeft.png");
 		Image imgFreezeUp = new Image("/images/freezePaddleUp.png");
 		Image imgFreezeDown = new Image("/images/freezePaddleDown.png");
-		boolean isInvis = false;
+		boolean isInvisP1 = false;
+		boolean isInvisP2 = false;
+		boolean isInvisP3 = false;
+		boolean isInvisP4 = false;
 
 		// Determine if the object is alive
 		if (!SetUpGame.getPlayer1().isAlive()) {
@@ -417,7 +420,7 @@ public class ObjectControl {
 				case SHRINK:	imgP1Vert = imgShrinkP1Vert;
 								imgP1Hori = imgShrinkP1Hori;
 								break;
-				case INVIS:		isInvis = true;
+				case INVIS:		isInvisP1 = true;
 								break;
 			}
 		}
@@ -434,7 +437,7 @@ public class ObjectControl {
 				case SHRINK:	imgP2Vert = imgShrinkP2Vert;
 								imgP2Hori = imgShrinkP2Hori;
 								break;
-				case INVIS:		isInvis = true;
+				case INVIS:		isInvisP2 = true;
 								break;
 			}
 		}
@@ -450,7 +453,7 @@ public class ObjectControl {
 				case SHRINK:	imgP3Vert = imgShrinkP3Vert;
 								imgP3Hori = imgShrinkP3Hori;
 								break;
-				case INVIS:		isInvis = true;
+				case INVIS:		isInvisP3 = true;
 								break;
 			}
 		}
@@ -466,7 +469,7 @@ public class ObjectControl {
 				case SHRINK:	imgP4Vert = imgShrinkP4Vert;
 								imgP4Hori = imgShrinkP4Hori;
 								break;
-				case INVIS:		isInvis = true;
+				case INVIS:		isInvisP4 = true;
 								break;
 			}
 		}
@@ -477,7 +480,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer1().getPlayerPaddle().setRotated(false);
 				render.getP1Render().setHeight(SetUpGame.getPlayer1().getPlayerPaddle().getHeight());
 				render.getP1Render().setWidth(SetUpGame.getPlayer1().getPlayerPaddle().getLength());
-				if (isInvis) {
+				if (isInvisP1) {
 					render.getP1Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP1Render().setFill(new ImagePattern(imgP1Hori));
@@ -486,7 +489,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer1().getPlayerPaddle().setRotated(true);
 				render.getP1Render().setHeight(SetUpGame.getPlayer1().getPlayerPaddle().getLength());
 				render.getP1Render().setWidth(SetUpGame.getPlayer1().getPlayerPaddle().getHeight());
-				if (isInvis) {
+				if (isInvisP1) {
 					render.getP1Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP1Render().setFill(new ImagePattern(imgP1Vert));
@@ -499,7 +502,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer1().getPlayerPaddle().setRotated(false);
 				render.getP1Render().setHeight(SetUpGame.getPlayer1().getPlayerPaddle().getHeight());
 				render.getP1Render().setWidth(SetUpGame.getPlayer1().getPlayerPaddle().getLength());
-				if (isInvis) {
+				if (isInvisP1) {
 					render.getP1Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP1Render().setFill(new ImagePattern(imgP1Hori));
@@ -508,7 +511,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer1().getPlayerPaddle().setRotated(true);
 				render.getP1Render().setHeight(SetUpGame.getPlayer1().getPlayerPaddle().getLength());
 				render.getP1Render().setWidth(SetUpGame.getPlayer1().getPlayerPaddle().getHeight());
-				if (isInvis) {
+				if (isInvisP1) {
 					render.getP1Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP1Render().setFill(new ImagePattern(imgP1Vert));
@@ -523,7 +526,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer2().getPlayerPaddle().setRotated(false);
 				render.getP2Render().setHeight(SetUpGame.getPlayer2().getPlayerPaddle().getHeight());
 				render.getP2Render().setWidth(SetUpGame.getPlayer2().getPlayerPaddle().getLength());
-				if (isInvis) {
+				if (isInvisP2) {
 					render.getP2Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP2Render().setFill(new ImagePattern(imgP2Hori));
@@ -532,7 +535,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer2().getPlayerPaddle().setRotated(true);
 				render.getP2Render().setHeight(SetUpGame.getPlayer2().getPlayerPaddle().getLength());
 				render.getP2Render().setWidth(SetUpGame.getPlayer2().getPlayerPaddle().getHeight());
-				if (isInvis) {
+				if (isInvisP2) {
 					render.getP2Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP2Render().setFill(new ImagePattern(imgP2Vert));
@@ -545,7 +548,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer2().getPlayerPaddle().setRotated(false);
 				render.getP2Render().setHeight(SetUpGame.getPlayer2().getPlayerPaddle().getHeight());
 				render.getP2Render().setWidth(SetUpGame.getPlayer2().getPlayerPaddle().getLength());
-				if (isInvis) {
+				if (isInvisP2) {
 					render.getP2Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP2Render().setFill(new ImagePattern(imgP2Hori));
@@ -554,7 +557,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer2().getPlayerPaddle().setRotated(true);
 				render.getP2Render().setHeight(SetUpGame.getPlayer2().getPlayerPaddle().getLength());
 				render.getP2Render().setWidth(SetUpGame.getPlayer2().getPlayerPaddle().getHeight());
-				if (isInvis) {
+				if (isInvisP2) {
 					render.getP2Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP2Render().setFill(new ImagePattern(imgP2Vert));
@@ -569,7 +572,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer3().getPlayerPaddle().setRotated(false);
 				render.getP3Render().setHeight(SetUpGame.getPlayer3().getPlayerPaddle().getHeight());
 				render.getP3Render().setWidth(SetUpGame.getPlayer3().getPlayerPaddle().getLength());
-				if (isInvis) {
+				if (isInvisP3) {
 					render.getP3Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP3Render().setFill(new ImagePattern(imgP3Hori));
@@ -578,7 +581,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer3().getPlayerPaddle().setRotated(true);
 				render.getP3Render().setHeight(SetUpGame.getPlayer3().getPlayerPaddle().getLength());
 				render.getP3Render().setWidth(SetUpGame.getPlayer3().getPlayerPaddle().getHeight());
-				if (isInvis) {
+				if (isInvisP3) {
 					render.getP3Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP3Render().setFill(new ImagePattern(imgP3Vert));
@@ -591,7 +594,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer3().getPlayerPaddle().setRotated(false);
 				render.getP3Render().setHeight(SetUpGame.getPlayer3().getPlayerPaddle().getHeight());
 				render.getP3Render().setWidth(SetUpGame.getPlayer3().getPlayerPaddle().getLength());
-				if (isInvis) {
+				if (isInvisP3) {
 					render.getP3Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP3Render().setFill(new ImagePattern(imgP3Hori));
@@ -600,7 +603,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer3().getPlayerPaddle().setRotated(true);
 				render.getP3Render().setHeight(SetUpGame.getPlayer3().getPlayerPaddle().getLength());
 				render.getP3Render().setWidth(SetUpGame.getPlayer3().getPlayerPaddle().getHeight());
-				if (isInvis) {
+				if (isInvisP3) {
 					render.getP3Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP3Render().setFill(new ImagePattern(imgP3Vert));
@@ -615,7 +618,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer4().getPlayerPaddle().setRotated(false);
 				render.getP4Render().setHeight(SetUpGame.getPlayer4().getPlayerPaddle().getHeight());
 				render.getP4Render().setWidth(SetUpGame.getPlayer4().getPlayerPaddle().getLength());
-				if (isInvis) {
+				if (isInvisP4) {
 					render.getP4Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP4Render().setFill(new ImagePattern(imgP4Hori));
@@ -624,7 +627,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer4().getPlayerPaddle().setRotated(true);
 				render.getP4Render().setHeight(SetUpGame.getPlayer4().getPlayerPaddle().getLength());
 				render.getP4Render().setWidth(SetUpGame.getPlayer4().getPlayerPaddle().getHeight());
-				if (isInvis) {
+				if (isInvisP4) {
 					render.getP4Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP4Render().setFill(new ImagePattern(imgP4Vert));
@@ -637,7 +640,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer4().getPlayerPaddle().setRotated(false);
 				render.getP4Render().setHeight(SetUpGame.getPlayer4().getPlayerPaddle().getHeight());
 				render.getP4Render().setWidth(SetUpGame.getPlayer4().getPlayerPaddle().getLength());
-				if (isInvis) {
+				if (isInvisP4) {
 					render.getP4Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP4Render().setFill(new ImagePattern(imgP4Hori));
@@ -646,7 +649,7 @@ public class ObjectControl {
 				SetUpGame.getPlayer4().getPlayerPaddle().setRotated(true);
 				render.getP4Render().setHeight(SetUpGame.getPlayer4().getPlayerPaddle().getLength());
 				render.getP4Render().setWidth(SetUpGame.getPlayer4().getPlayerPaddle().getHeight());
-				if (isInvis) {
+				if (isInvisP4) {
 					render.getP4Render().setFill(Color.TRANSPARENT);
 				} else {
 					render.getP4Render().setFill(new ImagePattern(imgP4Vert));
