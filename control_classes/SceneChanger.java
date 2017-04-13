@@ -85,7 +85,7 @@ public class SceneChanger {
         Image imgbutton1 = new Image("/images/ButtonBrightGreen.png");
         Image imgbutton2 = new Image("/images/ButtonBrightBlue.png");
         Image imgbutton3 = new Image("/images/ButtonBrightOrange.png");
-        Image titleImage = new Image("/images/LabXLogo1.png");
+        Image titleImage = new Image("/images/LabXLogo.png");
         // Credits: Science graphic by <a href="http://www.flaticon.com/authors/freepik">Freepik</a> from <a href="http://www.flaticon.com/">Flaticon</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>. Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a>
 
         //Initialise rectangle buttons
@@ -834,6 +834,47 @@ public class SceneChanger {
         titleText.setLayoutY(95);
         root.getChildren().add(titleText);
 
+        Text infoNileshText = new Text("Nilesh is a student studying computer systems engineering due to his \n" +
+                "love for programming and design. He has a knack for thinking outside the box and\n" +
+                "problem solving which makes him a valued team member, especially when it\n" +
+                "comes to UI design and functionality. Nilesh also has extracurricular experiences\n" +
+                "in coding web-apps; one of such involves using an api to find information about musical artists. ");
+        infoNileshText.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 15));
+        infoNileshText.setFill(Color.WHITE);
+        infoNileshText.setTextAlignment(TextAlignment.LEFT);
+        infoNileshText.setTextOrigin(VPos.CENTER);
+        infoNileshText.setLayoutX((1024/2) - (infoNileshText.getLayoutBounds().getWidth()/2));
+        infoNileshText.setLayoutY(500/2 + 15);
+
+        Text infoJiladaText = new Text("Jilada is in her third year studying Computer Systems engineering at the \n" +
+                "University of Auckland. She enjoys challenging herself to pursue new and more creative \n" +
+                "ways of solving problems. In previous years, she has worked on small photoshop projects as well \n" +
+                "as learnt graphical and product design processes. She hopes to bring my artistic skills \n" +
+                "into the game design.");
+        infoJiladaText.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 15));
+        infoJiladaText.setFill(Color.WHITE);
+        infoJiladaText.setTextAlignment(TextAlignment.LEFT);
+        infoJiladaText.setTextOrigin(VPos.CENTER);
+        infoJiladaText.setLayoutX((1024/2) - (infoNileshText.getLayoutBounds().getWidth()/2));
+        infoJiladaText.setLayoutY(700/2 + 15);
+
+        root.getChildren().add(infoNileshText);
+        root.getChildren().add(infoJiladaText);
+
+        Image imgBackButton = new Image("/images/ButtonBrightOrange.png");
+        Rectangle backButton = new Rectangle(372, 618, 280, 50);
+        backButton.setFill(new ImagePattern(imgBackButton));
+        root.getChildren().add(backButton);
+
+        Text backButtonClick = new Text("BACK TO MAIN MENU [B]");
+        backButtonClick.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 20));
+        backButtonClick.setFill(Color.WHITE);
+        backButtonClick.setTextAlignment(TextAlignment.CENTER);
+        backButtonClick.setTextOrigin(VPos.CENTER);
+        backButtonClick.setLayoutX((1024/2) - backButtonClick.getLayoutBounds().getWidth()/2);
+        backButtonClick.setLayoutY((768 - 250) + (250/2));
+        root.getChildren().add(backButtonClick);
+
         // Add the text for the developer information
 
         Scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
@@ -843,6 +884,25 @@ public class SceneChanger {
             }
         });
 
+        backButton.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                //Change to to game scene
+                sceneSwitch = gameScreen.INTRO;
+                primaryStage.setScene(IntroScene);
+            }
+        });
+
+        backButtonClick.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                //Change to to game scene
+                sceneSwitch = gameScreen.INTRO;
+                primaryStage.setScene(IntroScene);
+            }
+        });
         return Scene;
     }
 
@@ -1132,11 +1192,11 @@ public class SceneChanger {
         int yRect = 50;
 
         //Declare colours
-        Color c2 = Color.web("0x2ECC71");
+        Image imgButton = new Image("/images/ButtonBrightBlue.png");
 
         //Initialise rectangle buttons
         Rectangle rect2 = new Rectangle(xRect,(2 * yRect) + heightRect,widthRect,heightRect);
-        rect2.setFill(c2);
+        rect2.setFill(new ImagePattern(imgButton));
 
         //Round rectangle corners
         rect2.setArcWidth(20);
