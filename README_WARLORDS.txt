@@ -6,6 +6,10 @@ This README would normally document the steps are necessary
 to get your application up and running. This game was 
 created by Group 10.
 
+The MVC diagram, Final Submission Table, Report and 
+PowerPoint can be found in the additional_documents folder
+under the root directory
+
 ---------INSTRUCTIONS----------
 Press A to move paddle left
 Press S to move paddle right
@@ -97,8 +101,7 @@ implementations, we decided to take parts of our game code
 to complete the tests. You can. however, see that we have 
 implemented the methods from Ball.java in BallAdapter.java
 
-The MVC Diagram can be found in the same directory as this
-file.
+
 
 
 
