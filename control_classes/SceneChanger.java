@@ -855,11 +855,25 @@ public class SceneChanger {
         infoJiladaText.setFill(Color.WHITE);
         infoJiladaText.setTextAlignment(TextAlignment.LEFT);
         infoJiladaText.setTextOrigin(VPos.CENTER);
-        infoJiladaText.setLayoutX((1024/2) - (infoNileshText.getLayoutBounds().getWidth()/2));
+        infoJiladaText.setLayoutX((1024/2) - (infoJiladaText.getLayoutBounds().getWidth()/2));
         infoJiladaText.setLayoutY(700/2 + 15);
+
+        Text infoStoryText = new Text("Story:\n" +
+                "You and a group of mutants are stuck in a lab when it suddenly breaks down\n" +
+                "There is a chance of escape but only one of you can make it!\n" +
+                "Will you be able to break free or will you be stuck in the lab forever!\n" +
+                "Use your paddle to defend yourself from other mutants!\n" +
+                "Stay alive for as long as you can and be one to make it out!");
+        infoStoryText.setFont(Font.font("Rockwell", FontWeight.THIN, FontPosture.REGULAR, 15));
+        infoStoryText.setFill(Color.WHITE);
+        infoStoryText.setTextAlignment(TextAlignment.CENTER);
+        infoStoryText.setTextOrigin(VPos.CENTER);
+        infoStoryText.setLayoutX((1024/2) - (infoStoryText.getLayoutBounds().getWidth()/2));
+        infoStoryText.setLayoutY(1000/2 + 15);
 
         root.getChildren().add(infoNileshText);
         root.getChildren().add(infoJiladaText);
+        root.getChildren().add(infoStoryText);
 
         Image imgBackButton = new Image("/images/ButtonBrightOrange.png");
         Rectangle backButton = new Rectangle(372, 618, 280, 50);
