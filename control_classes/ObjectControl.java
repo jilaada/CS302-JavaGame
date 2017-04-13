@@ -2,6 +2,7 @@ package control_classes;
 
 import javafx.scene.Group;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import model_classes.*;
@@ -10,17 +11,27 @@ import view_classes.RenderView;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static model_classes.PowerUps.Power.FREEZE;
+
 public class ObjectControl {
 
 	private boolean firstLoop;
-	private Image imgP1Vert = new Image("/images/paddleV1.png");
-	private Image imgP1Hori = new Image("/images/paddleH1.png");
-	private Image imgP2Vert = new Image("/images/paddleV2.png");
-	private Image imgP2Hori = new Image("/images/paddleH2.png");
-	private Image imgP3Vert = new Image("/images/paddleV3.png");
-	private Image imgP3Hori = new Image("/images/paddleH3.png");
-	private Image imgP4Vert = new Image("/images/paddleV4.png");
-	private Image imgP4Hori = new Image("/images/paddleH4.png");
+	private Image imgP1VertDefault = new Image("/images/paddleV1.png");
+	private Image imgP1HoriDefault = new Image("/images/paddleH1.png");
+	private Image imgP2VertDefault = new Image("/images/paddleV2.png");
+	private Image imgP2HoriDefault = new Image("/images/paddleH2.png");
+	private Image imgP3VertDefault = new Image("/images/paddleV3.png");
+	private Image imgP3HoriDefault = new Image("/images/paddleH3.png");
+	private Image imgP4VertDefault = new Image("/images/paddleV4.png");
+	private Image imgP4HoriDefault = new Image("/images/paddleH4.png");
+	private Image imgShrinkP1Vert = new Image("/images/shrinkPaddleV1.png");
+	private Image imgShrinkP1Hori = new Image("/images/shrinkPaddleH1.png");
+	private Image imgShrinkP2Vert = new Image("/images/shrinkPaddleV2.png");
+	private Image imgShrinkP2Hori = new Image("/images/shrinkPaddleH2.png");
+	private Image imgShrinkP3Vert = new Image("/images/shrinkPaddleV3.png");
+	private Image imgShrinkP3Hori = new Image("/images/shrinkPaddleH3.png");
+	private Image imgShrinkP4Vert = new Image("/images/shrinkPaddleV4.png");
+	private Image imgShrinkP4Hori = new Image("/images/shrinkPaddleH4.png");
 	private ArrayList<gameObject> paddleArray;
 
 	public ObjectControl(ArrayList<gameObject> paddleArray) {
@@ -375,27 +386,89 @@ public class ObjectControl {
 	 */
 	public void moveAllPaddles(RenderView render, IOHandle HandleIO, GameSetUp SetUpGame) {
 		// Ghosts
+		Image imgP1Vert = imgP1VertDefault;
+		Image imgP1Hori = imgP1HoriDefault;
+		Image imgP2Vert = imgP2VertDefault;
+		Image imgP2Hori = imgP2HoriDefault;
+		Image imgP3Vert = imgP3VertDefault;
+		Image imgP3Hori = imgP3HoriDefault;
+		Image imgP4Vert = imgP4VertDefault;
+		Image imgP4Hori = imgP4HoriDefault;
 		Image imgGhostRight = new Image("/images/GhostPaddleRight.png");
 		Image imgGhostLeft = new Image("/images/GhostPaddleLeft.png");
 		Image imgGhostUp = new Image("/images/GhostPaddleUp.png");
 		Image imgGhostDown = new Image("/images/GhostPaddleDown.png");
+		Image imgFreezeRight = new Image("/images/freezePaddleRight.png");
+		Image imgFreezeLeft = new Image("/images/freezePaddleLeft.png");
+		Image imgFreezeUp = new Image("/images/freezePaddleUp.png");
+		Image imgFreezeDown = new Image("/images/freezePaddleDown.png");
+		boolean isInvis = false;
 
 		// Determine if the object is alive
 		if (!SetUpGame.getPlayer1().isAlive()) {
-			this.imgP1Hori = imgGhostDown;
-			this.imgP1Vert = imgGhostRight;
+			imgP1Hori = imgGhostDown;
+			imgP1Vert = imgGhostRight;
+		} else if (SetUpGame.getPlayer1().getPlayerPaddle().hasPowerUp()){
+			// Determine the power up and associated picture
+			switch (SetUpGame.getPlayer1().getPlayerPaddle().getPower().getPower()) {
+				case FREEZE: 	imgP1Hori = imgFreezeDown;
+								imgP1Vert = imgFreezeRight;
+								break;
+				case SHRINK:	imgP1Vert = imgShrinkP1Vert;
+								imgP1Hori = imgShrinkP1Hori;
+								break;
+				case INVIS:		isInvis = true;
+								break;
+			}
 		}
+
 		if (!SetUpGame.getPlayer2().isAlive()) {
-			this.imgP2Hori = imgGhostDown;
-			this.imgP2Vert = imgGhostLeft;
+			imgP2Hori = imgGhostDown;
+			imgP2Vert = imgGhostLeft;
+		} else if (SetUpGame.getPlayer2().getPlayerPaddle().hasPowerUp()){
+			// Determine the power up and associated picture
+			switch (SetUpGame.getPlayer2().getPlayerPaddle().getPower().getPower()) {
+				case FREEZE: 	imgP2Hori = imgFreezeDown;
+								imgP2Vert = imgFreezeLeft;
+								break;
+				case SHRINK:	imgP2Vert = imgShrinkP2Vert;
+								imgP2Hori = imgShrinkP2Hori;
+								break;
+				case INVIS:		isInvis = true;
+								break;
+			}
 		}
 		if (!SetUpGame.getPlayer3().isAlive()) {
-			this.imgP3Hori = imgGhostUp;
-			this.imgP3Vert = imgGhostRight;
+			imgP3Hori = imgGhostUp;
+			imgP3Vert = imgGhostRight;
+		} else if (SetUpGame.getPlayer3().getPlayerPaddle().hasPowerUp()){
+			// Determine the power up and associated picture
+			switch (SetUpGame.getPlayer3().getPlayerPaddle().getPower().getPower()) {
+				case FREEZE: 	imgP3Hori = imgFreezeUp;
+								imgP3Vert = imgFreezeRight;
+								break;
+				case SHRINK:	imgP3Vert = imgShrinkP3Vert;
+								imgP3Hori = imgShrinkP3Hori;
+								break;
+				case INVIS:		isInvis = true;
+								break;
+			}
 		}
 		if (!SetUpGame.getPlayer4().isAlive()) {
-			this.imgP4Hori = imgGhostUp;
-			this.imgP4Vert = imgGhostLeft;
+			imgP4Hori = imgGhostUp;
+			imgP4Vert = imgGhostLeft;
+		} else if (SetUpGame.getPlayer4().getPlayerPaddle().hasPowerUp()){
+			// Determine the power up and associated picture
+			switch (SetUpGame.getPlayer1().getPlayerPaddle().getPower().getPower()) {
+				case FREEZE: 	imgP4Hori = imgFreezeUp;
+								imgP4Vert = imgFreezeLeft;
+								break;
+				case SHRINK:	imgP4Vert = imgShrinkP4Vert;
+								imgP4Hori = imgShrinkP4Hori;
+								break;
+				case INVIS:		isInvis = true;
+								break;
+			}
 		}
 
 		if (HandleIO.hasMovedLeftP1()) {
@@ -404,12 +477,20 @@ public class ObjectControl {
 				SetUpGame.getPlayer1().getPlayerPaddle().setRotated(false);
 				render.getP1Render().setHeight(SetUpGame.getPlayer1().getPlayerPaddle().getHeight());
 				render.getP1Render().setWidth(SetUpGame.getPlayer1().getPlayerPaddle().getLength());
-				render.getP1Render().setFill(new ImagePattern(imgP1Hori));
+				if (isInvis) {
+					render.getP1Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP1Render().setFill(new ImagePattern(imgP1Hori));
+				}
 			} else {
 				SetUpGame.getPlayer1().getPlayerPaddle().setRotated(true);
 				render.getP1Render().setHeight(SetUpGame.getPlayer1().getPlayerPaddle().getLength());
 				render.getP1Render().setWidth(SetUpGame.getPlayer1().getPlayerPaddle().getHeight());
-				render.getP1Render().setFill(new ImagePattern(imgP1Vert));
+				if (isInvis) {
+					render.getP1Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP1Render().setFill(new ImagePattern(imgP1Vert));
+				}
 			}
 		}
 		if (HandleIO.hasMovedRightP1()) {
@@ -418,12 +499,20 @@ public class ObjectControl {
 				SetUpGame.getPlayer1().getPlayerPaddle().setRotated(false);
 				render.getP1Render().setHeight(SetUpGame.getPlayer1().getPlayerPaddle().getHeight());
 				render.getP1Render().setWidth(SetUpGame.getPlayer1().getPlayerPaddle().getLength());
-				render.getP1Render().setFill(new ImagePattern(imgP1Hori));
+				if (isInvis) {
+					render.getP1Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP1Render().setFill(new ImagePattern(imgP1Hori));
+				}
 			} else {
 				SetUpGame.getPlayer1().getPlayerPaddle().setRotated(true);
 				render.getP1Render().setHeight(SetUpGame.getPlayer1().getPlayerPaddle().getLength());
 				render.getP1Render().setWidth(SetUpGame.getPlayer1().getPlayerPaddle().getHeight());
-				render.getP1Render().setFill(new ImagePattern(imgP1Vert));
+				if (isInvis) {
+					render.getP1Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP1Render().setFill(new ImagePattern(imgP1Vert));
+				}
 			}
 		}
 
@@ -434,12 +523,20 @@ public class ObjectControl {
 				SetUpGame.getPlayer2().getPlayerPaddle().setRotated(false);
 				render.getP2Render().setHeight(SetUpGame.getPlayer2().getPlayerPaddle().getHeight());
 				render.getP2Render().setWidth(SetUpGame.getPlayer2().getPlayerPaddle().getLength());
-				render.getP2Render().setFill(new ImagePattern(imgP2Hori));
+				if (isInvis) {
+					render.getP2Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP2Render().setFill(new ImagePattern(imgP2Hori));
+				}
 			} else {
 				SetUpGame.getPlayer2().getPlayerPaddle().setRotated(true);
 				render.getP2Render().setHeight(SetUpGame.getPlayer2().getPlayerPaddle().getLength());
 				render.getP2Render().setWidth(SetUpGame.getPlayer2().getPlayerPaddle().getHeight());
-				render.getP2Render().setFill(new ImagePattern(imgP2Vert));
+				if (isInvis) {
+					render.getP2Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP2Render().setFill(new ImagePattern(imgP2Vert));
+				}
 			}
 		}
 		if (HandleIO.hasMovedRightP2()) {
@@ -448,12 +545,20 @@ public class ObjectControl {
 				SetUpGame.getPlayer2().getPlayerPaddle().setRotated(false);
 				render.getP2Render().setHeight(SetUpGame.getPlayer2().getPlayerPaddle().getHeight());
 				render.getP2Render().setWidth(SetUpGame.getPlayer2().getPlayerPaddle().getLength());
-				render.getP2Render().setFill(new ImagePattern(imgP2Hori));
+				if (isInvis) {
+					render.getP2Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP2Render().setFill(new ImagePattern(imgP2Hori));
+				}
 			} else {
 				SetUpGame.getPlayer2().getPlayerPaddle().setRotated(true);
 				render.getP2Render().setHeight(SetUpGame.getPlayer2().getPlayerPaddle().getLength());
 				render.getP2Render().setWidth(SetUpGame.getPlayer2().getPlayerPaddle().getHeight());
-				render.getP2Render().setFill(new ImagePattern(imgP2Vert));
+				if (isInvis) {
+					render.getP2Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP2Render().setFill(new ImagePattern(imgP2Vert));
+				}
 			}
 		}
 
@@ -464,12 +569,20 @@ public class ObjectControl {
 				SetUpGame.getPlayer3().getPlayerPaddle().setRotated(false);
 				render.getP3Render().setHeight(SetUpGame.getPlayer3().getPlayerPaddle().getHeight());
 				render.getP3Render().setWidth(SetUpGame.getPlayer3().getPlayerPaddle().getLength());
-				render.getP3Render().setFill(new ImagePattern(imgP3Hori));
+				if (isInvis) {
+					render.getP3Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP3Render().setFill(new ImagePattern(imgP3Hori));
+				}
 			} else {
 				SetUpGame.getPlayer3().getPlayerPaddle().setRotated(true);
 				render.getP3Render().setHeight(SetUpGame.getPlayer3().getPlayerPaddle().getLength());
 				render.getP3Render().setWidth(SetUpGame.getPlayer3().getPlayerPaddle().getHeight());
-				render.getP3Render().setFill(new ImagePattern(imgP3Vert));
+				if (isInvis) {
+					render.getP3Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP3Render().setFill(new ImagePattern(imgP3Vert));
+				}
 			}
 		}
 		if (HandleIO.hasMovedRightP3()) {
@@ -478,12 +591,20 @@ public class ObjectControl {
 				SetUpGame.getPlayer3().getPlayerPaddle().setRotated(false);
 				render.getP3Render().setHeight(SetUpGame.getPlayer3().getPlayerPaddle().getHeight());
 				render.getP3Render().setWidth(SetUpGame.getPlayer3().getPlayerPaddle().getLength());
-				render.getP3Render().setFill(new ImagePattern(imgP3Hori));
+				if (isInvis) {
+					render.getP3Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP3Render().setFill(new ImagePattern(imgP3Hori));
+				}
 			} else {
 				SetUpGame.getPlayer3().getPlayerPaddle().setRotated(true);
 				render.getP3Render().setHeight(SetUpGame.getPlayer3().getPlayerPaddle().getLength());
 				render.getP3Render().setWidth(SetUpGame.getPlayer3().getPlayerPaddle().getHeight());
-				render.getP3Render().setFill(new ImagePattern(imgP3Vert));
+				if (isInvis) {
+					render.getP3Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP3Render().setFill(new ImagePattern(imgP3Vert));
+				}
 			}
 		}
 
@@ -494,12 +615,20 @@ public class ObjectControl {
 				SetUpGame.getPlayer4().getPlayerPaddle().setRotated(false);
 				render.getP4Render().setHeight(SetUpGame.getPlayer4().getPlayerPaddle().getHeight());
 				render.getP4Render().setWidth(SetUpGame.getPlayer4().getPlayerPaddle().getLength());
-				render.getP4Render().setFill(new ImagePattern(imgP4Hori));
+				if (isInvis) {
+					render.getP4Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP4Render().setFill(new ImagePattern(imgP4Hori));
+				}
 			} else {
 				SetUpGame.getPlayer4().getPlayerPaddle().setRotated(true);
 				render.getP4Render().setHeight(SetUpGame.getPlayer4().getPlayerPaddle().getLength());
 				render.getP4Render().setWidth(SetUpGame.getPlayer4().getPlayerPaddle().getHeight());
-				render.getP4Render().setFill(new ImagePattern(imgP4Vert));
+				if (isInvis) {
+					render.getP4Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP4Render().setFill(new ImagePattern(imgP4Vert));
+				}
 			}
 		}
 		if (HandleIO.hasMovedRightP4()) {
@@ -508,12 +637,20 @@ public class ObjectControl {
 				SetUpGame.getPlayer4().getPlayerPaddle().setRotated(false);
 				render.getP4Render().setHeight(SetUpGame.getPlayer4().getPlayerPaddle().getHeight());
 				render.getP4Render().setWidth(SetUpGame.getPlayer4().getPlayerPaddle().getLength());
-				render.getP4Render().setFill(new ImagePattern(imgP4Hori));
+				if (isInvis) {
+					render.getP4Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP4Render().setFill(new ImagePattern(imgP4Hori));
+				}
 			} else {
 				SetUpGame.getPlayer4().getPlayerPaddle().setRotated(true);
 				render.getP4Render().setHeight(SetUpGame.getPlayer4().getPlayerPaddle().getLength());
 				render.getP4Render().setWidth(SetUpGame.getPlayer4().getPlayerPaddle().getHeight());
-				render.getP4Render().setFill(new ImagePattern(imgP4Vert));
+				if (isInvis) {
+					render.getP4Render().setFill(Color.TRANSPARENT);
+				} else {
+					render.getP4Render().setFill(new ImagePattern(imgP4Vert));
+				}
 			}
 		}
 	}
@@ -610,11 +747,11 @@ public class ObjectControl {
 
 			int randomPower = rand.nextInt( 3) + 1;
 
-			PowerUps.Power powerToAdd = PowerUps.Power.FREEZE;
+			PowerUps.Power powerToAdd = FREEZE;
 
 			switch(randomPower) {
 				case 1:
-					powerToAdd = PowerUps.Power.FREEZE;
+					powerToAdd = FREEZE;
 					break;
 				case 2:
 					powerToAdd = PowerUps.Power.SHRINK;
@@ -665,7 +802,7 @@ public class ObjectControl {
 					tempPaddle.getPower().setTimeOfPU(System.nanoTime());
 
 				} else {
-					if (tempPaddle.getPower().getPower() == PowerUps.Power.FREEZE) {
+					if (tempPaddle.getPower().getPower() == FREEZE) {
 						tempPaddle.setPaddleSpeed(15);
 					} else if (tempPaddle.getPower().getPower() == PowerUps.Power.SHRINK) {
 
