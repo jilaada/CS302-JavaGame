@@ -1120,7 +1120,24 @@ public class SceneChanger {
                                 // Display some message
                                 // Set the countdown to display 0
                                 if (status.onePlayerAlive()) {
-                                    sceneChanger.updateEndText("Player " + status.winningPlayer() + " won");
+                                    String output = "";
+
+                                    switch (status.winningPlayer()) {
+                                        case (1):
+                                            output = "Blue player";
+                                            break;
+                                        case (2):
+                                            output = "Red player";
+                                            break;
+                                        case (3):
+                                            output = "Green player";
+                                            break;
+                                        case (4):
+                                            output = "White player";
+                                            break;
+                                    }
+
+                                    sceneChanger.updateEndText(output + " wins");
                                 } else if (gameTime[0] < 0) {
                                     sceneChanger.updateEndText("Time up");
                                 } else {

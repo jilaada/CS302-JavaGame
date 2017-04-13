@@ -64,8 +64,8 @@ public class RenderView {
         Image imgP4 = new Image("/images/player4Sprite.png");
         Image backImage = new Image("/images/pipesFloor7.jpg");
         Image powerU1 = new Image("/images/freezePowerUp.png");
-        Image powerU2 = new Image("/images/freezePowerUp.png");
-        Image powerU3 = new Image("/images/freezePowerUp.png");
+        Image powerU2 = new Image("/images/shrinkPowerUp.png");
+        Image powerU3 = new Image("/images/invisiblePowerUp.png");
 
         back = new Rectangle(0,0,1024,768);
         this.back.setFill(new ImagePattern(backImage));
